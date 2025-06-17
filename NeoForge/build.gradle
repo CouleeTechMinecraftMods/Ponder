@@ -19,9 +19,11 @@ println "Java: ${System.getProperty "java.version"}, JVM: ${System.getProperty "
 neoForge {
     version = neo_version
 
-    parchment {
-        minecraftVersion = parchment_minecraft_version
-        mappingsVersion = parchment_version
+    if (parchment_version != "none") {
+        parchment {
+            minecraftVersion = parchment_minecraft_version
+            mappingsVersion = parchment_version
+        }
     }
 
     runs {
@@ -65,8 +67,8 @@ neoForge {
 dependencies {
     implementation(commonProject)
 
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${flywheel_minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${flywheel_minecraft_version}:${flywheel_version}")
 }
 
 tasks.withType(JavaCompile).configureEach {

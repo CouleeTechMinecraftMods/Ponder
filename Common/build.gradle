@@ -11,14 +11,16 @@ neoForge {
 
     accessTransformers.from(file('src/main/resources/META-INF/ponder.accesstransformer.cfg').absolutePath)
 
-    parchment {
-        minecraftVersion = parchment_minecraft_version
-        mappingsVersion = parchment_version
+    if (parchment_version != "none") {
+        parchment {
+            minecraftVersion = parchment_minecraft_version
+            mappingsVersion = parchment_version
+        }
     }
 }
 
 dependencies {
-    compileOnly "dev.engine-room.flywheel:flywheel-common-mojmap-api-${minecraft_version}:${flywheel_version}"
+    compileOnly "dev.engine-room.flywheel:flywheel-common-mojmap-api-${flywheel_minecraft_version}:${flywheel_version}"
 
     compileOnly "net.fabricmc:sponge-mixin:0.15.4+mixin.0.8.7"
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))

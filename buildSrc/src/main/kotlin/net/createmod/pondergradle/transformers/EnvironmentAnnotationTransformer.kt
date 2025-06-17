@@ -20,7 +20,6 @@ class EnvironmentAnnotationTransformer : IClassTransformer {
         )
     }
 
-    @Suppress("UNCHECKED_CAST")
     override fun transform(project: SubprojectType, node: ClassNode) {
         node.visibleAnnotations = node.visibleAnnotations ?: mutableListOf()
         node.invisibleAnnotations = node.invisibleAnnotations ?: mutableListOf()
