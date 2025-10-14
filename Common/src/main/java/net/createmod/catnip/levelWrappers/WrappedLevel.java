@@ -114,6 +114,7 @@ public class WrappedLevel extends Level {
 		return chunkSource != null ? chunkSource : level.getChunkSource();
 	}
 
+	@Override
 	public void levelEvent(@Nullable Player player, int type, BlockPos pos, int data) {}
 
 	@Override
@@ -121,6 +122,7 @@ public class WrappedLevel extends Level {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public void playSound(@Nullable Player player, double x, double y, double z, Holder<SoundEvent> soundIn,
 		SoundSource category, float volume, float pitch) {}
 
