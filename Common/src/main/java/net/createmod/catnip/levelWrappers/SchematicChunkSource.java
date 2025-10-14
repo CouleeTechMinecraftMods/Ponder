@@ -23,7 +23,7 @@ import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.entity.FuelValues;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
+import net.minecraft.world.entity.EnderDragonPart;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -213,6 +213,11 @@ public class SchematicChunkSource extends ChunkSource {
 			// MC 1.21.5: getRecipeManager removed
 			public RecipeManager getRecipeManager() {
 				return null;
+			}
+
+			@Override
+			public net.minecraft.world.item.crafting.RecipeAccess recipeAccess() {
+				return net.minecraft.world.item.crafting.RecipeAccess.EMPTY;
 			}
 
 			@Override

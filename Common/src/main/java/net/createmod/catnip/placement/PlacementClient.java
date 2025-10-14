@@ -17,8 +17,8 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -223,7 +223,7 @@ public class PlacementClient {
 		bufferbuilder.addVertex(mat, 6, -6, 0).setColor(r, g, b, 0f);
 		bufferbuilder.addVertex(mat, 9, -3, 0).setColor(r, g, b, 0f);
 
-		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow()); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = bufferbuilder.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
 		ms.popPose();
@@ -261,7 +261,7 @@ public class PlacementClient {
 		buffer.addVertex(mat,  1,  1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty + th);
 		buffer.addVertex(mat,  1, -1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty);
 
-		BufferUploader.drawWithShader(buffer.buildOrThrow()); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = buffer.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
 
 		RenderSystem.disableBlend();
 		ms.popPose();
