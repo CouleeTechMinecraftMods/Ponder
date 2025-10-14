@@ -30,9 +30,14 @@ public class NBTHelper {
 	
 	// Backwards compatible with 1.20
 	public static BlockPos readBlockPos(CompoundTag nbt, String key) {
-		Optional<BlockPos> pos = NbtUtils.readBlockPos(nbt, key);
-		if (pos.isPresent())
-			return pos.get();
+		// MC 1.21.5: NbtUtils.readBlockPos changed signature - use direct parsing
+		if (nbt.contains(key, 10)) { // TAG_COMPOUND
+			CompoundTag posTag = nbt.getCompound(key).orElse(new CompoundTag());
+			if (posTag.contains("X") && posTag.contains("Y") && posTag.contains("Z")) {
+				return new BlockPos(posTag.getInt("X").orElse(0), posTag.getInt("Y").orElse(0), posTag.getInt("Z").orElse(0));
+			}
+		}
+		// Fallback for old format
 		CompoundTag oldTag = nbt.getCompound(key).orElse(new CompoundTag());
 		return new BlockPos(oldTag.getInt("X").orElse(0), oldTag.getInt("Y").orElse(0), oldTag.getInt("Z").orElse(0));
 	}
@@ -80,14 +85,16 @@ public class NBTHelper {
 	public static ListTag writeItemList(Iterable<ItemStack> stacks, HolderLookup.Provider registries) {
 		ListTag listNBT = new ListTag();
 		for (ItemStack stack : stacks)
-			listNBT.add(stack.saveOptional(registries));
+			// MC 1.21.5: saveOptional -> save
+			listNBT.add(stack.save(registries));
 		return listNBT;
 	}
 
 	public static List<ItemStack> readItemList(ListTag stacks, HolderLookup.Provider registries) {
 		List<ItemStack> list = new ArrayList<>();
 		for (int i = 0; i < stacks.size(); i++)
-			list.add(i, ItemStack.parseOptional(registries, stacks.getCompound(i)));
+			// MC 1.21.5: parseOptional returns Tag instead of CompoundTag, use parse
+			list.add(i, ItemStack.parse(registries, stacks.getCompound(i).orElse(new CompoundTag())).orElse(ItemStack.EMPTY));
 		return list;
 	}
 

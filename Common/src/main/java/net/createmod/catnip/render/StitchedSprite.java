@@ -24,7 +24,8 @@ public class StitchedSprite {
 	}
 
 	public StitchedSprite(ResourceLocation location) {
-		this(InventoryMenu.BLOCK_ATLAS, location);
+		// MC 1.21.5: InventoryMenu.BLOCK_ATLAS moved to TextureAtlas.LOCATION_BLOCKS
+		this(TextureAtlas.LOCATION_BLOCKS, location);
 	}
 
 	public static void onTextureStitchPost(TextureAtlas atlas) {
