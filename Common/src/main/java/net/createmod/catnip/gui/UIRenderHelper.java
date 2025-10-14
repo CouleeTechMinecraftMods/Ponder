@@ -81,11 +81,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// MC 1.21.5: RenderTarget bind methods changed - use bindSourceTexture/bindWrite
-		src.bindAsReadBuffer();
-		dst.bindAsDrawBuffer();
+		// MC 1.21.5: RenderTarget bind methods renamed: bindAsReadBuffer() -> bindRead(), bindAsDrawBuffer() -> bindWrite(boolean)
+		src.bindRead();
+		dst.bindWrite(false);
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		dst.bindAsDrawBuffer();
+		dst.bindWrite(true);
 	}
 
 	/**
