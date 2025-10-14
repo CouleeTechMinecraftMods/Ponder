@@ -10,7 +10,7 @@ import net.createmod.catnip.client.render.model.BakedModelBufferer;
 import net.createmod.catnip.client.render.model.ShadeSeparatedResultConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.BakedModel;
+// MC 1.21.5: BakedModel class removed, using Object for model types
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -36,11 +36,11 @@ public class SuperBufferFactory {
 		return createForBlock(Minecraft.getInstance().getBlockRenderer().getBlockModel(renderedState), renderedState);
 	}
 
-	public SuperByteBuffer createForBlock(BakedModel model, BlockState referenceState) {
+	public SuperByteBuffer createForBlock(Object model, BlockState referenceState) {
 		return createForBlock(model, referenceState, new PoseStack());
 	}
 
-	public SuperByteBuffer createForBlock(BakedModel model, BlockState state, @Nullable PoseStack poseStack) {
+	public SuperByteBuffer createForBlock(Object model, BlockState state, @Nullable PoseStack poseStack) {
 		ThreadLocalObjects objects = THREAD_LOCAL_OBJECTS.get();
 		SbbBuilder sbbBuilder = objects.sbbBuilder;
 		sbbBuilder.prepare();

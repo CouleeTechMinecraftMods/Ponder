@@ -24,7 +24,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.resources.model.BakedModel;
+// MC 1.21.5: BakedModel class removed, using Object for model types
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
@@ -52,10 +52,10 @@ public interface ModClientHooksHelper {
 	void renderFullFluidState(PoseStack ms, MultiBufferSource.BufferSource buffer, FluidState fluid);
 
 	@ApiStatus.Internal
-	void bufferModel(BakedModel model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource);
+	void bufferModel(Object model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource);
 
 	@ApiStatus.Internal
-	void bufferModel(BakedModel model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedResultConsumer resultConsumer);
+	void bufferModel(Object model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedResultConsumer resultConsumer);
 
 	@ApiStatus.Internal
 	void bufferBlocks(Iterator<BlockPos> posIterator, BlockAndTintGetter level, @Nullable PoseStack poseStack, boolean renderFluids, ShadeSeparatedBufferSource bufferSource);
@@ -80,29 +80,29 @@ public interface ModClientHooksHelper {
 
 	/** <b>BROKEN - DO NOT USE</b> */
 	@Deprecated(forRemoval = true)
-	void tesselateBlockVirtual(BlockRenderDispatcher dispatcher, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, RandomSource randomSource, long seed, int packedOverlay, RenderType renderType);
+	void tesselateBlockVirtual(BlockRenderDispatcher dispatcher, Object model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, RandomSource randomSource, long seed, int packedOverlay, RenderType renderType);
 /** <b>BROKEN - DO NOT USE</b> */
 	@Deprecated(forRemoval = true)
-	default void tesselateBlockVirtual(Level level, BlockRenderDispatcher dispatcher, BakedModel model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, RandomSource randomSource, long seed, int packedOverlay, RenderType renderType) {
+	default void tesselateBlockVirtual(Level level, BlockRenderDispatcher dispatcher, Object model, BlockState state, BlockPos pos, PoseStack poseStack, VertexConsumer consumer, boolean checkSides, RandomSource randomSource, long seed, int packedOverlay, RenderType renderType) {
 		tesselateBlockVirtual(dispatcher, model, state, pos, poseStack, consumer, checkSides, randomSource, seed, packedOverlay, renderType);
 	}
 
 	/** <b>BROKEN - DO NOT USE</b> */
 	@Deprecated(forRemoval = true)
 	void renderGuiGameElementModel(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer,
-								   PoseStack ms, BlockState state, BakedModel blockModel, int color, @Nullable BlockEntity beWithModelData);
+								   PoseStack ms, BlockState state, Object blockModel, int color, @Nullable BlockEntity beWithModelData);
 
 	/** <b>BROKEN - DO NOT USE</b> */
 	@Deprecated(forRemoval = true)
 	default void renderGuiGameElementModel(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer,
-								   PoseStack ms, BlockState state, BakedModel blockModel, int color) {
+								   PoseStack ms, BlockState state, Object blockModel, int color) {
 		renderGuiGameElementModel(blockRenderer, buffer, ms, state, blockModel, color, null);
 	}
 
 	/** <b>BROKEN - DO NOT USE</b> */
 	@Deprecated(forRemoval = true)
 	void renderVirtualBlockStateModel(BlockRenderDispatcher dispatcher, PoseStack ms, VertexConsumer consumer,
-									  BlockState state, BakedModel model, float red, float green, float blue,
+									  BlockState state, Object model, float red, float green, float blue,
 									  RenderType layer);
 
 	@Deprecated(forRemoval = true)

@@ -10,7 +10,7 @@ import net.createmod.catnip.placement.PlacementClient;
 import net.createmod.catnip.render.SuperRenderTypeBuffer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.model.BakedModel;
+// MC 1.21.5: BakedModel class removed, using Object for model types
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -33,7 +33,7 @@ public abstract class GhostBlockRenderer {
 		@Override
 		public void render(PoseStack ms, SuperRenderTypeBuffer buffer, Vec3 camera, GhostBlockParams params) {
 			BlockState state = params.state;
-			BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+			Object model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state); // MC 1.21.5: BakedModel -> Object
 			BlockPos pos = params.pos;
 
 			ms.pushPose();
@@ -47,7 +47,7 @@ public abstract class GhostBlockRenderer {
 		@Override
 		public void render(PoseStack ms, SuperRenderTypeBuffer buffer, Vec3 camera, GhostBlockParams params) {
 			BlockState state = params.state;
-			BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+			Object model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state); // MC 1.21.5: BakedModel -> Object
 			BlockPos pos = params.pos;
 			float alpha = params.alphaSupplier.get() * .75f * PlacementClient.getCurrentAlpha();
 			VertexConsumer vb = new ColoringVertexConsumer(buffer.getEarlyBuffer(RenderType.translucent()), 1, 1, 1, alpha);

@@ -14,4 +14,4 @@ plugins {
 rootProject.name = "ponder"
 include "Common"
 include "NeoForge"
-include "Fabric"
+// include "Fabric" // Temporarily disabled - Fabric API 1.21.5 not yet available

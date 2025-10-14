@@ -9,7 +9,6 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -263,7 +262,7 @@ public class ConfigScreenList extends ObjectSelectionList<ConfigScreenList.Entry
 				graphics.flush();
 				//RemovedGuiUtils.drawHoveringText(ms, tooltip, mouseX, mouseY, screen.width, screen.height, 300, font);
 				graphics.pose().popPose();
-				GlStateManager._enableScissorTest();
+				GL11.glEnable(GL11.GL_SCISSOR_TEST);
 			}
 		}
 

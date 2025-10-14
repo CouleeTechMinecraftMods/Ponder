@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.createmod.catnip.platform.CatnipClientServices;
-import net.minecraft.client.resources.model.BakedModel;
+// MC 1.21.5: BakedModel class removed, using Object for model types
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,11 +16,11 @@ public final class BakedModelBufferer {
 	private BakedModelBufferer() {
 	}
 
-	public static void bufferModel(BakedModel model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource) {
+	public static void bufferModel(Object model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource) {
 		CatnipClientServices.CLIENT_HOOKS.bufferModel(model, pos, level, state, poseStack, bufferSource);
 	}
 
-	public static void bufferModel(BakedModel model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedResultConsumer resultConsumer) {
+	public static void bufferModel(Object model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedResultConsumer resultConsumer) {
 		CatnipClientServices.CLIENT_HOOKS.bufferModel(model, pos, level, state, poseStack, resultConsumer);
 	}
 
