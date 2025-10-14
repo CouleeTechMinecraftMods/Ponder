@@ -132,7 +132,8 @@ public class ParrotElementImpl extends AnimatedSceneElementBase implements Parro
 		float angle = AngleHelper.angleLerp(pt, entity.yRotO, entity.getYRot());
 		poseStack.mulPose(Axis.YP.rotationDegrees(angle));
 
-		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+		// EntityRenderDispatcher.render() signature changed in 1.21.5 - removed yaw parameter
+		entityrenderermanager.render(entity, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
 		poseStack.popPose();
 	}
 

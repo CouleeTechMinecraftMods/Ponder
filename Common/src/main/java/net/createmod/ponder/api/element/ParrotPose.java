@@ -1,5 +1,7 @@
 package net.createmod.ponder.api.element;
 
+import java.lang.reflect.Field;
+
 import com.mojang.blaze3d.platform.Window;
 
 import net.createmod.catnip.math.AngleHelper;
@@ -9,6 +11,7 @@ import net.createmod.ponder.foundation.PonderScene;
 import net.createmod.ponder.foundation.ui.PonderUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Parrot;
@@ -23,13 +26,27 @@ public abstract class ParrotPose {
 		Parrot.Variant.GRAY,
 	}; // blue parrots are kinda hard to see
 
+	@SuppressWarnings("unchecked")
+	private static final EntityDataAccessor<Integer> DATA_VARIANT_ID = getDataVariantId();
+
+	private static EntityDataAccessor<Integer> getDataVariantId() {
+		try {
+			Field field = Parrot.class.getDeclaredField("DATA_VARIANT_ID");
+			field.setAccessible(true);
+			return (EntityDataAccessor<Integer>) field.get(null);
+		} catch (Exception e) {
+			throw new RuntimeException("Failed to access Parrot.DATA_VARIANT_ID", e);
+		}
+	}
+
 	public abstract void tick(PonderScene scene, Parrot entity, Vec3 location);
 
 	public Parrot create(PonderLevel world) {
 		Parrot entity = new Parrot(EntityType.PARROT, world);
 		int nextInt = Ponder.RANDOM.nextInt(VARIANTS.length);
-		// setVariant() is now private - use entity data directly
-		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
+		// DATA_VARIANT_ID is now private - use reflection to access it
+		// In 1.21.5, Variant enum uses ordinal() instead of id()
+		entity.getEntityData().set(DATA_VARIANT_ID, VARIANTS[nextInt].ordinal());
 		return entity;
 	}
 

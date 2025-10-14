@@ -622,8 +622,8 @@ public class PonderUI extends AbstractPonderScreen {
 		// has to be outside of MS transforms, important for vertex sorting
 		Matrix4f matrix4f = new Matrix4f(RenderSystem.getProjectionMatrix());
 		matrix4f.translate(0, 0, 800);
-		// setProjectionMatrix signature changed - VertexSorting removed
-		RenderSystem.setProjectionMatrix(matrix4f);
+		// setProjectionMatrix signature changed - VertexSorting removed, ProjectionType added
+		RenderSystem.setProjectionMatrix(matrix4f, com.mojang.blaze3d.ProjectionType.PERSPECTIVE);
 
 		poseStack.pushPose();
 		poseStack.translate(0, 0, -800);

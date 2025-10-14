@@ -421,7 +421,8 @@ public class WorldSectionElementImpl extends AnimatedSceneElementBase implements
 			ms.translate(pos.getX(), pos.getY(), pos.getZ());
 
 			try {
-				renderer.render(tile, pt, ms, buffer, LevelRenderer.getLightColor(world, pos), OverlayTexture.NO_OVERLAY);
+				// BlockEntityRenderer.render() signature changed in 1.21.5 - added Vec3 camPos parameter
+				renderer.render(tile, pt, ms, buffer, LevelRenderer.getLightColor(world, pos), OverlayTexture.NO_OVERLAY, Vec3.ZERO);
 
 			} catch (Exception e) {
 				iterator.remove();

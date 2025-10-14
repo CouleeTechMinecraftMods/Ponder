@@ -12,13 +12,15 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.TriState;
 
 public abstract class PonderRenderTypes extends RenderType {
 
 	private static final RenderType OUTLINE_SOLID =
 		RenderTypeAccessor.catnip$create(createLayerName("outline_solid"), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, false, CompositeState.builder()
 			.setShaderState(RENDERTYPE_ENTITY_SOLID_SHADER)
-			.setTextureState(new TextureStateShard(PonderSpecialTextures.BLANK.getLocation(), false, false))
+			// TextureStateShard constructor changed in 1.21.5 - boolean parameters changed to TriState
+			.setTextureState(new TextureStateShard(PonderSpecialTextures.BLANK.getLocation(), TriState.FALSE, TriState.FALSE))
 			.setCullState(CULL)
 			.setLightmapState(LIGHTMAP)
 			.setOverlayState(OVERLAY)
@@ -27,7 +29,8 @@ public abstract class PonderRenderTypes extends RenderType {
 	private static final BiFunction<ResourceLocation, Boolean, RenderType> OUTLINE_TRANSLUCENT = Util.memoize((texture, cull) ->
 		RenderTypeAccessor.catnip$create(createLayerName("outline_translucent" + (cull ? "_cull" : "")), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, true, CompositeState.builder()
 			.setShaderState(cull ? RENDERTYPE_ENTITY_TRANSLUCENT_CULL_SHADER : RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
-			.setTextureState(new TextureStateShard(texture, false, false))
+			// TextureStateShard constructor changed in 1.21.5 - boolean parameters changed to TriState
+			.setTextureState(new TextureStateShard(texture, TriState.FALSE, TriState.FALSE))
 			.setTransparencyState(TRANSLUCENT_TRANSPARENCY)
 			.setCullState(cull ? CULL : NO_CULL)
 			.setLightmapState(LIGHTMAP)
