@@ -60,7 +60,7 @@ public class LongAttached<V> extends Pair<Long, V> {
 	}
 
 	public static <T> LongAttached<T> read(CompoundTag nbt, Function<CompoundTag, T> deserializer) {
-		return LongAttached.with(nbt.getLong("Location"), deserializer.apply(nbt.getCompound("Item")));
+		return LongAttached.with(nbt.getLong("Location").orElse(0L), deserializer.apply(nbt.getCompound("Item").orElse(new CompoundTag())));
 	}
 
 	public static <T> Codec<LongAttached<T>> codec(Codec<T> codec) {

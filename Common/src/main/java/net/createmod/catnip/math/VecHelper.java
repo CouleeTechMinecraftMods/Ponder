@@ -146,11 +146,11 @@ public class VecHelper {
 	public static Vec3 readNBT(ListTag list) {
 		if (list.isEmpty())
 			return Vec3.ZERO;
-		return new Vec3(list.getDouble(0), list.getDouble(1), list.getDouble(2));
+		return new Vec3(list.getDouble(0).orElse(0.0), list.getDouble(1).orElse(0.0), list.getDouble(2).orElse(0.0));
 	}
 
 	public static Vec3 readNBTCompound(CompoundTag nbt) {
-		return readNBT(nbt.getList("V", Tag.TAG_DOUBLE));
+		return readNBT(nbt.getList("V").orElse(new ListTag()));
 	}
 
 	public static void write(Vec3 vec, FriendlyByteBuf buffer) {

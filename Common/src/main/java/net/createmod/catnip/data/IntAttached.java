@@ -61,7 +61,7 @@ public class IntAttached<V> extends Pair<Integer, V> {
 	}
 
 	public static <T> IntAttached<T> read(CompoundTag nbt, Function<CompoundTag, T> deserializer) {
-		return IntAttached.with(nbt.getInt("Location"), deserializer.apply(nbt.getCompound("Item")));
+		return IntAttached.with(nbt.getInt("Location").orElse(0), deserializer.apply(nbt.getCompound("Item").orElse(new CompoundTag())));
 	}
 
 	public static <T> Codec<IntAttached<T>> codec(Codec<T> codec) {

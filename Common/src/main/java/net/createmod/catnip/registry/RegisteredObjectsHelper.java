@@ -59,11 +59,11 @@ public class RegisteredObjectsHelper {
 	}
 
 	public static Item getItem(ResourceLocation location) {
-		return BuiltInRegistries.ITEM.get(location);
+		return BuiltInRegistries.ITEM.get(location).map(ref -> ref.value()).orElse(Items.AIR);
 	}
 
 	public static Block getBlock(ResourceLocation location) {
-		return BuiltInRegistries.BLOCK.get(location);
+		return BuiltInRegistries.BLOCK.get(location).map(ref -> ref.value()).orElse(Blocks.AIR);
 	}
 
 	@Nullable
