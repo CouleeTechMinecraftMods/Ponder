@@ -134,6 +134,19 @@ public class WrappedLevel extends Level {
 		SoundSource p_217384_4_, float p_217384_5_, float p_217384_6_) {}
 
 	@Override
+	public void playSeededSound(@Nullable Entity entity, double x, double y, double z,
+								Holder<SoundEvent> sound, SoundSource source,
+								float volume, float pitch, long seed) {
+		level.playSeededSound(entity, x, y, z, sound, source, volume, pitch, seed);
+	}
+
+	@Override
+	public void playSeededSound(@Nullable Entity entity1, Entity entity2, Holder<SoundEvent> sound,
+								SoundSource source, float volume, float pitch, long seed) {
+		level.playSeededSound(entity1, entity2, sound, source, volume, pitch, seed);
+	}
+
+	@Override
 	public Entity getEntity(int id) {
 		return null;
 	}

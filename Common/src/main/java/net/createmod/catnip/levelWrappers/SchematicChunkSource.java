@@ -169,17 +169,20 @@ public class SchematicChunkSource extends ChunkSource {
 			public void playSound(Player pPlayer, Entity pEntity, SoundEvent pEvent, SoundSource pCategory,
 				float pVolume, float pPitch) {}
 
+			// MC 1.21.5: Changed from Player to Entity for first parameter
 			@Override
-			public void playSeededSound(Player pPlayer, double pX, double pY, double pZ, Holder<SoundEvent> pSound,
-										SoundSource pSource, float pVolume, float pPitch, long pSeed) {}
+			public void playSeededSound(@Nullable Entity entity, double x, double y, double z,
+										Holder<SoundEvent> sound, SoundSource source,
+										float volume, float pitch, long seed) {}
 
 			// MC 1.21.5: SoundEvent version removed
 			public void playSeededSound(Player p_220363_, double p_220364_, double p_220365_, double p_220366_,
 										SoundEvent p_220367_, SoundSource p_220368_, float p_220369_, float p_220370_, long p_220371_) {}
 
+			// MC 1.21.5: Changed from Player to Entity for first parameter
 			@Override
-			public void playSeededSound(Player p_220372_, Entity p_220373_, Holder<SoundEvent> p_220374_, SoundSource p_220375_,
-										float p_220376_, float p_220377_, long p_220378_) {}
+			public void playSeededSound(@Nullable Entity entity1, Entity entity2, Holder<SoundEvent> sound,
+										SoundSource source, float volume, float pitch, long seed) {}
 
 			@Override
 			public String gatherChunkSourceStats() {
