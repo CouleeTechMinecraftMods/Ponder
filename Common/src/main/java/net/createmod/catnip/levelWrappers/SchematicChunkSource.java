@@ -161,6 +161,11 @@ public class SchematicChunkSource extends ChunkSource {
 			}
 
 			@Override
+			public int getSeaLevel() {
+				return 63;
+			}
+
+			@Override
 			public void sendBlockUpdated(BlockPos pPos, BlockState pOldState, BlockState pNewState, int pFlags) {}
 
 			// MC 1.21.5: playSound methods changed - only Holder<SoundEvent> versions remain
@@ -224,13 +229,8 @@ public class SchematicChunkSource extends ChunkSource {
 
 			@Override
 			public net.minecraft.world.item.crafting.RecipeAccess recipeAccess() {
-				// MC 1.21.5: RecipeAccess.EMPTY removed, return empty implementation
-				return new net.minecraft.world.item.crafting.RecipeAccess() {
-					@Override
-					public java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<?>> byKey(net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> key) {
-						return java.util.Optional.empty();
-					}
-				};
+				// MC 1.21.5: RecipeAccess.EMPTY removed, return empty implementation using dummy RecipeManager
+				return new net.minecraft.world.item.crafting.RecipeManager(access);
 			}
 
 			@Override
