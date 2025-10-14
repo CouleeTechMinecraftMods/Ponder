@@ -31,6 +31,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 // MC 1.21.5: BakedModel class removed, using Object for model types
 import net.minecraft.core.BlockPos;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -126,9 +127,9 @@ public class GuiGameElement {
 		protected void prepareMatrix(PoseStack poseStack) {
 			poseStack.pushPose();
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			RenderSystem.enableDepthTest();
-			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			prepareLighting(poseStack);
 		}
 
@@ -183,11 +184,11 @@ public class GuiGameElement {
 
 			Minecraft mc = Minecraft.getInstance();
 			BlockRenderDispatcher blockRenderer = mc.getBlockRenderer();
-			MultiBufferSource.BufferSource buffer = graphics.bufferSource();
+			MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
 
 			transformMatrix(poseStack);
 
-			RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
+			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 			renderModel(blockRenderer, buffer, poseStack);
 
 			cleanUpMatrix(poseStack);
@@ -199,7 +200,8 @@ public class GuiGameElement {
 			level.blockState(blockState);
 			level.blockEntity(blockEntity);
 			BakedModelBufferer.bufferModel(blockModel, BlockPos.ZERO, level, blockState, ms, (layer, shade) -> {
-				layer = layer == RenderType.translucent() ? Sheets.translucentCullBlockSheet() : Sheets.cutoutBlockSheet();
+				// MC 1.21.5: Sheets.translucentCullBlockSheet() removed, use direct RenderType
+				layer = layer == RenderType.translucent() ? RenderType.translucent() : Sheets.cutoutBlockSheet();
 				return new ColoringVertexConsumer(buffer.getBuffer(layer), ARGB.red(color) / 255f, ARGB.green(color) / 255f, ARGB.blue(color) / 255f, 1);
 			});
 
@@ -235,7 +237,7 @@ public class GuiGameElement {
 
             BlockState stateBefore = blockEntity.getBlockState();
             blockEntity.setBlockState(blockState);
-            renderer.render(blockEntity, /*partials*/0, ms, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY);
+            renderer.render(blockEntity, /*partials*/0, ms, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, Vec3.ZERO);
             blockEntity.setBlockState(stateBefore);
         }
 	}
@@ -291,13 +293,13 @@ public class GuiGameElement {
 
 		public static void renderItemIntoGUI(PoseStack poseStack, ItemStack stack, boolean useDefaultLighting) {
 			ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-			Object bakedModel = renderer.getModel(stack, null, null, 0); // MC 1.21.5: Model type changed
+			Object bakedModel = renderer.getItemModel(stack); // MC 1.21.5: getModel -> getItemModel
 
-			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
-			RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-			RenderSystem.enableBlend();
-			RenderSystem.enableCull();
-			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
+			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 			poseStack.pushPose();
 			poseStack.translate(0, 0, 100.0F);
@@ -311,10 +313,10 @@ public class GuiGameElement {
 			}
 
 			renderer.render(stack, ItemDisplayContext.GUI, false, poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, bakedModel);
-			RenderSystem.disableDepthTest();
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			buffer.endBatch();
 
-			RenderSystem.enableDepthTest();
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			if (useDefaultLighting && flatLighting) {
 				Lighting.setupFor3DItems();
 			}
