@@ -20,9 +20,9 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -33,6 +33,7 @@ import net.createmod.catnip.platform.CatnipClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.util.Mth;
 
 public class UIRenderHelper {
@@ -183,7 +184,7 @@ public class UIRenderHelper {
 		buffer.addVertex(mat,  left,    top, zLevel).setColor(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha());
 		buffer.addVertex(mat,  left, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
 		buffer.addVertex(mat, right, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
-		BufferUploader.drawWithShader(buffer.buildOrThrow());
+		buffer.buildOrThrow().draw();
 
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
@@ -265,7 +266,7 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(model, x2, y1, 0).setColor(fc3.getRed(), fc3.getGreen(), fc3.getBlue(), fc3.getAlpha());
 		bufferbuilder.addVertex(model, x3, y2, 0).setColor(fc4.getRed(), fc4.getGreen(), fc4.getBlue(), fc4.getAlpha());
 
-		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+		bufferbuilder.buildOrThrow().draw();
 		RenderSystem.enableCull();
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
@@ -300,7 +301,7 @@ public class UIRenderHelper {
 			builder.addVertex(pose, (float) point.getX(), (float) point.getY(), 0).setColor(innerColor.getRGB());
 		}
 
-		BufferUploader.drawWithShader(builder.buildOrThrow());
+		builder.buildOrThrow().draw();
 
 		RenderSystem.disableBlend();
 
@@ -364,7 +365,7 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
 		bufferbuilder.addVertex(m, (float) left , (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v1);
-		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+		bufferbuilder.buildOrThrow().draw();
 		RenderSystem.disableBlend();
 	}
 
@@ -426,7 +427,7 @@ public class UIRenderHelper {
 			bufferbuilder.addVertex(vx, 0 , 0).setUv(tx, ty).setColor(1, 1, 1, alpha);
 			bufferbuilder.addVertex(0 , 0 , 0).setUv(0 , ty).setColor(1, 1, 1, alpha);
 
-			BufferUploader.draw(bufferbuilder.buildOrThrow());
+			bufferbuilder.buildOrThrow().draw();
 
 			shaderinstance.clear();
 			RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.ORTHOGRAPHIC_Z);
