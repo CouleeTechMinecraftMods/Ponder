@@ -9,6 +9,8 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.opengl.GL11;
+
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -77,6 +79,11 @@ public class ConfigScreenList extends ObjectSelectionList<ConfigScreenList.Entry
 	@Override
 	protected int getScrollbarPosition() {
 		return getX() + this.width - 6;
+	}
+
+	// MC 1.21.5: Expose scrollAmount access for compatibility
+	public double getScrollAmount() {
+		return scrollAmount();
 	}
 
 	@Override

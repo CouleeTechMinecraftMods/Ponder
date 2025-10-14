@@ -12,24 +12,23 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.TriState;
 
-public abstract class PonderRenderTypes extends RenderType {
+public abstract class PonderRenderTypes extends RenderStateShard {
 
 	private static final RenderType OUTLINE_SOLID =
-		RenderTypeAccessor.catnip$create(createLayerName("outline_solid"), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, false, CompositeState.builder()
+		RenderTypeAccessor.catnip$create(createLayerName("outline_solid"), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder()
 			.setShaderState(RenderStateShard.RENDERTYPE_ENTITY_SOLID_SHADER)
-			// MC 1.21.5: TextureStateShard constructor uses blur/mipmap boolean parameters
-			.setTextureState(new RenderStateShard.TextureStateShard(PonderSpecialTextures.BLANK.getLocation(), false, false))
+			.setTextureState(new RenderStateShard.TextureStateShard(PonderSpecialTextures.BLANK.getLocation(), TriState.FALSE, false))
 			.setCullState(RenderStateShard.CULL)
 			.setLightmapState(RenderStateShard.LIGHTMAP)
 			.setOverlayState(RenderStateShard.OVERLAY)
 			.createCompositeState(false));
 
 	private static final BiFunction<ResourceLocation, Boolean, RenderType> OUTLINE_TRANSLUCENT = Util.memoize((texture, cull) ->
-		RenderTypeAccessor.catnip$create(createLayerName("outline_translucent" + (cull ? "_cull" : "")), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, true, CompositeState.builder()
+		RenderTypeAccessor.catnip$create(createLayerName("outline_translucent" + (cull ? "_cull" : "")), DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder()
 			.setShaderState(cull ? RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_CULL_SHADER : RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_SHADER)
-			// MC 1.21.5: TextureStateShard constructor uses blur/mipmap boolean parameters
-			.setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
+			.setTextureState(new RenderStateShard.TextureStateShard(texture, TriState.FALSE, false))
 			.setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
 			.setCullState(cull ? RenderStateShard.CULL : RenderStateShard.NO_CULL)
 			.setLightmapState(RenderStateShard.LIGHTMAP)
@@ -38,7 +37,7 @@ public abstract class PonderRenderTypes extends RenderType {
 			.createCompositeState(false)));
 
 	private static final RenderType FLUID =
-		RenderTypeAccessor.catnip$create(createLayerName("fluid"), DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, true, CompositeState.builder()
+		RenderTypeAccessor.catnip$create(createLayerName("fluid"), DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 256, false, true, RenderType.CompositeState.builder()
 			.setShaderState(RenderStateShard.RENDERTYPE_TRANSLUCENT_SHADER)
 			.setTextureState(RenderStateShard.BLOCK_SHEET_MIPPED)
 			.setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
@@ -63,9 +62,8 @@ public abstract class PonderRenderTypes extends RenderType {
 		return Ponder.MOD_ID + ":" + name;
 	}
 
-	// MC 1.21.5: RenderType constructor signature changed to (String, int, boolean, boolean, Runnable, Runnable)
-	// The format/mode/bufferSize are now encoded in the int parameter
-	private PonderRenderTypes(String name, int bufferSize, boolean affectsCrumbling, boolean sortOnUpload, Runnable setupState, Runnable clearState) {
-		super(name, bufferSize, affectsCrumbling, sortOnUpload, setupState, clearState);
+	// Mmm gimme those protected fields
+	private PonderRenderTypes() {
+		super(null, null, null);
 	}
 }

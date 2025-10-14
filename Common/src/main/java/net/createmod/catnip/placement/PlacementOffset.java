@@ -110,7 +110,7 @@ public class PlacementOffset {
 	public InteractionResult placeInWorld(Level world, BlockItem blockItem, Player player, InteractionHand hand, BlockHitResult ray) {
 
 		if (!isReplaceable(world))
-			return InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS; // MC 1.21.5: PASS_TO_DEFAULT_BLOCK_INTERACTION renamed to PASS
 
 		if (world.isClientSide)
 			return InteractionResult.SUCCESS;
@@ -121,7 +121,7 @@ public class PlacementOffset {
 			.copy();
 
 		if (!world.mayInteract(player, newPos))
-			return InteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS; // MC 1.21.5: PASS_TO_DEFAULT_BLOCK_INTERACTION renamed to PASS
 
 		BlockState state = stateTransform.apply(blockItem.getBlock().defaultBlockState());
 		if (state.hasProperty(BlockStateProperties.WATERLOGGED)) {

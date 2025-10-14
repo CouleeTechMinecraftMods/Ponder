@@ -404,8 +404,8 @@ public class UIRenderHelper {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 			Minecraft minecraft = Minecraft.getInstance();
-			// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
-			var shaderinstance = net.minecraft.client.renderer.ShaderProgram.getInstance("position_tex_color");
+			// MC 1.21.5: Use CoreShaders for shader access
+			var shaderinstance = net.minecraft.client.renderer.CoreShaders.POSITION_TEX_COLOR;
 			// TODO: MC 1.21.5 - colorTextureId field is now private, need accessor
 			// shaderinstance.setSampler("DiffuseSampler", colorTextureId);
 			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);

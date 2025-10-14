@@ -23,7 +23,9 @@ public enum PonderSpecialTextures implements BindableTexture {
 	@Override
 	public void bind() {
 		// MC 1.21.5: setShaderTexture now requires GpuTexture, use TextureUtil reflection
-		RenderSystem.setShaderTexture(0, TextureUtil.getGpuTexture(net.minecraft.client.Minecraft.getInstance().getTextureManager().getTexture(location)));
+		// Cast Object to com.mojang.blaze3d.platform.GpuTexture (package-private, so we use reflection)
+		Object gpuTexture = TextureUtil.getGpuTexture(net.minecraft.client.Minecraft.getInstance().getTextureManager().getTexture(location));
+		RenderSystem.setShaderTexture(0, (com.mojang.blaze3d.platform.GpuTexture) gpuTexture);
 	}
 
 	@Override

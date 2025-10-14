@@ -125,8 +125,9 @@ public class SchematicChunkSource extends ChunkSource {
 				return null;
 			}
 
-			// MC 1.21.5: levelEvent removed from Level
-			public void levelEvent(Player pPlayer, int pType, BlockPos pPos, int pData) {}
+			// MC 1.21.5: levelEvent signature changed - first param is now Entity instead of Player
+			@Override
+			public void levelEvent(@Nullable Entity pEntity, int pType, BlockPos pPos, int pData) {}
 
 			@Override
 			public void gameEvent(@Nullable Entity entity, Holder<GameEvent> gameEvent, Vec3 pos) {}
@@ -223,7 +224,13 @@ public class SchematicChunkSource extends ChunkSource {
 
 			@Override
 			public net.minecraft.world.item.crafting.RecipeAccess recipeAccess() {
-				return net.minecraft.world.item.crafting.RecipeAccess.EMPTY;
+				// MC 1.21.5: RecipeAccess.EMPTY removed, return empty implementation
+				return new net.minecraft.world.item.crafting.RecipeAccess() {
+					@Override
+					public java.util.Optional<net.minecraft.world.item.crafting.RecipeHolder<?>> byKey(net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>> key) {
+						return java.util.Optional.empty();
+					}
+				};
 			}
 
 			@Override
@@ -253,7 +260,8 @@ public class SchematicChunkSource extends ChunkSource {
 
 			@Override
 			public FuelValues fuelValues() {
-				return FuelValues.vanillaBurnTimes(access);
+				// MC 1.21.5: FuelValues.vanillaBurnTimes signature changed to require Provider and FeatureFlagSet
+				return FuelValues.vanillaBurnTimes(access, enabledFeatures());
 			}
 
 			@Override

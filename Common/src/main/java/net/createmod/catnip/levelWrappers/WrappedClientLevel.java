@@ -28,10 +28,11 @@ public class WrappedClientLevel extends ClientLevel {
 	protected Level level;
 
 	private WrappedClientLevel(Level level) {
-		// MC 1.21.5: ClientLevel constructor changed, removed ProfilerSupplier parameter
+		// MC 1.21.5: ClientLevel constructor changed, added final int parameter (likely max section count)
 		super(mc.getConnection(), mc.level.getLevelData(), level.dimension(), level.dimensionTypeRegistration(),
 			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(),
-			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed());
+			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed(),
+			mc.level.getSectionsCount());
 		this.level = level;
 	}
 
@@ -77,12 +78,13 @@ public class WrappedClientLevel extends ClientLevel {
 		return level.getFluidState(pos);
 	}
 
-	// MC 1.21.5: getNearestEntity method signature changed
-	@Nullable
+	// MC 1.21.5: getNearestEntity method signature changed - method may have been removed or refactored
+	// Commenting out as it doesn't match current API
+	/*@Nullable
 	public <T extends LivingEntity> T getNearestEntity(List<? extends T> p_217361_1_, TargetingConditions p_217361_2_,
 		@Nullable LivingEntity p_217361_3_, double p_217361_4_, double p_217361_6_, double p_217361_8_) {
 		return level.getNearestEntity(p_217361_1_, p_217361_2_, p_217361_3_, p_217361_4_, p_217361_6_, p_217361_8_);
-	}
+	}*/
 
 	@Override
 	public int getBlockTint(BlockPos p_225525_1_, ColorResolver p_225525_2_) {

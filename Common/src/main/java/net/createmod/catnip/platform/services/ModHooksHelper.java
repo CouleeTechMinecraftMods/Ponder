@@ -20,7 +20,8 @@ public interface ModHooksHelper {
 	boolean playerPlaceSingleBlock(Player player, Level level, BlockPos pos, BlockState newState);
 
 	default ItemStack getCloneItemFromBlockstate(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
-		return state.getBlock().getCloneItemStack(level, pos, state);
+		// MC 1.21.5: getCloneItemStack now requires a boolean parameter (includeData)
+		return state.getBlock().getCloneItemStack(level, pos, state, true);
 	}
 
 	boolean isPlayerFake(ServerPlayer player);

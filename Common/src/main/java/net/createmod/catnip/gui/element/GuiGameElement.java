@@ -190,7 +190,8 @@ public class GuiGameElement {
 			transformMatrix(poseStack);
 
 			// MC 1.21.5: setShaderTexture now requires GpuTexture, use TextureUtil reflection
-			RenderSystem.setShaderTexture(0, TextureUtil.getGpuTexture(mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS)));
+			Object gpuTexture = TextureUtil.getGpuTexture(mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
+			RenderSystem.setShaderTexture(0, (com.mojang.blaze3d.platform.GpuTexture) gpuTexture);
 			renderModel(blockRenderer, buffer, poseStack);
 
 			cleanUpMatrix(poseStack);
@@ -300,7 +301,8 @@ public class GuiGameElement {
 
 			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
 			// MC 1.21.5: setShaderTexture now requires GpuTexture, use TextureUtil reflection
-			RenderSystem.setShaderTexture(0, TextureUtil.getGpuTexture(Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS)));
+			Object gpuTexture2 = TextureUtil.getGpuTexture(Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
+			RenderSystem.setShaderTexture(0, (com.mojang.blaze3d.platform.GpuTexture) gpuTexture2);
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

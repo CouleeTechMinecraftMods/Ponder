@@ -199,8 +199,8 @@ public class PlacementClient {
 		//RenderSystem.disableTexture();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
-		RenderSystem.setShader(() -> net.minecraft.client.renderer.ShaderProgram.getInstance("position_color"));
+		// MC 1.21.5: Shader is set automatically by the vertex format
+		// RenderSystem.setShader(() -> net.minecraft.client.renderer.CoreShaders.POSITION_COLOR);
 
 		ms.pushPose();
 		ms.translate(centerX, centerY, 5);
@@ -237,8 +237,8 @@ public class PlacementClient {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
-		RenderSystem.setShader(() -> net.minecraft.client.renderer.ShaderProgram.getInstance("position_tex_color"));
+		// MC 1.21.5: Shader is set automatically by the vertex format
+		// RenderSystem.setShader(() -> net.minecraft.client.renderer.CoreShaders.POSITION_TEX_COLOR);
 
 		ms.pushPose();
 		ms.translate(centerX, centerY, 50);

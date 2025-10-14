@@ -44,9 +44,7 @@ public class RayTraceLevel implements BlockGetter {
 		return template.getMinY();
 	}
 
-	@Override
-	public int getMinY() {
-		return template.getMinY();
-	}
+	// MC 1.21.5: getMinY() is now handled by getMinBuildHeight() in BlockGetter
+	// Removed duplicate @Override as it's no longer in the interface
 
 }
