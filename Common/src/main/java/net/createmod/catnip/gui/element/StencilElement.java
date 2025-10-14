@@ -32,18 +32,19 @@ public interface StencilElement extends RenderElement {
 	default void prepareStencil(GuiGraphics graphics) {
 		graphics.flush();
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
-		RenderSystem.stencilMask(~0);
+		// RenderSystem stencil methods removed in 1.21.5 - use GL11 directly
+		GL11.glStencilMask(~0);
 		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
-		RenderSystem.stencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
-		RenderSystem.stencilMask(0xFF);
-		RenderSystem.stencilFunc(GL11.GL_NEVER, 1, 0xFF);
+		GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+		GL11.glStencilMask(0xFF);
+		GL11.glStencilFunc(GL11.GL_NEVER, 1, 0xFF);
 	}
 
 	default void prepareElement(GuiGraphics graphics) {
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
-		RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
-		RenderSystem.stencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+		GL11.glStencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
+		GL11.glStencilFunc(GL11.GL_EQUAL, 1, 0xFF);
 	}
 
 	default void cleanUp(GuiGraphics graphics) {
