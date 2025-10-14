@@ -3,6 +3,7 @@ package net.createmod.catnip.animation;
 import net.createmod.catnip.levelWrappers.WrappedClientLevel;
 import net.createmod.ponder.api.level.PonderLevel;
 import net.createmod.ponder.foundation.ui.PonderUI;
+import net.createmod.ponder.mixin.accessor.MinecraftAccessor;
 import net.createmod.ponder.mixin.accessor.TimerAccessor;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -58,7 +59,7 @@ public class AnimationTickHolder {
 	 */
 	public static float getPartialTicks() {
 		Minecraft mc = Minecraft.getInstance();
-		return mc.getTimer().getGameTimeDeltaPartialTick(false);
+		return ((MinecraftAccessor) mc).catnip$getDeltaTracker().getGameTimeDeltaPartialTick(false);
 	}
 
 	/**
@@ -67,9 +68,9 @@ public class AnimationTickHolder {
 	// TODO - Check if one of the getGameTimeDeltaPartialTick methods can be used here instead
 	public static float getPartialTicksUI() {
 		Minecraft mc = Minecraft.getInstance();
-		DeltaTracker timer = mc.getTimer();
+		DeltaTracker deltaTracker = ((MinecraftAccessor) mc).catnip$getDeltaTracker();
 
-		if (timer instanceof TimerAccessor timerAccessor) {
+		if (deltaTracker instanceof TimerAccessor timerAccessor) {
 			return timerAccessor.catnip$getDeltaTickResidual();
 		} else {
 			return getPartialTicks();

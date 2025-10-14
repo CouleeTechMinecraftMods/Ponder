@@ -152,8 +152,10 @@ public final class FluidRenderHelper<T> {
 	private static void putVertex(VertexConsumer builder, PoseStack ms, float x, float y, float z, int color, float u,
 									float v, Direction face, int light) {
 
-		// MC 1.21.5: getNormal() -> normal()
-		Vec3i normal = face.normal();
+		// MC 1.21.5: getNormal() -> normal() -> getStepX/Y/Z
+		int normalX = face.getStepX();
+		int normalY = face.getStepY();
+		int normalZ = face.getStepZ();
 		PoseStack.Pose peek = ms.last();
 		int a = color >> 24 & 0xff;
 		int r = color >> 16 & 0xff;
@@ -165,7 +167,7 @@ public final class FluidRenderHelper<T> {
 			.setUv(u, v)
 			//.overlayCoords(OverlayTexture.NO_OVERLAY)
 			.setLight(light)
-			.setNormal(peek.copy(), normal.getX(), normal.getY(), normal.getZ())
+			.setNormal(peek.copy(), normalX, normalY, normalZ)
 		;
 	}
 

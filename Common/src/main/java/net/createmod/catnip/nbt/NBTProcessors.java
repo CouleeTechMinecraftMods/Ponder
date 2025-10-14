@@ -13,6 +13,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
@@ -41,12 +42,14 @@ public final class NBTProcessors {
 	private static final UnaryOperator<CompoundTag> signProcessor = data -> {
 		for (String key : List.of("front_text", "back_text")) {
 			CompoundTag textTag = data.getCompound(key).orElse(new CompoundTag());
-			if (!textTag.contains("messages", Tag.TAG_LIST))
+			// MC 1.21.5: contains(key, type) -> contains(key)
+			if (!textTag.contains("messages"))
 				continue;
-			for (Tag tag : textTag.getList("messages", Tag.TAG_STRING))
+			// MC 1.21.5: getList(key, type) -> getList(key)
+			for (Tag tag : textTag.getList("messages").orElse(new ListTag()))
 				if (tag instanceof StringTag stringTag)
 					// MC 1.21.5: StringTag.getAsString() -> asString()
-					if (textComponentHasClickEvent(stringTag.asString()))
+					if (textComponentHasClickEvent(stringTag.asString().orElse("")))
 						return null;
 		}
 		if (data.contains("front_item") || data.contains("back_item"))
@@ -58,7 +61,8 @@ public final class NBTProcessors {
 	public static UnaryOperator<CompoundTag> itemProcessor(String tagKey) {
 		return data -> {
 			CompoundTag compound = data.getCompound(tagKey).orElse(new CompoundTag());
-			if (!compound.contains("components", 10))
+			// MC 1.21.5: contains(key, type) -> contains(key)
+			if (!compound.contains("components"))
 				return data;
 			CompoundTag itemComponents = compound.getCompound("components").orElse(new CompoundTag());
 			// MC 1.21.5: Use getAllKeys() which still exists

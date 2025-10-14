@@ -9,6 +9,7 @@
     "accessor.MinecraftServerAccessor"
   ],
   "client": [
+    "accessor.MinecraftAccessor",
     "accessor.TimerAccessor",
     "client.WindowResizeMixin",
     "client.accessor.BufferBuilderAccessor",

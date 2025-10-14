@@ -31,7 +31,8 @@ public class NBTHelper {
 	// Backwards compatible with 1.20
 	public static BlockPos readBlockPos(CompoundTag nbt, String key) {
 		// MC 1.21.5: NbtUtils.readBlockPos changed signature - use direct parsing
-		if (nbt.contains(key, 10)) { // TAG_COMPOUND
+		// MC 1.21.5: contains(key, type) -> contains(key)
+		if (nbt.contains(key)) {
 			CompoundTag posTag = nbt.getCompound(key).orElse(new CompoundTag());
 			if (posTag.contains("X") && posTag.contains("Y") && posTag.contains("Z")) {
 				return new BlockPos(posTag.getInt("X").orElse(0), posTag.getInt("Y").orElse(0), posTag.getInt("Z").orElse(0));
@@ -46,7 +47,8 @@ public class NBTHelper {
 		T[] enumConstants = enumClass.getEnumConstants();
 		if (enumConstants == null)
 			throw new IllegalArgumentException("Non-Enum class passed to readEnum: " + enumClass.getName());
-		if (nbt.contains(key, Tag.TAG_STRING)) {
+		// MC 1.21.5: contains(key, type) -> contains(key)
+		if (nbt.contains(key)) {
 			String name = nbt.getString(key).orElse("");
 			for (T t : enumConstants) {
 				if (t.name()

@@ -21,6 +21,7 @@ import net.createmod.catnip.gui.AbstractSimiScreen;
 import net.createmod.catnip.gui.UIRenderHelper;
 import net.createmod.catnip.gui.element.DelegatedStencilElement;
 import net.createmod.catnip.gui.element.GuiGameElement;
+import net.createmod.ponder.mixin.accessor.MinecraftAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -127,7 +128,8 @@ public abstract class ConfigScreen extends AbstractSimiScreen {
 	}
 
 	protected static void renderCog(GuiGraphics graphics) {
-		float partialTicks = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
+		Minecraft mc = Minecraft.getInstance();
+		float partialTicks = ((MinecraftAccessor) mc).catnip$getDeltaTracker().getGameTimeDeltaPartialTick(false);
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();
 
