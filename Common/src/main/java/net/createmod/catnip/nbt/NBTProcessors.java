@@ -61,8 +61,8 @@ public final class NBTProcessors {
 			if (!compound.contains("components", 10))
 				return data;
 			CompoundTag itemComponents = compound.getCompound("components").orElse(new CompoundTag());
-			// MC 1.21.5: getAllKeys() -> getKeySet()
-			HashSet<String> keys = new HashSet<>(itemComponents.getKeySet());
+			// MC 1.21.5: Use getAllKeys() which still exists
+			HashSet<String> keys = new HashSet<>(itemComponents.getAllKeys());
 			for (String key : keys) {
 				DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(key)).orElse(null);
 				if (type != null && ComponentProcessors.isUnsafeItemComponent(type))

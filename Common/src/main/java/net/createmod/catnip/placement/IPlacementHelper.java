@@ -87,7 +87,8 @@ public interface IPlacementHelper {
 
 	static void renderArrow(Vec3 center, Vec3 target, Direction arrowPlane, double distanceFromCenter) {
 		Vec3 direction = target.subtract(center).normalize();
-		Vec3 facing = Vec3.atLowerCornerOf(arrowPlane.getNormal());
+		// MC 1.21.5: getNormal() -> normal()
+		Vec3 facing = Vec3.atLowerCornerOf(arrowPlane.normal());
 		Vec3 start = center.add(direction);
 		Vec3 offset = direction.scale(distanceFromCenter - 1);
 		Vec3 offsetA = direction.cross(facing).normalize().scale(.25);
@@ -152,7 +153,8 @@ public interface IPlacementHelper {
 
 		List<Pair<Direction, Double>> distances = new ArrayList<>();
 		for (Direction dir : directions) {
-			distances.add(Pair.of(dir, Vec3.atLowerCornerOf(dir.getNormal()).distanceTo(centerToHit)));
+			// MC 1.21.5: getNormal() -> normal()
+			distances.add(Pair.of(dir, Vec3.atLowerCornerOf(dir.normal()).distanceTo(centerToHit)));
 		}
 
 		distances.sort(Comparator.comparingDouble(Pair::getSecond));
