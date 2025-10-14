@@ -1,5 +1,6 @@
 package net.createmod.catnip.levelWrappers;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.TickRateManager;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -275,7 +277,7 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
-	public Iterable<Entity> dragonParts() {
+	public Collection<EnderDragonPart> dragonParts() {
 		return Collections.emptyList();
 	}
 
