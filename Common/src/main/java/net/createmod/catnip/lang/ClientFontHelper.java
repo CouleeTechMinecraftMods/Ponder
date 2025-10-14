@@ -76,7 +76,8 @@ public class ClientFontHelper {
 		if (p_228078_1_ == null) {
 			return 0;
 		} else {
-			MultiBufferSource.BufferSource irendertypebuffer$impl = graphics.bufferSource();
+			// MC 1.21.5: Use Minecraft's render buffers instead of GuiGraphics.bufferSource()
+			MultiBufferSource.BufferSource irendertypebuffer$impl = net.minecraft.client.Minecraft.getInstance().renderBuffers().bufferSource();
 			int i = font.drawInBatch(p_228078_1_, p_228078_2_, p_228078_3_, p_228078_4_, p_228078_6_, p_228078_5_,
 				irendertypebuffer$impl, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
 			irendertypebuffer$impl.endBatch();
