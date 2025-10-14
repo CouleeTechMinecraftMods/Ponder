@@ -18,6 +18,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.TickRateManager;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -51,8 +52,9 @@ public class WrappedLevel extends Level {
 	protected LevelEntityGetter<Entity> entityGetter = new DummyLevelEntityGetter<>();
 
 	public WrappedLevel(Level level) {
+		// MC 1.21.5: Level constructor changed, removed ProfilerSupplier parameter
 		super((WritableLevelData) level.getLevelData(), level.dimension(), level.registryAccess(), level.dimensionTypeRegistration(),
-			  level::getProfilerSupplier, level.isClientSide, level.isDebug(), 0, 0);
+			  level.isClientSide, level.isDebug(), 0, 0);
 		this.level = level;
 	}
 
@@ -220,12 +222,14 @@ public class WrappedLevel extends Level {
 	// getHeight overrides where they deviate
 	// from the defaults for their dimension.
 
+	@Override
 	public int getMaxBuildHeight() {
-		return level.getMaxBuildHeight();
+		return level.getMaxY();
 	}
 
+	@Override
 	public int getMinBuildHeight() {
-		return level.getMinBuildHeight();
+		return level.getMinY();
 	}
 
 	public int getSectionsCount() {
@@ -276,8 +280,7 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
-	public Collection<Entity> dragonParts() {
-		// MC 1.21.5: EnderDragonPart class removed, using Entity base type
+	public Collection<EnderDragonPart> dragonParts() {
 		return Collections.emptyList();
 	}
 

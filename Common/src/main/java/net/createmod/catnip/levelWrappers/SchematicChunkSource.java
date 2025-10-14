@@ -22,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.block.entity.FuelValues;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -99,11 +101,12 @@ public class SchematicChunkSource extends ChunkSource {
 	public static class EmptierChunk extends LevelChunk {
 
 		private static final class DummyLevel extends Level {
+			// MC 1.21.5: Level constructor changed, removed ProfilerSupplier parameter
 			private DummyLevel(WritableLevelData pLevelData, ResourceKey<Level> pDimension,
 							   RegistryAccess pRegistryAccess, Holder<DimensionType> pDimensionTypeRegistration,
-							   Supplier<ProfilerFiller> pProfiler, boolean pIsClientSide, boolean pIsDebug, long pBiomeZoomSeed,
+							   boolean pIsClientSide, boolean pIsDebug, long pBiomeZoomSeed,
 							   int pMaxChainedNeighborUpdates) {
-				super(pLevelData, pDimension, pRegistryAccess, pDimensionTypeRegistration, pProfiler, pIsClientSide, pIsDebug,
+				super(pLevelData, pDimension, pRegistryAccess, pDimensionTypeRegistration, pIsClientSide, pIsDebug,
 					  pBiomeZoomSeed, pMaxChainedNeighborUpdates);
 				access = pRegistryAccess;
 			}
@@ -111,7 +114,7 @@ public class SchematicChunkSource extends ChunkSource {
 			private final RegistryAccess access;
 
 			private DummyLevel(Level level) {
-				this(null, null, level.registryAccess(), level.dimensionTypeRegistration(), null, false, false, 0, 0);
+				this(null, null, level.registryAccess(), level.dimensionTypeRegistration(), false, false, 0, 0);
 			}
 
 			@Override
@@ -119,7 +122,7 @@ public class SchematicChunkSource extends ChunkSource {
 				return null;
 			}
 
-			@Override
+			// MC 1.21.5: levelEvent removed from Level
 			public void levelEvent(Player pPlayer, int pType, BlockPos pPos, int pData) {}
 
 			@Override
@@ -156,11 +159,10 @@ public class SchematicChunkSource extends ChunkSource {
 			@Override
 			public void sendBlockUpdated(BlockPos pPos, BlockState pOldState, BlockState pNewState, int pFlags) {}
 
-			@Override
+			// MC 1.21.5: playSound methods changed - only Holder<SoundEvent> versions remain
 			public void playSound(Player pPlayer, double pX, double pY, double pZ, SoundEvent pSound,
 				SoundSource pCategory, float pVolume, float pPitch) {}
 
-			@Override
 			public void playSound(Player pPlayer, Entity pEntity, SoundEvent pEvent, SoundSource pCategory,
 				float pVolume, float pPitch) {}
 
@@ -168,7 +170,7 @@ public class SchematicChunkSource extends ChunkSource {
 			public void playSeededSound(Player pPlayer, double pX, double pY, double pZ, Holder<SoundEvent> pSound,
 										SoundSource pSource, float pVolume, float pPitch, long pSeed) {}
 
-			@Override
+			// MC 1.21.5: SoundEvent version removed
 			public void playSeededSound(Player p_220363_, double p_220364_, double p_220365_, double p_220366_,
 										SoundEvent p_220367_, SoundSource p_220368_, float p_220369_, float p_220370_, long p_220371_) {}
 
@@ -192,10 +194,10 @@ public class SchematicChunkSource extends ChunkSource {
 				return null;
 			}
 
-			@Override
+			// MC 1.21.5: setMapData removed
 			public void setMapData(MapId mapId, MapItemSavedData mapItemSavedData) {}
 
-			@Override
+			// MC 1.21.5: getFreeMapId removed
 			public MapId getFreeMapId() {
 				return new MapId(0);
 			}
@@ -208,7 +210,7 @@ public class SchematicChunkSource extends ChunkSource {
 				return null;
 			}
 
-			@Override
+			// MC 1.21.5: getRecipeManager removed
 			public RecipeManager getRecipeManager() {
 				return null;
 			}
@@ -236,6 +238,16 @@ public class SchematicChunkSource extends ChunkSource {
 			@Override
 			public TickRateManager tickRateManager() {
 				return null;
+			}
+
+			@Override
+			public FuelValues fuelValues() {
+				return FuelValues.vanillaBurnTimes(access);
+			}
+
+			@Override
+			public java.util.Collection<EnderDragonPart> dragonParts() {
+				return java.util.Collections.emptyList();
 			}
 
 			// Neo's patched methods

@@ -6,8 +6,10 @@ import net.minecraft.world.level.LevelAccessor;
 
 public class WorldHelper {
 	public static ResourceLocation getDimensionID(LevelAccessor world) {
+		// MC 1.21.5: Registry API changed - use lookup() instead of registryOrThrow()
 		return world.registryAccess()
-			.registryOrThrow(Registries.DIMENSION_TYPE)
-			.getKey(world.dimensionType());
+			.lookup(Registries.DIMENSION_TYPE)
+			.flatMap(registry -> registry.getKey(world.dimensionType()))
+			.orElse(null);
 	}
 }

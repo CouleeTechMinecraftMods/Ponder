@@ -79,7 +79,7 @@ public class WrappedServerLevel extends ServerLevel {
 	@Override
 	public void scheduleTick(BlockPos pos, Fluid fluid, int delay, TickPriority priority) {}
 
-	@Override
+	// MC 1.21.5: levelEvent signature changed - Holder<SoundEvent> instead of SoundEvent
 	public void levelEvent(@Nullable Player player, int type, BlockPos pos, int data) {}
 
 	@Override
@@ -87,11 +87,10 @@ public class WrappedServerLevel extends ServerLevel {
 		return Collections.emptyList();
 	}
 
-	@Override
+	// MC 1.21.5: playSound methods removed from ServerLevel (now only in Level base class with Holder<SoundEvent>)
 	public void playSound(@Nullable Player player, double x, double y, double z, SoundEvent soundIn, SoundSource category,
 		float volume, float pitch) {}
 
-	@Override
 	public void playSound(@Nullable Player p_217384_1_, Entity p_217384_2_, SoundEvent p_217384_3_, SoundSource p_217384_4_,
 		float p_217384_5_, float p_217384_6_) {}
 
@@ -122,9 +121,9 @@ public class WrappedServerLevel extends ServerLevel {
 	@Override
 	public void destroyBlockProgress(int breakerId, BlockPos pos, int progress) {}
 
-	@Override
+	// MC 1.21.5: getRecipeManager() replaced by recipeAccess()
 	public RecipeManager getRecipeManager() {
-		return level.getRecipeManager();
+		return level.getServer().getRecipeManager();
 	}
 
 	@Override

@@ -28,8 +28,9 @@ public class WrappedClientLevel extends ClientLevel {
 	protected Level level;
 
 	private WrappedClientLevel(Level level) {
+		// MC 1.21.5: ClientLevel constructor changed, removed ProfilerSupplier parameter
 		super(mc.getConnection(), mc.level.getLevelData(), level.dimension(), level.dimensionTypeRegistration(),
-			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(), level.getProfilerSupplier(),
+			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(),
 			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed());
 		this.level = level;
 	}
@@ -76,8 +77,8 @@ public class WrappedClientLevel extends ClientLevel {
 		return level.getFluidState(pos);
 	}
 
+	// MC 1.21.5: getNearestEntity method signature changed
 	@Nullable
-	@Override
 	public <T extends LivingEntity> T getNearestEntity(List<? extends T> p_217361_1_, TargetingConditions p_217361_2_,
 		@Nullable LivingEntity p_217361_3_, double p_217361_4_, double p_217361_6_, double p_217361_8_) {
 		return level.getNearestEntity(p_217361_1_, p_217361_2_, p_217361_3_, p_217361_4_, p_217361_6_, p_217361_8_);
@@ -96,10 +97,10 @@ public class WrappedClientLevel extends ClientLevel {
 		level.addParticle(p_195594_1_, p_195594_2_, p_195594_4_, p_195594_6_, p_195594_8_, p_195594_10_, p_195594_12_);
 	}
 
-	@Override
+	// MC 1.21.5: addParticle signature changed - added extra boolean parameter
 	public void addParticle(ParticleOptions p_195590_1_, boolean p_195590_2_, double p_195590_3_, double p_195590_5_,
 		double p_195590_7_, double p_195590_9_, double p_195590_11_, double p_195590_13_) {
-		level.addParticle(p_195590_1_, p_195590_2_, p_195590_3_, p_195590_5_, p_195590_7_, p_195590_9_, p_195590_11_,
+		level.addParticle(p_195590_1_, p_195590_2_, false, p_195590_3_, p_195590_5_, p_195590_7_, p_195590_9_, p_195590_11_,
 						  p_195590_13_);
 	}
 
@@ -124,7 +125,7 @@ public class WrappedClientLevel extends ClientLevel {
 							 p_184134_11_);
 	}
 
-	@Override
+	// MC 1.21.5: playSound method signature changed
 	public void playSound(@Nullable Player p_184148_1_, double p_184148_2_, double p_184148_4_, double p_184148_6_,
 		SoundEvent p_184148_8_, SoundSource p_184148_9_, float p_184148_10_, float p_184148_11_) {
 		level.playSound(p_184148_1_, p_184148_2_, p_184148_4_, p_184148_6_, p_184148_8_, p_184148_9_, p_184148_10_,
