@@ -34,7 +34,7 @@ public interface StencilElement extends RenderElement {
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 		// RenderSystem stencil methods removed in 1.21.5 - use GL11 directly
 		GL11.glStencilMask(~0);
-		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
+		GL11.glClear(GL11.GL_STENCIL_BUFFER_BIT);
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
 		GL11.glStencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
 		GL11.glStencilMask(0xFF);

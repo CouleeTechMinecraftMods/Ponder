@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -50,6 +51,13 @@ public interface ModClientHooksHelper {
 	void enableStencilBuffer(RenderTarget renderTarget);
 
 	void renderFullFluidState(PoseStack ms, MultiBufferSource.BufferSource buffer, FluidState fluid);
+
+	/**
+	 * Platform-specific method to draw mesh data with a shader.
+	 * MC 1.21.5: MeshData.draw() was removed, use BufferUploader.drawWithShader() instead.
+	 * @param meshData The mesh data to draw
+	 */
+	void drawMeshWithShader(MeshData meshData);
 
 	@ApiStatus.Internal
 	void bufferModel(Object model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource);

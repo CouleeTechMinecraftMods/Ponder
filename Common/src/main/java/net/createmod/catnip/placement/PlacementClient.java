@@ -18,10 +18,11 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import org.lwjgl.opengl.GL11;
+import net.createmod.catnip.platform.CatnipClientServices;
 import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
@@ -197,8 +198,8 @@ public class PlacementClient {
 	private static void fadedArrow(PoseStack ms, float centerX, float centerY, float r, float g, float b, float a,
 		float length, float snappedAngle) {
 		//RenderSystem.disableTexture();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		ms.pushPose();
@@ -223,10 +224,9 @@ public class PlacementClient {
 		bufferbuilder.addVertex(mat, 6, -6, 0).setColor(r, g, b, 0f);
 		bufferbuilder.addVertex(mat, 9, -3, 0).setColor(r, g, b, 0f);
 
-		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
-		MeshData mesh = bufferbuilder.buildOrThrow();
-		mesh.draw();
-		RenderSystem.disableBlend();
+		// MC 1.21.5: Use platform service to draw mesh data
+		CatnipClientServices.CLIENT_HOOKS.drawMeshWithShader(bufferbuilder.buildOrThrow());
+		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
 		ms.popPose();
 	}
@@ -234,9 +234,9 @@ public class PlacementClient {
 	public static void textured(PoseStack ms, float centerX, float centerY, float alpha, float snappedAngle) {
 		//RenderSystem.enableTexture();
 		PonderGuiTextures.PLACEMENT_INDICATOR_SHEET.bind();
-		RenderSystem.enableDepthTest();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 
 		ms.pushPose();
@@ -263,11 +263,10 @@ public class PlacementClient {
 		buffer.addVertex(mat,  1,  1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty + th);
 		buffer.addVertex(mat,  1, -1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty);
 
-		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
-		MeshData mesh = buffer.buildOrThrow();
-		mesh.draw();
+		// MC 1.21.5: Use platform service to draw mesh data
+		CatnipClientServices.CLIENT_HOOKS.drawMeshWithShader(buffer.buildOrThrow());
 
-		RenderSystem.disableBlend();
+		GL11.glDisable(GL11.GL_BLEND);
 		ms.popPose();
 	}
 }

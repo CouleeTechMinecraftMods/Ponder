@@ -9,6 +9,8 @@ import org.jetbrains.annotations.Nullable;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -88,6 +90,11 @@ public class NeoForgeClientHooksHelper implements ModClientHooksHelper {
 	public void renderFullFluidState(PoseStack ms, MultiBufferSource.BufferSource buffer, FluidState fluid) {
 		CatnipServices.FLUID_RENDERER.renderFluidBox(fluid, 0, 0, 0, 1, 1, 1, buffer, ms,
 			LightTexture.FULL_BRIGHT, false, true);
+	}
+
+	@Override
+	public void drawMeshWithShader(MeshData meshData) {
+		BufferUploader.drawWithShader(meshData);
 	}
 
 	@Override

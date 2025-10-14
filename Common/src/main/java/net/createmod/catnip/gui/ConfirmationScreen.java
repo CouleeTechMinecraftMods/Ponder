@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -213,7 +214,7 @@ public class ConfirmationScreen extends AbstractSimiScreen {
 	@Override
 	protected void prepareFrame() {
 		UIRenderHelper.swapAndBlitColor(minecraft.getMainRenderTarget(), UIRenderHelper.framebuffer);
-		RenderSystem.clear(GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+		GL11.glClear(GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 	}
 
 	@Override

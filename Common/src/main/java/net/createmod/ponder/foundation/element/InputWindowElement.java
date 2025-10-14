@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.lwjgl.opengl.GL11;
 
 import net.createmod.catnip.gui.element.GuiGameElement;
 import net.createmod.catnip.gui.element.ScreenElement;
@@ -147,7 +148,7 @@ public class InputWindowElement extends AnimatedOverlayElementBase {
 				.<GuiGameElement.GuiRenderBuilder>at(keyWidth + (hasIcon ? 24 : 0), 0)
 				.scale(1.5)
 				.render(graphics);
-			RenderSystem.disableDepthTest();
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 		}
 
 		poseStack.popPose();
