@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import org.lwjgl.opengl.GL11;
 
 import net.createmod.catnip.gui.NavigatableSimiScreen;
 import net.createmod.catnip.gui.ScreenOpener;
@@ -265,7 +266,7 @@ public class PonderTagScreen extends AbstractPonderScreen {
 
 	@Override
 	protected void renderWindowForeground(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		RenderSystem.disableDepthTest();
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();
 		poseStack.translate(0, 0, 200);
@@ -275,7 +276,7 @@ public class PonderTagScreen extends AbstractPonderScreen {
 		}
 
 		poseStack.popPose();
-		RenderSystem.enableDepthTest();
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
 
 	@Override
