@@ -28,9 +28,8 @@ public class ItemOutline extends Outline {
 		ms.translate(pos.x - camera.x, pos.y - camera.y, pos.z - camera.z);
 		ms.scale(params.alpha, params.alpha, params.alpha);
 
-		mc.getItemRenderer().render(stack, ItemDisplayContext.FIXED, false, ms,
-									buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY,
-									mc.getItemRenderer().getModel(stack, null, null, 0));
+		// MC 1.21.5: ItemRenderer.render() signature changed, use renderStatic() without model param
+		mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, ms, buffer, null, 0);
 
 		ms.popPose();
 	}

@@ -16,6 +16,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.createmod.catnip.animation.LerpedFloat;
+import net.createmod.catnip.util.TextureUtil;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.gui.element.BoxElement;
 import net.createmod.catnip.gui.widget.BoxWidget;
@@ -174,14 +175,14 @@ public abstract class NavigatableSimiScreen extends AbstractSimiScreen {
 		if (lastScreen != null && lastScreen != this && !transition.settled()) {
 			currentlyRenderingPreviousScreen = true;
 			ms.pushPose();
-			// MC 1.21.5: Use GL30 for framebuffer binding
-			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, UIRenderHelper.framebuffer.frameBufferId);
+			// MC 1.21.5: Use GL30 for framebuffer binding with TextureUtil reflection
+			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, TextureUtil.getFramebufferId(UIRenderHelper.framebuffer));
 			lastScreen.render(graphics, 0, 0, partialTicks);
 
 			ms.popPose();
 
 			ms.pushPose();
-			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, minecraft.getMainRenderTarget().frameBufferId);
+			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, TextureUtil.getFramebufferId(minecraft.getMainRenderTarget()));
 
 			int dpx = (int) (guiScaledWidth / 2);
 			int dpy = (int) (guiScaledHeight / 2);

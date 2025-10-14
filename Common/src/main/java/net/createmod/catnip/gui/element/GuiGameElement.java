@@ -18,6 +18,7 @@ import net.createmod.catnip.gui.UIRenderHelper;
 import net.createmod.catnip.impl.client.render.ColoringVertexConsumer;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.platform.CatnipClientServices;
+import net.createmod.catnip.util.TextureUtil;
 import net.createmod.ponder.mixin.client.accessor.ItemRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -188,8 +189,8 @@ public class GuiGameElement {
 
 			transformMatrix(poseStack);
 
-			// MC 1.21.5: setShaderTexture now requires GpuTexture (bind texture atlas)
-			RenderSystem.setShaderTexture(0, mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).getId());
+			// MC 1.21.5: setShaderTexture now requires GpuTexture, use TextureUtil reflection
+			RenderSystem.setShaderTexture(0, TextureUtil.getGpuTexture(mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS)));
 			renderModel(blockRenderer, buffer, poseStack);
 
 			cleanUpMatrix(poseStack);
@@ -295,11 +296,11 @@ public class GuiGameElement {
 		public static void renderItemIntoGUI(PoseStack poseStack, ItemStack stack, boolean useDefaultLighting) {
 			ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
 			// MC 1.21.5: getItemModel() -> getModel(), and item rendering is simplified
-			Object bakedModel = renderer.getModel(stack, null, null, 0);
+			// Object bakedModel = renderer.getModel(stack, null, null, 0);
 
 			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-			// MC 1.21.5: setShaderTexture now requires GpuTexture (bind texture atlas)
-			RenderSystem.setShaderTexture(0, Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).getId());
+			// MC 1.21.5: setShaderTexture now requires GpuTexture, use TextureUtil reflection
+			RenderSystem.setShaderTexture(0, TextureUtil.getGpuTexture(Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS)));
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);

@@ -30,6 +30,7 @@ import com.mojang.blaze3d.vertex.VertexSorting;
 import com.mojang.math.Axis;
 
 import net.createmod.catnip.platform.CatnipClientServices;
+import net.createmod.catnip.util.TextureUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
@@ -81,11 +82,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// MC 1.21.5: Use GL30 for framebuffer binding
-		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, src.frameBufferId);
-		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
+		// MC 1.21.5: Use GL30 for framebuffer binding with TextureUtil reflection
+		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, TextureUtil.getFramebufferId(src));
+		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, TextureUtil.getFramebufferId(dst));
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
+		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, TextureUtil.getFramebufferId(dst));
 	}
 
 	/**

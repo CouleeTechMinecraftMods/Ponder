@@ -28,7 +28,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -200,7 +199,8 @@ public class PlacementClient {
 		//RenderSystem.disableTexture();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
+		RenderSystem.setShader(() -> net.minecraft.client.renderer.ShaderProgram.getInstance("position_color"));
 
 		ms.pushPose();
 		ms.translate(centerX, centerY, 5);
@@ -237,7 +237,8 @@ public class PlacementClient {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
+		RenderSystem.setShader(() -> net.minecraft.client.renderer.ShaderProgram.getInstance("position_tex_color"));
 
 		ms.pushPose();
 		ms.translate(centerX, centerY, 50);

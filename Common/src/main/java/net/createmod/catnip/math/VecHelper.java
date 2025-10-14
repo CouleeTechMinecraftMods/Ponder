@@ -262,9 +262,10 @@ public class VecHelper {
 		if (mc.options.bobView().get()) {
 			Entity renderViewEntity = mc.getCameraEntity();
 			if (renderViewEntity instanceof Player playerEntity) {
-				float walkDist_modified = playerEntity.walkDist;
+				// MC 1.21.5: walkDist -> moveDist, walkDistO -> oMoveDist
+				float walkDist_modified = playerEntity.moveDist;
 
-				float f = walkDist_modified - playerEntity.walkDistO;
+				float f = walkDist_modified - playerEntity.oMoveDist;
 				float f1 = -(walkDist_modified + f * partialTicks);
 				float f2 = Mth.lerp(partialTicks, playerEntity.oBob, playerEntity.bob);
 				Quaternionf q2 =
