@@ -20,6 +20,7 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -63,15 +64,13 @@ public class UIRenderHelper {
 	public static CustomRenderTarget framebuffer;
 
 	public static void init() {
-		RenderSystem.recordRenderCall(() -> {
-			Window mainWindow = Minecraft.getInstance().getWindow();
-			framebuffer = CustomRenderTarget.create(mainWindow);
-		});
+		Window mainWindow = Minecraft.getInstance().getWindow();
+		framebuffer = CustomRenderTarget.create(mainWindow);
 	}
 
 	public static void updateWindowSize(Window mainWindow) {
 		if (framebuffer != null)
-			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 
 	public static void drawFramebuffer(PoseStack poseStack, float alpha) {
@@ -83,11 +82,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, src.frameBufferId);
-		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
-		GL30.glBlitFramebuffer(0, 0, src.viewWidth, src.viewHeight, 0, 0, dst.viewWidth, dst.viewHeight, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-
-		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, dst.frameBufferId);
+		// frameBufferId became private in 1.21.5, using bindRead/bindWrite instead
+		src.bindRead();
+		dst.bindWrite(false);
+		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
+		dst.bindWrite(true);
 	}
 
 	/**
@@ -184,7 +183,7 @@ public class UIRenderHelper {
 		buffer.addVertex(mat,  left,    top, zLevel).setColor(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha());
 		buffer.addVertex(mat,  left, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
 		buffer.addVertex(mat, right, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
-		RenderSystem.drawBuffer(buffer.buildOrThrow());
+		BufferUploader.drawWithShader(buffer.buildOrThrow());
 
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
@@ -266,7 +265,7 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(model, x2, y1, 0).setColor(fc3.getRed(), fc3.getGreen(), fc3.getBlue(), fc3.getAlpha());
 		bufferbuilder.addVertex(model, x3, y2, 0).setColor(fc4.getRed(), fc4.getGreen(), fc4.getBlue(), fc4.getAlpha());
 
-		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 		RenderSystem.enableCull();
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
@@ -301,7 +300,7 @@ public class UIRenderHelper {
 			builder.addVertex(pose, (float) point.getX(), (float) point.getY(), 0).setColor(innerColor.getRGB());
 		}
 
-		RenderSystem.drawBuffer(builder.buildOrThrow());
+		BufferUploader.drawWithShader(builder.buildOrThrow());
 
 		RenderSystem.disableBlend();
 
@@ -365,7 +364,7 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
 		bufferbuilder.addVertex(m, (float) left , (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v1);
-		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 		RenderSystem.disableBlend();
 	}
 
@@ -381,7 +380,7 @@ public class UIRenderHelper {
 
 		public static CustomRenderTarget create(Window mainWindow) {
 			CustomRenderTarget framebuffer = new CustomRenderTarget(true);
-			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight());
 			framebuffer.setClearColor(0, 0, 0, 0);
 			CatnipClientServices.CLIENT_HOOKS.enableStencilBuffer(framebuffer);
 			return framebuffer;
