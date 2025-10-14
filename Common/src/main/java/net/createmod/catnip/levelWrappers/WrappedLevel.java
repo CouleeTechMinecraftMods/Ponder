@@ -120,6 +120,9 @@ public class WrappedLevel extends Level {
 		return chunkSource != null ? chunkSource : level.getChunkSource();
 	}
 
+	@Override
+	public void levelEvent(@Nullable Entity entity, int type, BlockPos pos, int data) {}
+
 	public void levelEvent(@Nullable Player player, int type, BlockPos pos, int data) {}
 
 	@Override
@@ -197,6 +200,11 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
+	public int getSeaLevel() {
+		return level.getSeaLevel();
+	}
+
+	@Override
 	public RegistryAccess registryAccess() {
 		return level.registryAccess();
 	}
@@ -238,12 +246,10 @@ public class WrappedLevel extends Level {
 	// getHeight overrides where they deviate
 	// from the defaults for their dimension.
 
-	@Override
 	public int getMaxBuildHeight() {
 		return level.getMaxY();
 	}
 
-	@Override
 	public int getMinBuildHeight() {
 		return level.getMinY();
 	}
