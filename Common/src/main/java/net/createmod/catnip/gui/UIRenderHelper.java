@@ -21,6 +21,7 @@ import org.lwjgl.opengl.GL30;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -81,11 +82,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// frameBufferId became private in 1.21.5, using bindRead/bindWrite instead
-		src.bindRead();
-		dst.bindWrite(false);
+		// MC 1.21.5: bindRead/bindWrite replaced with bindFbo
+		src.bindFboRead();
+		dst.bindFbo();
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		dst.bindWrite(true);
+		dst.bindFbo();
 	}
 
 	/**
@@ -182,7 +183,8 @@ public class UIRenderHelper {
 		buffer.addVertex(mat,  left,    top, zLevel).setColor(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha());
 		buffer.addVertex(mat,  left, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
 		buffer.addVertex(mat, right, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
-		MeshData mesh = buffer.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = buffer.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 
 		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
@@ -264,7 +266,8 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(model, x2, y1, 0).setColor(fc3.getRed(), fc3.getGreen(), fc3.getBlue(), fc3.getAlpha());
 		bufferbuilder.addVertex(model, x3, y2, 0).setColor(fc4.getRed(), fc4.getGreen(), fc4.getBlue(), fc4.getAlpha());
 
-		MeshData mesh = bufferbuilder.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = bufferbuilder.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
@@ -299,7 +302,8 @@ public class UIRenderHelper {
 			builder.addVertex(pose, (float) point.getX(), (float) point.getY(), 0).setColor(innerColor.getRGB());
 		}
 
-		MeshData mesh = builder.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = builder.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 
 		GL11.glDisable(GL11.GL_BLEND);
 
@@ -363,7 +367,8 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
 		bufferbuilder.addVertex(m, (float) left , (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v1);
-		MeshData mesh = bufferbuilder.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+		MeshData mesh = bufferbuilder.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 
@@ -426,7 +431,8 @@ public class UIRenderHelper {
 			bufferbuilder.addVertex(vx, 0 , 0).setUv(tx, ty).setColor(1, 1, 1, alpha);
 			bufferbuilder.addVertex(0 , 0 , 0).setUv(0 , ty).setColor(1, 1, 1, alpha);
 
-			MeshData mesh = bufferbuilder.buildOrThrow(); mesh.draw(); // MC 1.21.5: RenderSystem.drawBuffer -> BufferUploader.drawWithShader
+			MeshData mesh = bufferbuilder.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 
 			shaderinstance.clear();
 			RenderSystem.setProjectionMatrix(projectionMatrix, RenderSystem.getProjectionType());

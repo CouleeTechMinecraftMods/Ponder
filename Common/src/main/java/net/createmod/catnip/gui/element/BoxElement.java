@@ -4,6 +4,7 @@ import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -136,8 +137,8 @@ public class BoxElement extends AbstractRenderElement {
 		b.addVertex(model, x - f - 1        , y + f + 1 + height, z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y + f + 1 + height, z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y - f - 1         , z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
-		MeshData mesh = b.buildOrThrow(); // MC 1.21.5: MeshData.draw() instead of BufferUploader
-		mesh.draw();
+		MeshData mesh = b.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 		b = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 		//inner top - includes corners
 		b.addVertex(model, x - f - 1        , y - f - 1         , z).setColor(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha());
@@ -160,8 +161,8 @@ public class BoxElement extends AbstractRenderElement {
 		b.addVertex(model, x + f + 1 + width, y + f     + height, z).setColor(c3.getRed(), c3.getGreen(), c3.getBlue(), c3.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y - f             , z).setColor(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha());
 
-		mesh = b.buildOrThrow(); // MC 1.21.5: MeshData.draw() instead of BufferUploader
-		mesh.draw();
+		mesh = b.buildOrThrow(); // MC 1.21.5: BufferUploader.drawWithShader instead of mesh.draw()
+		BufferUploader.drawWithShader(mesh);
 
 		// disableBlend removed - controlled by RenderStateShard
 		//RenderSystem.enableTexture();
