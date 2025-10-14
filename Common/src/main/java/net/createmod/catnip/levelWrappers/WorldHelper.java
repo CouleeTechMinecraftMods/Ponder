@@ -9,7 +9,7 @@ public class WorldHelper {
 		// MC 1.21.5: Registry API changed - use lookup() instead of registryOrThrow()
 		return world.registryAccess()
 			.lookup(Registries.DIMENSION_TYPE)
-			.flatMap(registry -> registry.getKey(world.dimensionType()))
+			.flatMap(registry -> registry.getResourceKey(world.dimensionType()).map(key -> key.location()))
 			.orElse(null);
 	}
 }

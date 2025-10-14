@@ -96,8 +96,9 @@ public class ScreenOpener {
 	}
 
 	private static void openScreen(@Nullable Screen screen) {
+		// MC 1.21.5: tell() replaced with execute()
 		Minecraft.getInstance()
-			.tell(() -> {
+			.execute(() -> {
 				Minecraft.getInstance()
 					.setScreen(screen);
 				Screen previouslyRenderedScreen = getPreviouslyRenderedScreen();

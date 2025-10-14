@@ -81,7 +81,8 @@ public enum PonderGuiTextures implements TextureSheetSegment, ScreenElement, Col
 
 	@Override
 	public void render(GuiGraphics graphics, int x, int y) {
-		graphics.blit(getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
+		// MC 1.21.5: blit now requires RenderType function as first parameter
+		graphics.blit(net.minecraft.client.renderer.RenderType::guiTextured, getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
 	}
 
 	@Override

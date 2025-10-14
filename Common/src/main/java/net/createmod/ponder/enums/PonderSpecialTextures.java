@@ -21,7 +21,8 @@ public enum PonderSpecialTextures implements BindableTexture {
 
 	@Override
 	public void bind() {
-		RenderSystem.setShaderTexture(0, location);
+		// MC 1.21.5: setShaderTexture now requires GpuTexture, use bindTexture instead
+		RenderSystem.setShaderTexture(0, RenderSystem.getTextureManager().getTexture(location));
 	}
 
 	@Override

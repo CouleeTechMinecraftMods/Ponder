@@ -33,8 +33,8 @@ public class NBTHelper {
 		Optional<BlockPos> pos = NbtUtils.readBlockPos(nbt, key);
 		if (pos.isPresent())
 			return pos.get();
-		CompoundTag oldTag = nbt.getCompound(key);
-		return new BlockPos(oldTag.getInt("X"), oldTag.getInt("Y"), oldTag.getInt("Z"));
+		CompoundTag oldTag = nbt.getCompound(key).orElse(new CompoundTag());
+		return new BlockPos(oldTag.getInt("X").orElse(0), oldTag.getInt("Y").orElse(0), oldTag.getInt("Z").orElse(0));
 	}
 
 	public static <T extends Enum<?>> T readEnum(CompoundTag nbt, String key, Class<T> enumClass) {
@@ -42,7 +42,7 @@ public class NBTHelper {
 		if (enumConstants == null)
 			throw new IllegalArgumentException("Non-Enum class passed to readEnum: " + enumClass.getName());
 		if (nbt.contains(key, Tag.TAG_STRING)) {
-			String name = nbt.getString(key);
+			String name = nbt.getString(key).orElse("");
 			for (T t : enumConstants) {
 				if (t.name()
 					.equals(name))
@@ -106,8 +106,8 @@ public class NBTHelper {
 	public static AABB readAABB(ListTag bbTag) {
 		if (bbTag.isEmpty())
 			return null;
-		return new AABB(bbTag.getFloat(0), bbTag.getFloat(1), bbTag.getFloat(2), bbTag.getFloat(3),
-			bbTag.getFloat(4), bbTag.getFloat(5));
+		return new AABB(bbTag.getFloat(0).orElse(0f), bbTag.getFloat(1).orElse(0f), bbTag.getFloat(2).orElse(0f), bbTag.getFloat(3).orElse(0f),
+			bbTag.getFloat(4).orElse(0f), bbTag.getFloat(5).orElse(0f));
 	}
 
 	public static ListTag writeVec3i(Vec3i vec) {
@@ -119,7 +119,7 @@ public class NBTHelper {
 	}
 
 	public static Vec3i readVec3i(ListTag tag) {
-		return new Vec3i(tag.getInt(0), tag.getInt(1), tag.getInt(2));
+		return new Vec3i(tag.getInt(0).orElse(0), tag.getInt(1).orElse(0), tag.getInt(2).orElse(0));
 	}
 
 	@Nonnull
@@ -137,7 +137,7 @@ public class NBTHelper {
 	}
 
 	public static int intFromCompound(CompoundTag compoundTag) {
-		return compoundTag.getInt("V");
+		return compoundTag.getInt("V").orElse(0);
 	}
 
 	public static void writeResourceLocation(CompoundTag nbt, String key, ResourceLocation location) {
@@ -145,7 +145,7 @@ public class NBTHelper {
 	}
 
 	public static ResourceLocation readResourceLocation(CompoundTag nbt, String key) {
-		return ResourceLocation.parse(nbt.getString(key));
+		return ResourceLocation.parse(nbt.getString(key).orElse(""));
 	}
 
 }

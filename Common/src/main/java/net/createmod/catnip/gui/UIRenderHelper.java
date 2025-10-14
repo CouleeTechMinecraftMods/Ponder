@@ -81,11 +81,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// MC 1.21.5: RenderTarget bind methods renamed: bindAsReadBuffer() -> bindRead(), bindAsDrawBuffer() -> bindWrite(boolean)
-		src.bindRead();
-		dst.bindWrite(false);
+		// MC 1.21.5: RenderTarget bind methods exist as bindAsReadBuffer() and bindAsDrawBuffer()
+		src.bindAsReadBuffer();
+		dst.bindAsDrawBuffer();
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		dst.bindWrite(true);
+		dst.bindAsDrawBuffer();
 	}
 
 	/**
@@ -383,7 +383,8 @@ public class UIRenderHelper {
 		public static CustomRenderTarget create(Window mainWindow) {
 			CustomRenderTarget framebuffer = new CustomRenderTarget(true);
 			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight());
-			framebuffer.setClearColor(0, 0, 0, 0);
+			// MC 1.21.5: setClearColor removed, use RenderSystem.clearColor instead if needed
+			// framebuffer.setClearColor(0, 0, 0, 0);
 			CatnipClientServices.CLIENT_HOOKS.enableStencilBuffer(framebuffer);
 			return framebuffer;
 		}
@@ -402,7 +403,9 @@ public class UIRenderHelper {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 			Minecraft minecraft = Minecraft.getInstance();
-			var shaderinstance = minecraft.gameRenderer.blitShader;
+			// MC 1.21.5: blitShader is no longer accessible, need to use appropriate shader
+			// TODO: Find replacement for blitShader in 1.21.5
+			var shaderinstance = minecraft.gameRenderer.getPositionTexColorShader();
 			// TODO: MC 1.21.5 - colorTextureId field is now private, need accessor
 			// shaderinstance.setSampler("DiffuseSampler", colorTextureId);
 			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);

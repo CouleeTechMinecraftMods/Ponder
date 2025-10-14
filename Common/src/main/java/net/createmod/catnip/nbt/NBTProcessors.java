@@ -40,7 +40,7 @@ public final class NBTProcessors {
 	// Triggered by block tag, not BE type
 	private static final UnaryOperator<CompoundTag> signProcessor = data -> {
 		for (String key : List.of("front_text", "back_text")) {
-			CompoundTag textTag = data.getCompound(key);
+			CompoundTag textTag = data.getCompound(key).orElse(new CompoundTag());
 			if (!textTag.contains("messages", Tag.TAG_LIST))
 				continue;
 			for (Tag tag : textTag.getList("messages", Tag.TAG_STRING))
@@ -56,13 +56,13 @@ public final class NBTProcessors {
 	// TODO - Checkover and test
 	public static UnaryOperator<CompoundTag> itemProcessor(String tagKey) {
 		return data -> {
-			CompoundTag compound = data.getCompound(tagKey);
+			CompoundTag compound = data.getCompound(tagKey).orElse(new CompoundTag());
 			if (!compound.contains("components", 10))
 				return data;
-			CompoundTag itemComponents = compound.getCompound("components");
+			CompoundTag itemComponents = compound.getCompound("components").orElse(new CompoundTag());
 			HashSet<String> keys = new HashSet<>(itemComponents.getAllKeys());
 			for (String key : keys) {
-				DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(key));
+				DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(key)).orElse(null);
 				if (type != null && ComponentProcessors.isUnsafeItemComponent(type))
 					itemComponents.remove(key);
 			}

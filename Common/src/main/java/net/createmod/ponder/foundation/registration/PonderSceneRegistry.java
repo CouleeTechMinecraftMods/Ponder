@@ -151,8 +151,8 @@ public class PonderSceneRegistry implements SceneRegistryAccess {
 		StructureTemplate t = new StructureTemplate();
 		DataInputStream stream = new DataInputStream(new BufferedInputStream(new GZIPInputStream(resourceStream)));
 		CompoundTag nbt = NbtIo.read(stream, NbtAccounter.create(0x20000000L));
-		//t.load(Minecraft.getInstance().level.holderLookup(Registries.BLOCK), nbt);
-		t.load(BuiltInRegistries.BLOCK.asLookup(), nbt);
+		// MC 1.21.5: Use registryAccess() instead of specific registry lookup
+		t.load(Minecraft.getInstance().level.registryAccess(), nbt);
 		return t;
 	}
 }

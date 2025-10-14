@@ -173,14 +173,14 @@ public abstract class NavigatableSimiScreen extends AbstractSimiScreen {
 		if (lastScreen != null && lastScreen != this && !transition.settled()) {
 			currentlyRenderingPreviousScreen = true;
 			ms.pushPose();
-			// MC 1.21.5: bindWrite() now takes a boolean parameter for setting viewport
-			UIRenderHelper.framebuffer.bindWrite(true);
+			// MC 1.21.5: bindAsDrawBuffer() replaces bindWrite()
+			UIRenderHelper.framebuffer.bindAsDrawBuffer();
 			lastScreen.render(graphics, 0, 0, partialTicks);
 
 			ms.popPose();
 
 			ms.pushPose();
-			minecraft.getMainRenderTarget().bindWrite(true);
+			minecraft.getMainRenderTarget().bindAsDrawBuffer();
 
 			int dpx = (int) (guiScaledWidth / 2);
 			int dpy = (int) (guiScaledHeight / 2);

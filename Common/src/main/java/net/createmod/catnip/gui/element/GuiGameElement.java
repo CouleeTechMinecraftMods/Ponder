@@ -188,7 +188,8 @@ public class GuiGameElement {
 
 			transformMatrix(poseStack);
 
-			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+			// MC 1.21.5: setShaderTexture now requires GpuTexture
+			RenderSystem.setShaderTexture(0, mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
 			renderModel(blockRenderer, buffer, poseStack);
 
 			cleanUpMatrix(poseStack);
@@ -296,7 +297,8 @@ public class GuiGameElement {
 			Object bakedModel = renderer.getItemModel(stack); // MC 1.21.5: getModel -> getItemModel
 
 			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-			RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
+			// MC 1.21.5: setShaderTexture now requires GpuTexture
+			RenderSystem.setShaderTexture(0, Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
