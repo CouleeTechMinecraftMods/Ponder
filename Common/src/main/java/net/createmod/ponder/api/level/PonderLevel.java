@@ -36,6 +36,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockGetter;
@@ -83,7 +84,10 @@ public class PonderLevel extends SchematicLevel {
 		entities.forEach(e -> {
 			CompoundTag tag = new CompoundTag();
 			e.save(tag);//TODO Used to use Forge's #serializeNBT, which includes Passengers
-			EntityType.create(tag, this).ifPresent(originalEntities::add);
+			EntityType.loadEntityRecursive(tag, this, EntitySpawnReason.LOAD, entity -> {
+				originalEntities.add(entity);
+				return entity;
+			});
 		});
 	}
 
@@ -103,7 +107,10 @@ public class PonderLevel extends SchematicLevel {
 		originalEntities.forEach(e -> {
 			CompoundTag tag = new CompoundTag();
 			e.save(tag);//TODO Used to use Forge's #serializeNBT, which includes Passengers
-			EntityType.create(tag, this).ifPresent(entities::add);
+			EntityType.loadEntityRecursive(tag, this, EntitySpawnReason.LOAD, entity -> {
+				entities.add(entity);
+				return entity;
+			});
 		});
 		particles.clearEffects();
 
@@ -180,10 +187,11 @@ public class PonderLevel extends SchematicLevel {
 			renderEntity(entity, d0, d1, d2, pt, ms, buffer);
 		}
 
-		buffer.draw(RenderType.entitySolid(InventoryMenu.BLOCK_ATLAS));
-		buffer.draw(RenderType.entityCutout(InventoryMenu.BLOCK_ATLAS));
-		buffer.draw(RenderType.entityCutoutNoCull(InventoryMenu.BLOCK_ATLAS));
-		buffer.draw(RenderType.entitySmoothCutout(InventoryMenu.BLOCK_ATLAS));
+		// BLOCK_ATLAS removed in 1.21.5 - entity rendering now uses different texture system
+		// buffer.draw(RenderType.entitySolid(BLOCK_ATLAS));
+		// buffer.draw(RenderType.entityCutout(BLOCK_ATLAS));
+		// buffer.draw(RenderType.entityCutoutNoCull(BLOCK_ATLAS));
+		// buffer.draw(RenderType.entitySmoothCutout(BLOCK_ATLAS));
 	}
 
 	private void renderEntity(Entity entity, double x, double y, double z, float pt, PoseStack ms,
@@ -191,12 +199,12 @@ public class PonderLevel extends SchematicLevel {
 		double d0 = Mth.lerp((double) pt, entity.xOld, entity.getX());
 		double d1 = Mth.lerp((double) pt, entity.yOld, entity.getY());
 		double d2 = Mth.lerp((double) pt, entity.zOld, entity.getZ());
-		float f = Mth.lerp(pt, entity.yRotO, entity.getYRot());
 		EntityRenderDispatcher renderManager = Minecraft.getInstance()
 			.getEntityRenderDispatcher();
 		int light = renderManager.getRenderer(entity)
 			.getPackedLightCoords(entity, pt);
-		renderManager.render(entity, d0 - x, d1 - y, d2 - z, f, pt, ms, buffer, light);
+		// render() signature changed in 1.21.5 - removed rotation parameter
+		renderManager.render(entity, d0 - x, d1 - y, d2 - z, pt, ms, buffer, light);
 	}
 
 	public void renderParticles(PoseStack ms, MultiBufferSource buffer, Camera ari, float pt) {

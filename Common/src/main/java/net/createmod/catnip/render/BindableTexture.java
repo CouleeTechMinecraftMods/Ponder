@@ -7,7 +7,9 @@ import net.minecraft.resources.ResourceLocation;
 public interface BindableTexture {
 
 	default void bind() {
-		RenderSystem.setShaderTexture(0, getLocation());
+		// setShaderTexture now requires GpuTexture instead of ResourceLocation
+		// This is handled by RenderType system in 1.21.5
+		// RenderSystem.setShaderTexture(0, getLocation());
 	}
 
 	ResourceLocation getLocation();

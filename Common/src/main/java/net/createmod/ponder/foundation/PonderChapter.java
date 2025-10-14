@@ -29,10 +29,12 @@ public class PonderChapter implements ScreenElement {
 	public void render(GuiGraphics graphics, int x, int y) {
 		PoseStack ms = graphics.pose();
 		ms.pushPose();
-		RenderSystem.setShaderTexture(0, icon);
+		// setShaderTexture now requires GpuTexture instead of ResourceLocation
+		// RenderSystem.setShaderTexture(0, icon);
 		ms.scale(0.25f, 0.25f, 1);
 		//x and y offset, blit z offset, tex x and y, tex width and height, entire tex sheet width and height
-		graphics.blit(icon, x, y, 0, 0, 0, 64, 64, 64, 64);
+		// blit now requires RenderType factory function
+		graphics.blit(net.minecraft.client.renderer.RenderType::guiTextured, icon, x, y, 0, 0, 0, 64, 64, 64, 64);
 		ms.popPose();
 	}
 

@@ -6,6 +6,7 @@ import net.createmod.ponder.foundation.PonderScene;
 import net.createmod.ponder.foundation.element.AnimatedOverlayElementBase;
 import net.createmod.ponder.foundation.element.AnimatedSceneElementBase;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.phys.Vec3;
 
 public class HideAllInstruction extends TickingInstruction {
@@ -26,7 +27,7 @@ public class HideAllInstruction extends TickingInstruction {
 					AnimatedSceneElement animatedSceneElement = (AnimatedSceneElement) element;
 					animatedSceneElement.setFade(1);
 					animatedSceneElement
-						.setFadeVec(fadeOutTo == null ? null : Vec3.atLowerCornerOf(fadeOutTo.getNormal()).scale(.5f));
+						.setFadeVec(fadeOutTo == null ? null : Vec3.atLowerCornerOf(new Vec3i(fadeOutTo.getStepX(), fadeOutTo.getStepY(), fadeOutTo.getStepZ())).scale(.5f));
 				} else if (element instanceof AnimatedOverlayElementBase) {
 					AnimatedOverlayElement animatedSceneElement = (AnimatedOverlayElement) element;
 					animatedSceneElement.setFade(1);

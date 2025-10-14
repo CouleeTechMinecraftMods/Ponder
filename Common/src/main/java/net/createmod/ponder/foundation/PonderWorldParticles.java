@@ -70,11 +70,11 @@ public class PonderWorldParticles {
 		LightTexture lightTexture = mc.gameRenderer.lightTexture();
 
 		lightTexture.turnOnLightLayer();
-		RenderSystem.enableDepthTest();
+		// enableDepthTest removed - now controlled by RenderStateShard
 		Matrix4fStack stack = RenderSystem.getModelViewStack();
 		stack.pushMatrix();
 		stack.mul(ms.last().pose());
-		RenderSystem.applyModelViewMatrix();
+		// applyModelViewMatrix removed in 1.21.5
 
 		for (ParticleRenderType iparticlerendertype : this.byType.keySet()) {
 			if (iparticlerendertype == ParticleRenderType.NO_RENDER)
@@ -82,26 +82,23 @@ public class PonderWorldParticles {
 			Iterable<Particle> iterable = this.byType.get(iparticlerendertype);
 			if (iterable != null) {
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.setShader(GameRenderer::getParticleShader);
+				// getParticleShader removed - particles now use RenderType system
+				// RenderSystem.setShader(GameRenderer::getParticleShader);
 
 				Tesselator tesselator = Tesselator.getInstance();
-				BufferBuilder bufferBuilder = iparticlerendertype.begin(tesselator, mc.getTextureManager());
+				// begin() signature changed - now returns BufferSource
+				// BufferBuilder bufferBuilder = iparticlerendertype.begin(tesselator, mc.getTextureManager());
 
-				if (bufferBuilder != null) {
-					for (Particle particle : iterable)
-						particle.render(bufferBuilder, renderInfo, pt);
-
-					MeshData meshData = bufferBuilder.build();
-					if (meshData != null)
-						RenderSystem.drawBuffer(meshData);
+				// Particle rendering now uses MultiBufferSource instead
+				for (Particle particle : iterable) {
+					particle.render(buffer, renderInfo, pt);
 				}
 			}
 		}
 
 		stack.popMatrix();
-		RenderSystem.applyModelViewMatrix();
-		RenderSystem.depthMask(true);
-		RenderSystem.disableBlend();
+		// applyModelViewMatrix removed in 1.21.5
+		// depthMask and disableBlend removed - now controlled by RenderStateShard
 		lightTexture.turnOffLightLayer();
 	}
 

@@ -99,8 +99,7 @@ public class BoxElement extends AbstractRenderElement {
 		 *
 		 * */
 		//RenderSystem.disableTexture();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		// enableBlend and defaultBlendFunc removed - controlled by RenderStateShard
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		PoseStack ms = graphics.pose();
@@ -162,7 +161,7 @@ public class BoxElement extends AbstractRenderElement {
 
 		RenderSystem.drawBuffer(b.buildOrThrow()); // MC 1.21.5: BufferUploader removed
 
-		RenderSystem.disableBlend();
+		// disableBlend removed - controlled by RenderStateShard
 		//RenderSystem.enableTexture();
 	}
 }

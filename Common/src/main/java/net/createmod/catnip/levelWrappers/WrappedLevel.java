@@ -20,8 +20,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.crafting.RecipeAccess;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -110,7 +114,6 @@ public class WrappedLevel extends Level {
 		return chunkSource != null ? chunkSource : level.getChunkSource();
 	}
 
-	@Override
 	public void levelEvent(@Nullable Player player, int type, BlockPos pos, int data) {}
 
 	@Override
@@ -118,20 +121,11 @@ public class WrappedLevel extends Level {
 		return Collections.emptyList();
 	}
 
-	@Override
-	public void playSeededSound(Player pPlayer, double pX, double pY, double pZ, Holder<SoundEvent> pSound,
-								SoundSource pSource, float pVolume, float pPitch, long pSeed) {}
-
-	@Override
-	public void playSeededSound(Player pPlayer, Entity pEntity, Holder<SoundEvent> pSound, SoundSource pCategory,
-								float pVolume, float pPitch, long pSeed) {}
-
-	@Override
-	public void playSound(@Nullable Player player, double x, double y, double z, SoundEvent soundIn,
+	public void playSound(@Nullable Player player, double x, double y, double z, Holder<SoundEvent> soundIn,
 		SoundSource category, float volume, float pitch) {}
 
 	@Override
-	public void playSound(@Nullable Player p_217384_1_, Entity p_217384_2_, SoundEvent p_217384_3_,
+	public void playSound(@Nullable Player p_217384_1_, Entity p_217384_2_, Holder<SoundEvent> p_217384_3_,
 		SoundSource p_217384_4_, float p_217384_5_, float p_217384_6_) {}
 
 	@Override
@@ -156,12 +150,10 @@ public class WrappedLevel extends Level {
 		return level.addFreshEntity(entityIn);
 	}
 
-	@Override
 	public void setMapData(MapId mapId, MapItemSavedData mapItemSavedData) {}
 
-	@Override
 	public MapId getFreeMapId() {
-		return level.getFreeMapId();
+		return new MapId(0);
 	}
 
 	@Override
@@ -172,9 +164,13 @@ public class WrappedLevel extends Level {
 		return level.getScoreboard();
 	}
 
+	public RecipeAccess getRecipeManager() {
+		return level.recipeAccess();
+	}
+
 	@Override
-	public RecipeManager getRecipeManager() {
-		return level.getRecipeManager();
+	public RecipeAccess recipeAccess() {
+		return level.recipeAccess();
 	}
 
 	@Override
@@ -226,7 +222,12 @@ public class WrappedLevel extends Level {
 
 	@Override
 	public int getMaxBuildHeight() {
-		return this.getMinBuildHeight() + this.getHeight();
+		return level.getMaxBuildHeight();
+	}
+
+	@Override
+	public int getMinBuildHeight() {
+		return level.getMinBuildHeight();
 	}
 
 	@Override
@@ -272,6 +273,11 @@ public class WrappedLevel extends Level {
 	@Override
 	public FeatureFlagSet enabledFeatures() {
 		return level.enabledFeatures();
+	}
+
+	@Override
+	public FuelValues fuelValues() {
+		return level.fuelValues();
 	}
 
 	// Neo's patched methods

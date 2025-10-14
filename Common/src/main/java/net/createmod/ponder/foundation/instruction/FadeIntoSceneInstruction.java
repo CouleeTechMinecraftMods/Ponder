@@ -5,6 +5,7 @@ import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.foundation.PonderScene;
 import net.createmod.ponder.foundation.element.ElementLinkImpl;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class FadeIntoSceneInstruction<T extends AnimatedSceneElement> extends TickingInstruction {
@@ -26,7 +27,7 @@ public abstract class FadeIntoSceneInstruction<T extends AnimatedSceneElement> e
 		element.setVisible(true);
 		element.setFade(0);
 		element.setFadeVec(fadeInFrom == null ? Vec3.ZERO
-			: Vec3.atLowerCornerOf(fadeInFrom.getNormal())
+			: Vec3.atLowerCornerOf(new Vec3i(fadeInFrom.getStepX(), fadeInFrom.getStepY(), fadeInFrom.getStepZ()))
 				.scale(.5f));
 		if (elementLink != null)
 			scene.linkElement(element, elementLink);

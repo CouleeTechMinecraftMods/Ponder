@@ -120,7 +120,7 @@ public class BoxWidget extends ElementWidget {
 	protected void beforeRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.beforeRender(graphics, mouseX, mouseY, partialTicks);
 
-		RenderSystem.enableDepthTest();
+		// enableDepthTest removed - controlled by RenderStateShard
 
 		if (isHovered != wasHovered) {
 			animateGradientFromState();

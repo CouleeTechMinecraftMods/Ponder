@@ -593,7 +593,7 @@ public class PonderUI extends AbstractPonderScreen {
 	protected void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		super.renderWindow(graphics, mouseX, mouseY, partialTicks);
 		partialTicks = getPartialTicks();
-		RenderSystem.enableBlend();
+		// enableBlend removed - controlled by RenderStateShard
 		renderVisibleScenes(graphics, mouseX, mouseY,
 			skipCooling > 0 ? 0 : identifyMode ? ponderPartialTicksPaused : partialTicks);
 		renderWidgets(graphics, mouseX, mouseY, identifyMode ? ponderPartialTicksPaused : partialTicks);
@@ -613,8 +613,7 @@ public class PonderUI extends AbstractPonderScreen {
 		double diff = i - value;
 		double slide = Mth.lerp(diff * diff, 200, 600) * diff;
 
-		RenderSystem.enableBlend();
-		RenderSystem.enableDepthTest();
+		// enableBlend and enableDepthTest removed - controlled by RenderStateShard
 		RenderSystem.backupProjectionMatrix();
 
 		PoseStack poseStack = graphics.pose();
@@ -623,7 +622,8 @@ public class PonderUI extends AbstractPonderScreen {
 		// has to be outside of MS transforms, important for vertex sorting
 		Matrix4f matrix4f = new Matrix4f(RenderSystem.getProjectionMatrix());
 		matrix4f.translate(0, 0, 800);
-		RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.DISTANCE_TO_ORIGIN);
+		// setProjectionMatrix signature changed - VertexSorting removed
+		RenderSystem.setProjectionMatrix(matrix4f);
 
 		poseStack.pushPose();
 		poseStack.translate(0, 0, -800);
@@ -641,8 +641,7 @@ public class PonderUI extends AbstractPonderScreen {
 
 		// kool shadow fx
 		if (!scene.shouldHidePlatformShadow()) {
-			RenderSystem.enableCull();
-			RenderSystem.enableDepthTest();
+			// enableCull and enableDepthTest removed - controlled by RenderStateShard
 			poseStack.pushPose();
 			poseStack.translate(scene.getBasePlateOffsetX(), 0, scene.getBasePlateOffsetZ());
 			UIRenderHelper.flipForGuiRender(poseStack);
@@ -670,8 +669,7 @@ public class PonderUI extends AbstractPonderScreen {
 				poseStack.mulPose(Axis.YP.rotationDegrees(-90));
 			}
 			poseStack.popPose();
-			RenderSystem.disableCull();
-			RenderSystem.disableDepthTest();
+			// disableCull and disableDepthTest removed - controlled by RenderStateShard
 		}
 
 		// coords for debug
@@ -727,7 +725,7 @@ public class PonderUI extends AbstractPonderScreen {
 	}
 
 	protected void renderWidgets(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		RenderSystem.disableDepthTest();
+		// disableDepthTest removed - controlled by RenderStateShard
 
 		float fade = fadeIn.getValue(partialTicks);
 		float lazyIndexValue = lazyIndex.getValue(partialTicks);
@@ -874,7 +872,7 @@ public class PonderUI extends AbstractPonderScreen {
 
 		renderHoverTooltips(graphics, tooltipColor);
 
-		RenderSystem.enableDepthTest();
+		// enableDepthTest removed - controlled by RenderStateShard
 	}
 
 	private void renderHoverTooltips(GuiGraphics graphics, int tooltipColor) {
@@ -1070,8 +1068,9 @@ public class PonderUI extends AbstractPonderScreen {
 		if (chapter != null)
 			return chapter.getTitle();
 
+		// getDescription() removed - use getName() instead
 		return stack.getItem()
-				.getDescription()
+				.getName(stack)
 				.getString();
 	}
 

@@ -1,0 +1,1133 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :
+Appending build number to version. Version is now 1.0.0
+Skipping PGP signing. No signing.secretKeyRingFile provided.
+Skipping PGP signing. No signing.keyId provided.
+Skipping PGP signing. No signing.password provided.
+Mixin disabled for project ponder:Common.
+Skipping PGP signing. No signing.secretKeyRingFile provided.
+Skipping PGP signing. No signing.keyId provided.
+Skipping PGP signing. No signing.password provided.
+Mixin enabled for project ponder:NeoForge.
+
+> Configure project :Common
+Property mavenURL was not found. Defaulting to undefined.
+
+> Configure project :NeoForge
+MultiModWorkspace disabled for project ponder:NeoForge.
+Java: 21.0.8, JVM: 21.0.8+9-LTS (Eclipse Adoptium), Arch: amd64
+Property mavenURL was not found. Defaulting to undefined.
+
+> Task :Common:createMinecraftArtifacts UP-TO-DATE
+> Task :NeoForge:createMinecraftArtifacts UP-TO-DATE
+> Task :NeoForge:processResources UP-TO-DATE
+> Task :NeoForge:jarJar NO-SOURCE
+> Task :NeoForge:sourcesJar
+> Task :NeoForge:processTestResources NO-SOURCE
+
+> Task :Common:compileJava
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:45: error: WrappedLevel is not abstract and does not override abstract method recipeAccess() in Level
+public class WrappedLevel extends Level {
+       ^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:54: error: invalid method reference
+			  level::getProfilerSupplier, level.isClientSide, level.isDebug(), 0, 0);
+			  ^
+  cannot find symbol
+    symbol:   method getProfilerSupplier()
+    location: class Level
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:117: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:125: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:129: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:155: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:158: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:160: error: cannot find symbol
+		return MapId.of(0);
+		            ^
+  symbol:   method of(int)
+  location: class MapId
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:222: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:224: error: cannot find symbol
+		return this.getMinBuildHeight() + this.getHeight();
+		           ^
+  symbol: method getMinBuildHeight()
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:232: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:234: error: cannot find symbol
+		return SectionPos.blockToSectionCoord(this.getMinBuildHeight());
+		                                          ^
+  symbol: method getMinBuildHeight()
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:237: error: method does not override or implement a method from a supertype
+	@Override
+	^
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:249: error: cannot find symbol
+		return y < this.getMinBuildHeight() || y >= this.getMaxBuildHeight();
+		               ^
+  symbol: method getMinBuildHeight()
+/workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/SchematicLevel.java:43: error: SchematicLevel is not abstract and does not override abstract method getSeaLevel() in LevelReader
+public class SchematicLevel extends WrappedLevel implements ServerLevelAccessor, SchematicLevelAccessor {
+       ^
+/workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:86: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+			EntityType.loadEntityRecursive(tag, this, entity -> {
+			          ^
+  required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+  found:    CompoundTag,PonderLevel,(entity)->[...]ty; }
+  reason: actual and formal argument lists differ in length
+  where T is a type-variable:
+    T extends Entity declared in class EntityType
+/workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:86: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+			EntityType.loadEntityRecursive(tag, this, entity -> {
+			                              ^
+  required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+  found:    CompoundTag,PonderLevel,(entity)->[...]ty; },<any>
+  reason: actual and formal argument lists differ in length
+  where T is a type-variable:
+    T extends Entity declared in class EntityType
+/workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:109: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+			EntityType.loadEntityRecursive(tag, this, entity -> {
+			          ^
+  required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+  found:    CompoundTag,PonderLevel,(entity)->[...]ty; }
+  reason: actual and formal argument lists differ in length
+  where T is a type-variable:
+    T extends Entity declared in class EntityType
+/workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:109: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+			EntityType.loadEntityRecursive(tag, this, entity -> {
+			                              ^
+  required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+  found:    CompoundTag,PonderLevel,(entity)->[...]ty; },<any>
+  reason: actual and formal argument lists differ in length
+  where T is a type-variable:
+    T extends Entity declared in class EntityType
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderWorldParticles.java:94: error: incompatible types: MultiBufferSource cannot be converted to VertexConsumer
+					particle.render(buffer, renderInfo, pt);
+					                ^
+/workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:176: error: cannot find symbol
+			UIRenderHelper.framebuffer.clear();
+			                          ^
+  symbol:   method clear()
+  location: variable framebuffer of type CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:177: error: cannot find symbol
+			UIRenderHelper.framebuffer.bindWrite();
+			                          ^
+  symbol:   method bindWrite()
+  location: variable framebuffer of type CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:183: error: cannot find symbol
+			minecraft.getMainRenderTarget().bindWrite();
+			                               ^
+  symbol:   method bindWrite()
+  location: class RenderTarget
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderUI.java:626: error: method setProjectionMatrix in class RenderSystem cannot be applied to given types;
+		RenderSystem.setProjectionMatrix(matrix4f);
+		            ^
+  required: Matrix4f,ProjectionType
+  found:    Matrix4f
+  reason: actual and formal argument lists differ in length
+/workspace/Common/src/main/java/net/createmod/ponder/api/element/ParrotPose.java:32: error: DATA_VARIANT_ID has private access in Parrot
+		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
+		                                 ^
+/workspace/Common/src/main/java/net/createmod/ponder/api/element/ParrotPose.java:32: error: cannot find symbol
+		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
+		                                                                    ^
+  symbol:   method id()
+  location: class Variant
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:103: error: invalid method reference
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		                       ^
+  cannot find symbol
+    symbol:   method getPositionColorShader()
+    location: class GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:139: error: cannot find symbol
+		RenderSystem.drawBuffer(b.buildOrThrow()); // MC 1.21.5: BufferUploader removed
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:162: error: cannot find symbol
+		RenderSystem.drawBuffer(b.buildOrThrow()); // MC 1.21.5: BufferUploader removed
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/registration/PonderSceneRegistry.java:155: error: cannot find symbol
+		t.load(BuiltInRegistries.BLOCK.asLookup(), nbt);
+		                              ^
+  symbol:   method asLookup()
+  location: variable BLOCK of type DefaultedRegistry<Block>
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuilder.java:255: error: incompatible types: Vector3f cannot be converted to int
+					effects().particleEmitterWithinBlockSpace(new DustParticleOptions(rgb, 1), Vec3.ZERO), amount, 2));
+					                                                                  ^
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuilder.java:321: error: cannot find symbol
+			location = location.add(Vec3.atLowerCornerOf(side.getNormal()).scale(-3 / 128f));
+			                                                 ^
+  symbol:   method getNormal()
+  location: variable side of type Direction
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagScreen.java:268: error: cannot find symbol
+		RenderSystem.disableDepthTest();
+		            ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagScreen.java:278: error: cannot find symbol
+		RenderSystem.enableDepthTest();
+		            ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagIndexScreen.java:273: error: cannot find symbol
+		RenderSystem.disableDepthTest();
+		            ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagIndexScreen.java:285: error: cannot find symbol
+		RenderSystem.enableDepthTest();
+		            ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuildingUtil.java:91: error: cannot find symbol
+			return centerOf(pos).add(Vec3.atLowerCornerOf(face.getNormal())
+			                                                  ^
+  symbol:   method getNormal()
+  location: variable face of type Direction
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/HideAllInstruction.java:29: error: cannot find symbol
+						.setFadeVec(fadeOutTo == null ? null : Vec3.atLowerCornerOf(fadeOutTo.getNormal()).scale(.5f));
+						                                                                     ^
+  symbol:   method getNormal()
+  location: variable fadeOutTo of type Direction
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/FadeIntoSceneInstruction.java:29: error: cannot find symbol
+			: Vec3.atLowerCornerOf(fadeInFrom.getNormal())
+			                                 ^
+  symbol:   method getNormal()
+  location: variable fadeInFrom of type Direction
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/FadeOutOfSceneInstruction.java:30: error: cannot find symbol
+			: Vec3.atLowerCornerOf(fadeOutTo.getNormal())
+			                                ^
+  symbol:   method getNormal()
+  location: variable fadeOutTo of type Direction
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/element/InputWindowElement.java:150: error: cannot find symbol
+			RenderSystem.disableDepthTest();
+			            ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/element/MinecartElementImpl.java:112: error: no suitable method found for render(AbstractMinecart,int,int,int,int,float,PoseStack,MultiBufferSource,int)
+		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+		                     ^
+    method EntityRenderDispatcher.<E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int) is not applicable
+      (cannot infer type-variable(s) E#1
+        (actual and formal argument lists differ in length))
+    method EntityRenderDispatcher.<E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>) is not applicable
+      (cannot infer type-variable(s) E#2,S#1
+        (argument mismatch; float cannot be converted to PoseStack))
+    method EntityRenderDispatcher.<S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int) is not applicable
+      (cannot infer type-variable(s) S#2
+        (actual and formal argument lists differ in length))
+    method EntityRenderDispatcher.<S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>) is not applicable
+      (cannot infer type-variable(s) S#3
+        (actual and formal argument lists differ in length))
+  where E#1,E#2,S#1,S#2,S#3 are type-variables:
+    E#1 extends Entity declared in method <E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int)
+    E#2 extends Entity declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+    S#1 extends EntityRenderState declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+    S#2 extends EntityRenderState declared in method <S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int)
+    S#3 extends EntityRenderState declared in method <S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>)
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/element/WorldSectionElementImpl.java:424: error: method render in interface BlockEntityRenderer<T> cannot be applied to given types;
+				renderer.render(tile, pt, ms, buffer, LevelRenderer.getLightColor(world, pos), OverlayTexture.NO_OVERLAY);
+				        ^
+  required: BlockEntity,float,PoseStack,MultiBufferSource,int,int,Vec3
+  found:    BlockEntity,float,PoseStack,MultiBufferSource,int,int
+  reason: actual and formal argument lists differ in length
+  where T is a type-variable:
+    T extends BlockEntity declared in interface BlockEntityRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/render/StitchedSprite.java:27: error: cannot find symbol
+		this(InventoryMenu.BLOCK_ATLAS, location);
+		                  ^
+  symbol:   variable BLOCK_ATLAS
+  location: class InventoryMenu
+/workspace/Common/src/main/java/net/createmod/ponder/foundation/element/ParrotElementImpl.java:135: error: no suitable method found for render(Parrot,int,int,int,int,float,PoseStack,MultiBufferSource,int)
+		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+		                     ^
+    method EntityRenderDispatcher.<E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int) is not applicable
+      (cannot infer type-variable(s) E#1
+        (actual and formal argument lists differ in length))
+    method EntityRenderDispatcher.<E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>) is not applicable
+      (cannot infer type-variable(s) E#2,S#1
+        (argument mismatch; float cannot be converted to PoseStack))
+    method EntityRenderDispatcher.<S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int) is not applicable
+      (cannot infer type-variable(s) S#2
+        (actual and formal argument lists differ in length))
+    method EntityRenderDispatcher.<S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>) is not applicable
+      (cannot infer type-variable(s) S#3
+        (actual and formal argument lists differ in length))
+  where E#1,E#2,S#1,S#2,S#3 are type-variables:
+    E#1 extends Entity declared in method <E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int)
+    E#2 extends Entity declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+    S#1 extends EntityRenderState declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+    S#2 extends EntityRenderState declared in method <S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int)
+    S#3 extends EntityRenderState declared in method <S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>)
+/workspace/Common/src/main/java/net/createmod/ponder/enums/PonderSpecialTextures.java:24: error: incompatible types: ResourceLocation cannot be converted to GpuTexture
+		RenderSystem.setShaderTexture(0, location);
+		                                 ^
+/workspace/Common/src/main/java/net/createmod/ponder/enums/PonderGuiTextures.java:84: error: incompatible types: ResourceLocation cannot be converted to Function<ResourceLocation,RenderType>
+		graphics.blit(getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
+		                         ^
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:35: error: cannot find symbol
+		RenderSystem.stencilMask(~0);
+		            ^
+  symbol:   method stencilMask(int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:36: error: cannot find symbol
+		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+		            ^
+  symbol:   method clear(int,boolean)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:38: error: cannot find symbol
+		RenderSystem.stencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+		            ^
+  symbol:   method stencilOp(int,int,int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:39: error: cannot find symbol
+		RenderSystem.stencilMask(0xFF);
+		            ^
+  symbol:   method stencilMask(int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:40: error: cannot find symbol
+		RenderSystem.stencilFunc(GL11.GL_NEVER, 1, 0xFF);
+		            ^
+  symbol:   method stencilFunc(int,int,int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:45: error: cannot find symbol
+		RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
+		            ^
+  symbol:   method stencilOp(int,int,int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:46: error: cannot find symbol
+		RenderSystem.stencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+		            ^
+  symbol:   method stencilFunc(int,int,int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:66: error: cannot find symbol
+		RenderSystem.recordRenderCall(() -> {
+		            ^
+  symbol:   method recordRenderCall(()->{ Wind[...]w); })
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:74: error: method resize in class RenderTarget cannot be applied to given types;
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			           ^
+  required: int,int
+  found:    int,int,boolean
+  reason: actual and formal argument lists differ in length
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:86: error: cannot find symbol
+		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, src.frameBufferId);
+		                                                    ^
+  symbol:   variable frameBufferId
+  location: variable src of type RenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:87: error: cannot find symbol
+		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
+		                                                    ^
+  symbol:   variable frameBufferId
+  location: variable dst of type RenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:90: error: cannot find symbol
+		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, dst.frameBufferId);
+		                                               ^
+  symbol:   variable frameBufferId
+  location: variable dst of type RenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:175: error: cannot find symbol
+		RenderSystem.enableDepthTest();
+		            ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:177: error: cannot find symbol
+		RenderSystem.enableBlend();
+		            ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:178: error: cannot find symbol
+		RenderSystem.defaultBlendFunc();
+		            ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:179: error: invalid method reference
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		                       ^
+  cannot find symbol
+    symbol:   method getPositionColorShader()
+    location: class GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:187: error: cannot find symbol
+		RenderSystem.drawBuffer(buffer.buildOrThrow());
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:189: error: cannot find symbol
+		RenderSystem.disableBlend();
+		            ^
+  symbol:   method disableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:235: error: cannot find symbol
+		RenderSystem.disableDepthTest();
+		            ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:236: error: cannot find symbol
+		RenderSystem.enableBlend();
+		            ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:237: error: cannot find symbol
+		RenderSystem.disableCull();
+		            ^
+  symbol:   method disableCull()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:238: error: cannot find symbol
+		RenderSystem.defaultBlendFunc();
+		            ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:239: error: invalid method reference
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		                       ^
+  cannot find symbol
+    symbol:   method getPositionColorShader()
+    location: class GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:269: error: cannot find symbol
+		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:270: error: cannot find symbol
+		RenderSystem.enableCull();
+		            ^
+  symbol:   method enableCull()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:271: error: cannot find symbol
+		RenderSystem.disableBlend();
+		            ^
+  symbol:   method disableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:286: error: cannot find symbol
+		RenderSystem.enableBlend();
+		            ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:287: error: cannot find symbol
+		RenderSystem.defaultBlendFunc();
+		            ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:288: error: invalid method reference
+		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		                       ^
+  cannot find symbol
+    symbol:   method getPositionColorShader()
+    location: class GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:304: error: cannot find symbol
+		RenderSystem.drawBuffer(builder.buildOrThrow());
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:306: error: cannot find symbol
+		RenderSystem.disableBlend();
+		            ^
+  symbol:   method disableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:361: error: cannot find symbol
+		RenderSystem.enableBlend();
+		            ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:362: error: cannot find symbol
+		RenderSystem.defaultBlendFunc();
+		            ^
+  symbol:   method defaultBlendFunc()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:363: error: invalid method reference
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		                       ^
+  cannot find symbol
+    symbol:   method getPositionTexColorShader()
+    location: class GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:368: error: cannot find symbol
+		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		            ^
+  symbol:   method drawBuffer(MeshData)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:369: error: cannot find symbol
+		RenderSystem.disableBlend();
+		            ^
+  symbol:   method disableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:379: error: constructor RenderTarget in class RenderTarget cannot be applied to given types;
+			super(useDepth);
+			^
+  required: String,boolean
+  found:    boolean
+  reason: actual and formal argument lists differ in length
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:384: error: method resize in class RenderTarget cannot be applied to given types;
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			           ^
+  required: int,int
+  found:    int,int,boolean
+  reason: actual and formal argument lists differ in length
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:385: error: cannot find symbol
+			framebuffer.setClearColor(0, 0, 0, 0);
+			           ^
+  symbol:   method setClearColor(int,int,int,int)
+  location: variable framebuffer of type CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:401: error: cannot find symbol
+			RenderSystem.disableDepthTest();
+			            ^
+  symbol:   method disableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:404: error: cannot find symbol
+			ShaderInstance shaderinstance = minecraft.gameRenderer.blitShader;
+			^
+  symbol:   class ShaderInstance
+  location: class CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:404: error: cannot find symbol
+			ShaderInstance shaderinstance = minecraft.gameRenderer.blitShader;
+			                                                      ^
+  symbol:   variable blitShader
+  location: variable gameRenderer of type GameRenderer
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:405: error: cannot find symbol
+			shaderinstance.setSampler("DiffuseSampler", colorTextureId);
+			                                            ^
+  symbol:   variable colorTextureId
+  location: class CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:409: error: incompatible types: VertexSorting cannot be converted to ProjectionType
+			RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.ORTHOGRAPHIC_Z);
+			                                                        ^
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:422: error: cannot find symbol
+			Tesselator tesselator = RenderSystem.renderThreadTesselator();
+			                                    ^
+  symbol:   method renderThreadTesselator()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:430: error: cannot find symbol
+			BufferUploader.draw(bufferbuilder.buildOrThrow());
+			^
+  symbol:   variable BufferUploader
+  location: class CustomRenderTarget
+/workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:433: error: incompatible types: VertexSorting cannot be converted to ProjectionType
+			RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.ORTHOGRAPHIC_Z);
+			                                                                ^
+/workspace/Common/src/main/java/net/createmod/catnip/gui/ScreenOpener.java:100: error: cannot find symbol
+			.tell(() -> {
+			^
+  symbol:   method tell(()->{ Mine[...]t); })
+  location: class Minecraft
+/workspace/Common/src/main/java/net/createmod/catnip/gui/ConfirmationScreen.java:216: error: cannot find symbol
+		RenderSystem.clear(GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
+		            ^
+  symbol:   method clear(int,boolean)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:129: error: cannot find symbol
+			RenderSystem.enableDepthTest();
+			            ^
+  symbol:   method enableDepthTest()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:130: error: cannot find symbol
+			RenderSystem.enableBlend();
+			            ^
+  symbol:   method enableBlend()
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:131: error: cannot find symbol
+			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			            ^
+  symbol:   method blendFunc(int,int)
+  location: class RenderSystem
+/workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:186: error: cannot find symbol
+			MultiBufferSource.BufferSource buffer = graphics.bufferSource();
+			                                                ^
+  symbol:   method bufferSource()
+  location: variable graphics of type GuiGraphics
+/workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:67: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+	default ShadedBlockSbbBuilder createSbbBuilder(BufferBuilder builder) {
+	        ^
+/workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:67: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+	default ShadedBlockSbbBuilder createSbbBuilder(BufferBuilder builder) {
+	        ^
+/workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:67: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+	default ShadedBlockSbbBuilder createSbbBuilder(BufferBuilder builder) {
+	        ^
+/workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:68: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+		return ShadedBlockSbbBuilder.create();
+		       ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+100 errors
+4 warnings
+
+> Task :Common:compileJava FAILED
+
+[Incubating] Problems report is available at: file:///workspace/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':Common:compileJava'.
+> Compilation failed; see the compiler output below.
+  /workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:86: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+  			EntityType.loadEntityRecursive(tag, this, entity -> {
+  			          ^
+    required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+    found:    CompoundTag,PonderLevel,(entity)->[...]ty; }
+    reason: actual and formal argument lists differ in length
+    where T is a type-variable:
+      T extends Entity declared in class EntityType
+  /workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:86: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+  			EntityType.loadEntityRecursive(tag, this, entity -> {
+  			                              ^
+    required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+    found:    CompoundTag,PonderLevel,(entity)->[...]ty; },<any>
+    reason: actual and formal argument lists differ in length
+    where T is a type-variable:
+      T extends Entity declared in class EntityType
+  /workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:109: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+  			EntityType.loadEntityRecursive(tag, this, entity -> {
+  			          ^
+    required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+    found:    CompoundTag,PonderLevel,(entity)->[...]ty; }
+    reason: actual and formal argument lists differ in length
+    where T is a type-variable:
+      T extends Entity declared in class EntityType
+  /workspace/Common/src/main/java/net/createmod/ponder/api/level/PonderLevel.java:109: error: method loadEntityRecursive in class EntityType<T> cannot be applied to given types;
+  			EntityType.loadEntityRecursive(tag, this, entity -> {
+  			                              ^
+    required: CompoundTag,Level,EntitySpawnReason,Function<Entity,Entity>
+    found:    CompoundTag,PonderLevel,(entity)->[...]ty; },<any>
+    reason: actual and formal argument lists differ in length
+    where T is a type-variable:
+      T extends Entity declared in class EntityType
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderUI.java:626: error: method setProjectionMatrix in class RenderSystem cannot be applied to given types;
+  		RenderSystem.setProjectionMatrix(matrix4f);
+  		            ^
+    required: Matrix4f,ProjectionType
+    found:    Matrix4f
+    reason: actual and formal argument lists differ in length
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/element/WorldSectionElementImpl.java:424: error: method render in interface BlockEntityRenderer<T> cannot be applied to given types;
+  				renderer.render(tile, pt, ms, buffer, LevelRenderer.getLightColor(world, pos), OverlayTexture.NO_OVERLAY);
+  				        ^
+    required: BlockEntity,float,PoseStack,MultiBufferSource,int,int,Vec3
+    found:    BlockEntity,float,PoseStack,MultiBufferSource,int,int
+    reason: actual and formal argument lists differ in length
+    where T is a type-variable:
+      T extends BlockEntity declared in interface BlockEntityRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:74: error: method resize in class RenderTarget cannot be applied to given types;
+  			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+  			           ^
+    required: int,int
+    found:    int,int,boolean
+    reason: actual and formal argument lists differ in length
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:379: error: constructor RenderTarget in class RenderTarget cannot be applied to given types;
+  			super(useDepth);
+  			^
+    required: String,boolean
+    found:    boolean
+    reason: actual and formal argument lists differ in length
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:384: error: method resize in class RenderTarget cannot be applied to given types;
+  			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+  			           ^
+    required: int,int
+    found:    int,int,boolean
+    reason: actual and formal argument lists differ in length
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/element/MinecartElementImpl.java:112: error: no suitable method found for render(AbstractMinecart,int,int,int,int,float,PoseStack,MultiBufferSource,int)
+  		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+  		                     ^
+      method EntityRenderDispatcher.<E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int) is not applicable
+        (cannot infer type-variable(s) E#1
+          (actual and formal argument lists differ in length))
+      method EntityRenderDispatcher.<E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>) is not applicable
+        (cannot infer type-variable(s) E#2,S#1
+          (argument mismatch; float cannot be converted to PoseStack))
+      method EntityRenderDispatcher.<S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int) is not applicable
+        (cannot infer type-variable(s) S#2
+          (actual and formal argument lists differ in length))
+      method EntityRenderDispatcher.<S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>) is not applicable
+        (cannot infer type-variable(s) S#3
+          (actual and formal argument lists differ in length))
+    where E#1,E#2,S#1,S#2,S#3 are type-variables:
+      E#1 extends Entity declared in method <E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int)
+      E#2 extends Entity declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+      S#1 extends EntityRenderState declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+      S#2 extends EntityRenderState declared in method <S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int)
+      S#3 extends EntityRenderState declared in method <S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>)
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/element/ParrotElementImpl.java:135: error: no suitable method found for render(Parrot,int,int,int,int,float,PoseStack,MultiBufferSource,int)
+  		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+  		                     ^
+      method EntityRenderDispatcher.<E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int) is not applicable
+        (cannot infer type-variable(s) E#1
+          (actual and formal argument lists differ in length))
+      method EntityRenderDispatcher.<E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>) is not applicable
+        (cannot infer type-variable(s) E#2,S#1
+          (argument mismatch; float cannot be converted to PoseStack))
+      method EntityRenderDispatcher.<S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int) is not applicable
+        (cannot infer type-variable(s) S#2
+          (actual and formal argument lists differ in length))
+      method EntityRenderDispatcher.<S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>) is not applicable
+        (cannot infer type-variable(s) S#3
+          (actual and formal argument lists differ in length))
+    where E#1,E#2,S#1,S#2,S#3 are type-variables:
+      E#1 extends Entity declared in method <E#1>render(E#1,double,double,double,float,PoseStack,MultiBufferSource,int)
+      E#2 extends Entity declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+      S#1 extends EntityRenderState declared in method <E#2,S#1>render(E#2,double,double,double,float,PoseStack,MultiBufferSource,int,EntityRenderer<? super E#2,S#1>)
+      S#2 extends EntityRenderState declared in method <S#2>render(S#2,double,double,double,PoseStack,MultiBufferSource,int)
+      S#3 extends EntityRenderState declared in method <S#3>render(S#3,double,double,double,PoseStack,MultiBufferSource,int,EntityRenderer<?,S#3>)
+  Note: Recompile with -Xlint:deprecation for details.
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:54: error: invalid method reference
+  			  level::getProfilerSupplier, level.isClientSide, level.isDebug(), 0, 0);
+  			  ^
+    cannot find symbol
+      symbol:   method getProfilerSupplier()
+      location: class Level
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:103: error: invalid method reference
+  		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+  		                       ^
+    cannot find symbol
+      symbol:   method getPositionColorShader()
+      location: class GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:179: error: invalid method reference
+  		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+  		                       ^
+    cannot find symbol
+      symbol:   method getPositionColorShader()
+      location: class GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:239: error: invalid method reference
+  		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+  		                       ^
+    cannot find symbol
+      symbol:   method getPositionColorShader()
+      location: class GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:288: error: invalid method reference
+  		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+  		                       ^
+    cannot find symbol
+      symbol:   method getPositionColorShader()
+      location: class GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:363: error: invalid method reference
+  		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+  		                       ^
+    cannot find symbol
+      symbol:   method getPositionTexColorShader()
+      location: class GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/render/StitchedSprite.java:27: error: cannot find symbol
+  		this(InventoryMenu.BLOCK_ATLAS, location);
+  		                  ^
+    symbol:   variable BLOCK_ATLAS
+    location: class InventoryMenu
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:86: error: cannot find symbol
+  		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, src.frameBufferId);
+  		                                                    ^
+    symbol:   variable frameBufferId
+    location: variable src of type RenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:87: error: cannot find symbol
+  		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
+  		                                                    ^
+    symbol:   variable frameBufferId
+    location: variable dst of type RenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:90: error: cannot find symbol
+  		GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, dst.frameBufferId);
+  		                                               ^
+    symbol:   variable frameBufferId
+    location: variable dst of type RenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:404: error: cannot find symbol
+  			ShaderInstance shaderinstance = minecraft.gameRenderer.blitShader;
+  			^
+    symbol:   class ShaderInstance
+    location: class CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:404: error: cannot find symbol
+  			ShaderInstance shaderinstance = minecraft.gameRenderer.blitShader;
+  			                                                      ^
+    symbol:   variable blitShader
+    location: variable gameRenderer of type GameRenderer
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:405: error: cannot find symbol
+  			shaderinstance.setSampler("DiffuseSampler", colorTextureId);
+  			                                            ^
+    symbol:   variable colorTextureId
+    location: class CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:430: error: cannot find symbol
+  			BufferUploader.draw(bufferbuilder.buildOrThrow());
+  			^
+    symbol:   variable BufferUploader
+    location: class CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/ponder/api/element/ParrotPose.java:32: error: DATA_VARIANT_ID has private access in Parrot
+  		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
+  		                                 ^
+  Note: Recompile with -Xlint:unchecked for details.
+  Note: Some input files use or override a deprecated API.
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:117: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:125: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:129: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:155: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:158: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:222: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:232: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:237: error: method does not override or implement a method from a supertype
+  	@Override
+  	^
+  /workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:67: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+  	default ShadedBlockSbbBuilder createSbbBuilder(BufferBuilder builder) {
+  	        ^
+  /workspace/Common/src/main/java/net/createmod/catnip/platform/services/ModClientHooksHelper.java:68: warning: [removal] ShadedBlockSbbBuilder in net.createmod.catnip.render has been deprecated and marked for removal
+  		return ShadedBlockSbbBuilder.create();
+  		       ^
+  Note: Some input files use unchecked or unsafe operations.
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:160: error: cannot find symbol
+  		return MapId.of(0);
+  		            ^
+    symbol:   method of(int)
+    location: class MapId
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:176: error: cannot find symbol
+  			UIRenderHelper.framebuffer.clear();
+  			                          ^
+    symbol:   method clear()
+    location: variable framebuffer of type CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:177: error: cannot find symbol
+  			UIRenderHelper.framebuffer.bindWrite();
+  			                          ^
+    symbol:   method bindWrite()
+    location: variable framebuffer of type CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/NavigatableSimiScreen.java:183: error: cannot find symbol
+  			minecraft.getMainRenderTarget().bindWrite();
+  			                               ^
+    symbol:   method bindWrite()
+    location: class RenderTarget
+  /workspace/Common/src/main/java/net/createmod/ponder/api/element/ParrotPose.java:32: error: cannot find symbol
+  		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
+  		                                                                    ^
+    symbol:   method id()
+    location: class Variant
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:139: error: cannot find symbol
+  		RenderSystem.drawBuffer(b.buildOrThrow()); // MC 1.21.5: BufferUploader removed
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/BoxElement.java:162: error: cannot find symbol
+  		RenderSystem.drawBuffer(b.buildOrThrow()); // MC 1.21.5: BufferUploader removed
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/registration/PonderSceneRegistry.java:155: error: cannot find symbol
+  		t.load(BuiltInRegistries.BLOCK.asLookup(), nbt);
+  		                              ^
+    symbol:   method asLookup()
+    location: variable BLOCK of type DefaultedRegistry<Block>
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuilder.java:321: error: cannot find symbol
+  			location = location.add(Vec3.atLowerCornerOf(side.getNormal()).scale(-3 / 128f));
+  			                                                 ^
+    symbol:   method getNormal()
+    location: variable side of type Direction
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagScreen.java:268: error: cannot find symbol
+  		RenderSystem.disableDepthTest();
+  		            ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagScreen.java:278: error: cannot find symbol
+  		RenderSystem.enableDepthTest();
+  		            ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagIndexScreen.java:273: error: cannot find symbol
+  		RenderSystem.disableDepthTest();
+  		            ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/ui/PonderTagIndexScreen.java:285: error: cannot find symbol
+  		RenderSystem.enableDepthTest();
+  		            ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuildingUtil.java:91: error: cannot find symbol
+  			return centerOf(pos).add(Vec3.atLowerCornerOf(face.getNormal())
+  			                                                  ^
+    symbol:   method getNormal()
+    location: variable face of type Direction
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/HideAllInstruction.java:29: error: cannot find symbol
+  						.setFadeVec(fadeOutTo == null ? null : Vec3.atLowerCornerOf(fadeOutTo.getNormal()).scale(.5f));
+  						                                                                     ^
+    symbol:   method getNormal()
+    location: variable fadeOutTo of type Direction
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/FadeIntoSceneInstruction.java:29: error: cannot find symbol
+  			: Vec3.atLowerCornerOf(fadeInFrom.getNormal())
+  			                                 ^
+    symbol:   method getNormal()
+    location: variable fadeInFrom of type Direction
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/instruction/FadeOutOfSceneInstruction.java:30: error: cannot find symbol
+  			: Vec3.atLowerCornerOf(fadeOutTo.getNormal())
+  			                                ^
+    symbol:   method getNormal()
+    location: variable fadeOutTo of type Direction
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/element/InputWindowElement.java:150: error: cannot find symbol
+  			RenderSystem.disableDepthTest();
+  			            ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:35: error: cannot find symbol
+  		RenderSystem.stencilMask(~0);
+  		            ^
+    symbol:   method stencilMask(int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:36: error: cannot find symbol
+  		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+  		            ^
+    symbol:   method clear(int,boolean)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:38: error: cannot find symbol
+  		RenderSystem.stencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
+  		            ^
+    symbol:   method stencilOp(int,int,int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:39: error: cannot find symbol
+  		RenderSystem.stencilMask(0xFF);
+  		            ^
+    symbol:   method stencilMask(int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:40: error: cannot find symbol
+  		RenderSystem.stencilFunc(GL11.GL_NEVER, 1, 0xFF);
+  		            ^
+    symbol:   method stencilFunc(int,int,int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:45: error: cannot find symbol
+  		RenderSystem.stencilOp(GL11.GL_KEEP, GL11.GL_KEEP, GL11.GL_KEEP);
+  		            ^
+    symbol:   method stencilOp(int,int,int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/StencilElement.java:46: error: cannot find symbol
+  		RenderSystem.stencilFunc(GL11.GL_EQUAL, 1, 0xFF);
+  		            ^
+    symbol:   method stencilFunc(int,int,int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:66: error: cannot find symbol
+  		RenderSystem.recordRenderCall(() -> {
+  		            ^
+    symbol:   method recordRenderCall(()->{ Wind[...]w); })
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:175: error: cannot find symbol
+  		RenderSystem.enableDepthTest();
+  		            ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:177: error: cannot find symbol
+  		RenderSystem.enableBlend();
+  		            ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:178: error: cannot find symbol
+  		RenderSystem.defaultBlendFunc();
+  		            ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:187: error: cannot find symbol
+  		RenderSystem.drawBuffer(buffer.buildOrThrow());
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:189: error: cannot find symbol
+  		RenderSystem.disableBlend();
+  		            ^
+    symbol:   method disableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:235: error: cannot find symbol
+  		RenderSystem.disableDepthTest();
+  		            ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:236: error: cannot find symbol
+  		RenderSystem.enableBlend();
+  		            ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:237: error: cannot find symbol
+  		RenderSystem.disableCull();
+  		            ^
+    symbol:   method disableCull()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:238: error: cannot find symbol
+  		RenderSystem.defaultBlendFunc();
+  		            ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:269: error: cannot find symbol
+  		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:270: error: cannot find symbol
+  		RenderSystem.enableCull();
+  		            ^
+    symbol:   method enableCull()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:271: error: cannot find symbol
+  		RenderSystem.disableBlend();
+  		            ^
+    symbol:   method disableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:286: error: cannot find symbol
+  		RenderSystem.enableBlend();
+  		            ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:287: error: cannot find symbol
+  		RenderSystem.defaultBlendFunc();
+  		            ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:304: error: cannot find symbol
+  		RenderSystem.drawBuffer(builder.buildOrThrow());
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:306: error: cannot find symbol
+  		RenderSystem.disableBlend();
+  		            ^
+    symbol:   method disableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:361: error: cannot find symbol
+  		RenderSystem.enableBlend();
+  		            ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:362: error: cannot find symbol
+  		RenderSystem.defaultBlendFunc();
+  		            ^
+    symbol:   method defaultBlendFunc()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:368: error: cannot find symbol
+  		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+  		            ^
+    symbol:   method drawBuffer(MeshData)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:369: error: cannot find symbol
+  		RenderSystem.disableBlend();
+  		            ^
+    symbol:   method disableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:385: error: cannot find symbol
+  			framebuffer.setClearColor(0, 0, 0, 0);
+  			           ^
+    symbol:   method setClearColor(int,int,int,int)
+    location: variable framebuffer of type CustomRenderTarget
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:401: error: cannot find symbol
+  			RenderSystem.disableDepthTest();
+  			            ^
+    symbol:   method disableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:422: error: cannot find symbol
+  			Tesselator tesselator = RenderSystem.renderThreadTesselator();
+  			                                    ^
+    symbol:   method renderThreadTesselator()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/ScreenOpener.java:100: error: cannot find symbol
+  			.tell(() -> {
+  			^
+    symbol:   method tell(()->{ Mine[...]t); })
+    location: class Minecraft
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/ConfirmationScreen.java:216: error: cannot find symbol
+  		RenderSystem.clear(GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
+  		            ^
+    symbol:   method clear(int,boolean)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:129: error: cannot find symbol
+  			RenderSystem.enableDepthTest();
+  			            ^
+    symbol:   method enableDepthTest()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:130: error: cannot find symbol
+  			RenderSystem.enableBlend();
+  			            ^
+    symbol:   method enableBlend()
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:131: error: cannot find symbol
+  			RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+  			            ^
+    symbol:   method blendFunc(int,int)
+    location: class RenderSystem
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/element/GuiGameElement.java:186: error: cannot find symbol
+  			MultiBufferSource.BufferSource buffer = graphics.bufferSource();
+  			                                                ^
+    symbol:   method bufferSource()
+    location: variable graphics of type GuiGraphics
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:224: error: cannot find symbol
+  		return this.getMinBuildHeight() + this.getHeight();
+  		           ^
+    symbol: method getMinBuildHeight()
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:234: error: cannot find symbol
+  		return SectionPos.blockToSectionCoord(this.getMinBuildHeight());
+  		                                          ^
+    symbol: method getMinBuildHeight()
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:249: error: cannot find symbol
+  		return y < this.getMinBuildHeight() || y >= this.getMaxBuildHeight();
+  		               ^
+    symbol: method getMinBuildHeight()
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderWorldParticles.java:94: error: incompatible types: MultiBufferSource cannot be converted to VertexConsumer
+  					particle.render(buffer, renderInfo, pt);
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.14.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+9 actionable tasks: 2 executed, 7 up-to-date
+  					                ^
+  /workspace/Common/src/main/java/net/createmod/ponder/foundation/PonderSceneBuilder.java:255: error: incompatible types: Vector3f cannot be converted to int
+  					effects().particleEmitterWithinBlockSpace(new DustParticleOptions(rgb, 1), Vec3.ZERO), amount, 2));
+  					                                                                  ^
+  /workspace/Common/src/main/java/net/createmod/ponder/enums/PonderSpecialTextures.java:24: error: incompatible types: ResourceLocation cannot be converted to GpuTexture
+  		RenderSystem.setShaderTexture(0, location);
+  		                                 ^
+  /workspace/Common/src/main/java/net/createmod/ponder/enums/PonderGuiTextures.java:84: error: incompatible types: ResourceLocation cannot be converted to Function<ResourceLocation,RenderType>
+  		graphics.blit(getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
+  		                         ^
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:409: error: incompatible types: VertexSorting cannot be converted to ProjectionType
+  			RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.ORTHOGRAPHIC_Z);
+  			                                                        ^
+  /workspace/Common/src/main/java/net/createmod/catnip/gui/UIRenderHelper.java:433: error: incompatible types: VertexSorting cannot be converted to ProjectionType
+  			RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.ORTHOGRAPHIC_Z);
+  			                                                                ^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/WrappedLevel.java:45: error: WrappedLevel is not abstract and does not override abstract method recipeAccess() in Level
+  public class WrappedLevel extends Level {
+         ^
+  /workspace/Common/src/main/java/net/createmod/catnip/levelWrappers/SchematicLevel.java:43: error: SchematicLevel is not abstract and does not override abstract method getSeaLevel() in LevelReader
+  public class SchematicLevel extends WrappedLevel implements ServerLevelAccessor, SchematicLevelAccessor {
+         ^
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  100 errors
+  4 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 10s

@@ -28,7 +28,8 @@ public abstract class ParrotPose {
 	public Parrot create(PonderLevel world) {
 		Parrot entity = new Parrot(EntityType.PARROT, world);
 		int nextInt = Ponder.RANDOM.nextInt(VARIANTS.length);
-		entity.setVariant(VARIANTS[nextInt]);
+		// setVariant() is now private - use entity data directly
+		entity.getEntityData().set(Parrot.DATA_VARIANT_ID, VARIANTS[nextInt].id());
 		return entity;
 	}
 
