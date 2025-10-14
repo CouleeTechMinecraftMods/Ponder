@@ -18,7 +18,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.TickRateManager;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
@@ -277,7 +276,8 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
-	public Collection<EnderDragonPart> dragonParts() {
+	public Collection<Entity> dragonParts() {
+		// MC 1.21.5: EnderDragonPart class removed, using Entity base type
 		return Collections.emptyList();
 	}
 
