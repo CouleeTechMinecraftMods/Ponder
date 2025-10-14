@@ -136,10 +136,9 @@ public class BoxElement extends AbstractRenderElement {
 		b.addVertex(model, x - f - 1        , y + f + 1 + height, z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y + f + 1 + height, z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y - f - 1         , z).setColor(c1.getRed(), c1.getGreen(), c1.getBlue(), c1.getAlpha());
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = b.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = b.buildOrThrow();
+		mesh.draw();
 		b = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 		//inner top - includes corners
 		b.addVertex(model, x - f - 1        , y - f - 1         , z).setColor(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha());
@@ -162,10 +161,9 @@ public class BoxElement extends AbstractRenderElement {
 		b.addVertex(model, x + f + 1 + width, y + f     + height, z).setColor(c3.getRed(), c3.getGreen(), c3.getBlue(), c3.getAlpha());
 		b.addVertex(model, x + f + 1 + width, y - f             , z).setColor(c2.getRed(), c2.getGreen(), c2.getBlue(), c2.getAlpha());
 
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh2 = b.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh2);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh2 = b.buildOrThrow();
+		mesh2.draw();
 
 		// disableBlend removed - controlled by RenderStateShard
 		//RenderSystem.enableTexture();

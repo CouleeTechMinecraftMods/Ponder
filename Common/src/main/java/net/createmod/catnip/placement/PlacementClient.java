@@ -223,10 +223,9 @@ public class PlacementClient {
 		bufferbuilder.addVertex(mat, 6, -6, 0).setColor(r, g, b, 0f);
 		bufferbuilder.addVertex(mat, 9, -3, 0).setColor(r, g, b, 0f);
 
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = bufferbuilder.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = bufferbuilder.buildOrThrow();
+		mesh.draw();
 		RenderSystem.disableBlend();
 		//RenderSystem.enableTexture();
 		ms.popPose();
@@ -264,10 +263,9 @@ public class PlacementClient {
 		buffer.addVertex(mat,  1,  1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty + th);
 		buffer.addVertex(mat,  1, -1, 0).setColor(1f, 1f, 1f, alpha).setUv(tx + tw, ty);
 
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = buffer.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = buffer.buildOrThrow();
+		mesh.draw();
 
 		RenderSystem.disableBlend();
 		ms.popPose();

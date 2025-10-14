@@ -173,14 +173,14 @@ public abstract class NavigatableSimiScreen extends AbstractSimiScreen {
 		if (lastScreen != null && lastScreen != this && !transition.settled()) {
 			currentlyRenderingPreviousScreen = true;
 			ms.pushPose();
-			UIRenderHelper.framebuffer.clear(Minecraft.ON_OSX);
-			UIRenderHelper.framebuffer.bindFbo();
+			// MC 1.21.5: clear() method no longer exists, bindWrite will clear automatically
+			UIRenderHelper.framebuffer.bindWrite();
 			lastScreen.render(graphics, 0, 0, partialTicks);
 
 			ms.popPose();
 
 			ms.pushPose();
-			minecraft.getMainRenderTarget().bindFbo();
+			minecraft.getMainRenderTarget().bindWrite();
 
 			int dpx = (int) (guiScaledWidth / 2);
 			int dpy = (int) (guiScaledHeight / 2);

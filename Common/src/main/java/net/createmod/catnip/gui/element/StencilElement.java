@@ -33,7 +33,7 @@ public interface StencilElement extends RenderElement {
 		graphics.flush();
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 		RenderSystem.stencilMask(~0);
-		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT, Minecraft.ON_OSX);
+		RenderSystem.clear(GL11.GL_STENCIL_BUFFER_BIT);
 		GL11.glEnable(GL11.GL_STENCIL_TEST);
 		RenderSystem.stencilOp(GL11.GL_REPLACE, GL11.GL_KEEP, GL11.GL_KEEP);
 		RenderSystem.stencilMask(0xFF);

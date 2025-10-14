@@ -81,11 +81,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// MC 1.21.5: bindRead/bindWrite replaced with bindFbo
-		src.bindFboRead();
-		dst.bindFbo();
+		// MC 1.21.5: Use bindRead/bindWrite instead of bindFboRead/bindFbo
+		src.bindRead();
+		dst.bindWrite();
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		dst.bindFbo();
+		dst.bindWrite();
 	}
 
 	/**
@@ -181,8 +181,9 @@ public class UIRenderHelper {
 		buffer.addVertex(mat,  left,    top, zLevel).setColor(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha());
 		buffer.addVertex(mat,  left, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
 		buffer.addVertex(mat, right, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
-		// MC 1.21.5: Draw MeshData using BufferBuilder.drawWithShader (note: static method on BufferBuilder, not BufferUploader)
-		BufferBuilder.drawWithShader(buffer.buildOrThrow());
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = buffer.buildOrThrow();
+		mesh.draw();
 
 		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
@@ -264,10 +265,9 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(model, x2, y1, 0).setColor(fc3.getRed(), fc3.getGreen(), fc3.getBlue(), fc3.getAlpha());
 		bufferbuilder.addVertex(model, x3, y2, 0).setColor(fc4.getRed(), fc4.getGreen(), fc4.getBlue(), fc4.getAlpha());
 
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = bufferbuilder.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = bufferbuilder.buildOrThrow();
+		mesh.draw();
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
@@ -302,10 +302,9 @@ public class UIRenderHelper {
 			builder.addVertex(pose, (float) point.getX(), (float) point.getY(), 0).setColor(innerColor.getRGB());
 		}
 
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = builder.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = builder.buildOrThrow();
+		mesh.draw();
 
 		GL11.glDisable(GL11.GL_BLEND);
 
@@ -369,10 +368,9 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
 		bufferbuilder.addVertex(m, (float) left , (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v1);
-		// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-		try (MeshData mesh = bufferbuilder.buildOrThrow()) {
-			BufferBuilder.drawWithShader(mesh);
-		}
+		// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+		MeshData mesh = bufferbuilder.buildOrThrow();
+		mesh.draw();
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 
@@ -435,10 +433,9 @@ public class UIRenderHelper {
 			bufferbuilder.addVertex(vx, 0 , 0).setUv(tx, ty).setColor(1, 1, 1, alpha);
 			bufferbuilder.addVertex(0 , 0 , 0).setUv(0 , ty).setColor(1, 1, 1, alpha);
 
-			// MC 1.21.5: MeshData must be uploaded and drawn via GpuBuffer or closed immediately
-			try (MeshData mesh = bufferbuilder.buildOrThrow()) {
-				BufferBuilder.drawWithShader(mesh);
-			}
+			// MC 1.21.5: MeshData.draw() draws the mesh and closes it automatically
+			MeshData mesh = bufferbuilder.buildOrThrow();
+			mesh.draw();
 
 			shaderinstance.clear();
 			RenderSystem.setProjectionMatrix(projectionMatrix, RenderSystem.getProjectionType());
