@@ -53,7 +53,7 @@ public class WrappedLevel extends Level {
 
 	public WrappedLevel(Level level) {
 		super((WritableLevelData) level.getLevelData(), level.dimension(), level.registryAccess(), level.dimensionTypeRegistration(),
-			  level::getProfiler, level.isClientSide, level.isDebug(), 0, 0);
+			  level::getProfilerSupplier, level.isClientSide, level.isDebug(), 0, 0);
 		this.level = level;
 	}
 
