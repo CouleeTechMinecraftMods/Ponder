@@ -15,6 +15,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.FullChunkStatus;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.TickRateManager;
 import net.minecraft.world.entity.Entity;
@@ -253,6 +256,14 @@ public class SchematicChunkSource extends ChunkSource {
 			@Override
 			public java.util.Collection<EnderDragonPart> dragonParts() {
 				return java.util.Collections.emptyList();
+			}
+
+			@Override
+			public void explode(@Nullable Entity entity, @Nullable DamageSource damageSource,
+								@Nullable ExplosionDamageCalculator calculator, double x, double y, double z,
+								float radius, boolean fire, Level.ExplosionInteraction interaction,
+								ParticleOptions smallExplosionParticles, ParticleOptions largeExplosionParticles,
+								Holder<SoundEvent> explosionSound) {
 			}
 
 			// Neo's patched methods

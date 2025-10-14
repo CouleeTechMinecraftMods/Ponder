@@ -43,6 +43,9 @@ import net.minecraft.world.level.storage.WritableLevelData;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.ticks.LevelTickAccess;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.core.particles.ParticleOptions;
 
 public class WrappedLevel extends Level {
 
@@ -282,6 +285,16 @@ public class WrappedLevel extends Level {
 	@Override
 	public Collection<EnderDragonPart> dragonParts() {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public void explode(@Nullable Entity entity, @Nullable DamageSource damageSource,
+						@Nullable ExplosionDamageCalculator calculator, double x, double y, double z,
+						float radius, boolean fire, Level.ExplosionInteraction interaction,
+						ParticleOptions smallExplosionParticles, ParticleOptions largeExplosionParticles,
+						Holder<SoundEvent> explosionSound) {
+		level.explode(entity, damageSource, calculator, x, y, z, radius, fire, interaction,
+					  smallExplosionParticles, largeExplosionParticles, explosionSound);
 	}
 
 	// Neo's patched methods
