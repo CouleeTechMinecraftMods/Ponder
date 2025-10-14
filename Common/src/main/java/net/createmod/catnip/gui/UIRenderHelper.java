@@ -171,10 +171,10 @@ public class UIRenderHelper {
 	}
 
 	public static void drawGradientRect(Matrix4f mat, int zLevel, float left, float top, float right, float bottom, Color startColor, Color endColor) {
-		RenderSystem.enableDepthTest();
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		//RenderSystem.disableTexture();
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		Tesselator tesselator = Tesselator.getInstance();
@@ -183,9 +183,9 @@ public class UIRenderHelper {
 		buffer.addVertex(mat,  left,    top, zLevel).setColor(startColor.getRed(), startColor.getGreen(), startColor.getBlue(), startColor.getAlpha());
 		buffer.addVertex(mat,  left, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
 		buffer.addVertex(mat, right, bottom, zLevel).setColor(  endColor.getRed(),   endColor.getGreen(),   endColor.getBlue(),   endColor.getAlpha());
-		buffer.buildOrThrow().draw();
+		RenderSystem.drawBuffer(buffer.buildOrThrow());
 
-		RenderSystem.disableBlend();
+		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
 	}
 
@@ -231,10 +231,10 @@ public class UIRenderHelper {
 		Color fc3 = Color.mixColors(c1, c2, (indent + width) / (width + 2f * indent));
 		Color fc4 = Color.mixColors(c1, c2, 1);
 
-		RenderSystem.disableDepthTest();
-		RenderSystem.enableBlend();
-		RenderSystem.disableCull();
-		RenderSystem.defaultBlendFunc();
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		Tesselator tessellator = Tesselator.getInstance();
@@ -265,9 +265,9 @@ public class UIRenderHelper {
 		bufferbuilder.addVertex(model, x2, y1, 0).setColor(fc3.getRed(), fc3.getGreen(), fc3.getBlue(), fc3.getAlpha());
 		bufferbuilder.addVertex(model, x3, y2, 0).setColor(fc4.getRed(), fc4.getGreen(), fc4.getBlue(), fc4.getAlpha());
 
-		bufferbuilder.buildOrThrow().draw();
-		RenderSystem.enableCull();
-		RenderSystem.disableBlend();
+		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glDisable(GL11.GL_BLEND);
 		//RenderSystem.enableTexture();
 	}
 
@@ -282,8 +282,8 @@ public class UIRenderHelper {
 
 		// if arcAngle > 0, start with inner. otherwise start with outer
 
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
 
 		BufferBuilder builder = Tesselator.getInstance().begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
@@ -300,9 +300,9 @@ public class UIRenderHelper {
 			builder.addVertex(pose, (float) point.getX(), (float) point.getY(), 0).setColor(innerColor.getRGB());
 		}
 
-		builder.buildOrThrow().draw();
+		RenderSystem.drawBuffer(builder.buildOrThrow());
 
-		RenderSystem.disableBlend();
+		GL11.glDisable(GL11.GL_BLEND);
 
 	}
 
@@ -357,15 +357,15 @@ public class UIRenderHelper {
 	private static void drawTexturedQuad(Matrix4f m, Color c, int left, int right, int top, int bot, int z, float u1, float u2, float v1, float v2) {
 		Tesselator tesselator = Tesselator.getInstance();
 		BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		bufferbuilder.addVertex(m, (float) left , (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
 		bufferbuilder.addVertex(m, (float) left , (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v1);
-		bufferbuilder.buildOrThrow().draw();
-		RenderSystem.disableBlend();
+		RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
+		GL11.glDisable(GL11.GL_BLEND);
 	}
 
 	public static void flipForGuiRender(PoseStack poseStack) {
@@ -375,7 +375,7 @@ public class UIRenderHelper {
 	public static class CustomRenderTarget extends RenderTarget {
 
 		public CustomRenderTarget(boolean useDepth) {
-			super(useDepth);
+			super("catnip_stencil_fb", useDepth);
 		}
 
 		public static CustomRenderTarget create(Window mainWindow) {
@@ -397,15 +397,16 @@ public class UIRenderHelper {
 			float tx = (float) viewWidth / (float) width;
 			float ty = (float) viewHeight / (float) height;
 
-			RenderSystem.disableDepthTest();
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 			Minecraft minecraft = Minecraft.getInstance();
 			var shaderinstance = minecraft.gameRenderer.blitShader;
-			shaderinstance.setSampler("DiffuseSampler", colorTextureId);
+			// TODO: MC 1.21.5 - colorTextureId field is now private, need accessor
+			// shaderinstance.setSampler("DiffuseSampler", colorTextureId);
 			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);
 			Matrix4f matrix4f = poseStack.last().pose();
 			Matrix4f projectionMatrix = RenderSystem.getProjectionMatrix();
-			RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.ORTHOGRAPHIC_Z);
+			RenderSystem.setProjectionMatrix(matrix4f, RenderSystem.getProjectionType());
 			if (shaderinstance.MODEL_VIEW_MATRIX != null) {
 				shaderinstance.MODEL_VIEW_MATRIX.set(new Matrix4f().translation(0.0F, 0.0F, -2000.0F));
 			}
@@ -418,7 +419,7 @@ public class UIRenderHelper {
 
 			//bindRead();
 
-			Tesselator tesselator = RenderSystem.renderThreadTesselator();
+			Tesselator tesselator = Tesselator.getInstance();
 			BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
 			bufferbuilder.addVertex(0 , vy, 0).setUv(0 , 0 ).setColor(1, 1, 1, alpha);
@@ -426,10 +427,10 @@ public class UIRenderHelper {
 			bufferbuilder.addVertex(vx, 0 , 0).setUv(tx, ty).setColor(1, 1, 1, alpha);
 			bufferbuilder.addVertex(0 , 0 , 0).setUv(0 , ty).setColor(1, 1, 1, alpha);
 
-			bufferbuilder.buildOrThrow().draw();
+			RenderSystem.drawBuffer(bufferbuilder.buildOrThrow());
 
 			shaderinstance.clear();
-			RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.ORTHOGRAPHIC_Z);
+			RenderSystem.setProjectionMatrix(projectionMatrix, RenderSystem.getProjectionType());
 			//unbindRead();
 		}
 
