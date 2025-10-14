@@ -12,7 +12,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.createmod.catnip.data.Couple;
 import net.createmod.catnip.theme.Color;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.CoreShaders;
 
 public class BoxElement extends AbstractRenderElement {
 
@@ -100,7 +100,7 @@ public class BoxElement extends AbstractRenderElement {
 		 * */
 		//RenderSystem.disableTexture();
 		// enableBlend and defaultBlendFunc removed - controlled by RenderStateShard
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_COLOR);
 
 		PoseStack ms = graphics.pose();
 		Matrix4f model = ms.last().pose();
