@@ -181,8 +181,10 @@ public class DefaultSuperByteBuffer implements SuperByteBuffer {
 
 	@Override
 	public DefaultSuperByteBuffer reset() {
-		while (!transforms.clear())
+		while (transforms.last() != null) {
 			transforms.popPose();
+			if (transforms.last() == null) break;
+		}
 
 		transforms.pushPose();
 

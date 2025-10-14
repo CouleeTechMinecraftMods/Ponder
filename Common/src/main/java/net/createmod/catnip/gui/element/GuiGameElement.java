@@ -188,8 +188,8 @@ public class GuiGameElement {
 
 			transformMatrix(poseStack);
 
-			// MC 1.21.5: setShaderTexture now requires GpuTexture
-			RenderSystem.setShaderTexture(0, mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
+			// MC 1.21.5: setShaderTexture now requires GpuTexture (bind texture atlas)
+			RenderSystem.setShaderTexture(0, mc.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).getId());
 			renderModel(blockRenderer, buffer, poseStack);
 
 			cleanUpMatrix(poseStack);
@@ -294,11 +294,12 @@ public class GuiGameElement {
 
 		public static void renderItemIntoGUI(PoseStack poseStack, ItemStack stack, boolean useDefaultLighting) {
 			ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-			Object bakedModel = renderer.getItemModel(stack); // MC 1.21.5: getModel -> getItemModel
+			// MC 1.21.5: getItemModel() -> getModel(), and item rendering is simplified
+			Object bakedModel = renderer.getModel(stack, null, null, 0);
 
 			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).setFilter(false, false);
-			// MC 1.21.5: setShaderTexture now requires GpuTexture
-			RenderSystem.setShaderTexture(0, Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS));
+			// MC 1.21.5: setShaderTexture now requires GpuTexture (bind texture atlas)
+			RenderSystem.setShaderTexture(0, Minecraft.getInstance().getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS).getId());
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -314,7 +315,8 @@ public class GuiGameElement {
 				Lighting.setupForFlatItems();
 			}
 
-			renderer.render(stack, ItemDisplayContext.GUI, false, poseStack, buffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, bakedModel);
+			// MC 1.21.5: ItemRenderer.render() signature changed - use renderStatic() instead
+			renderer.renderStatic(stack, ItemDisplayContext.GUI, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, poseStack, buffer, null, 0);
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			buffer.endBatch();
 

@@ -81,11 +81,11 @@ public class UIRenderHelper {
 	 * Switch from src to dst, after copying the contents of src to dst.
 	 */
 	public static void swapAndBlitColor(RenderTarget src, RenderTarget dst) {
-		// MC 1.21.5: RenderTarget bind methods exist as bindAsReadBuffer() and bindAsDrawBuffer()
-		src.bindAsReadBuffer();
-		dst.bindAsDrawBuffer();
+		// MC 1.21.5: Use GL30 for framebuffer binding
+		GL30.glBindFramebuffer(GL30.GL_READ_FRAMEBUFFER, src.frameBufferId);
+		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
 		GL30.glBlitFramebuffer(0, 0, src.width, src.height, 0, 0, dst.width, dst.height, GL30.GL_COLOR_BUFFER_BIT, GL20.GL_LINEAR);
-		dst.bindAsDrawBuffer();
+		GL30.glBindFramebuffer(GL30.GL_DRAW_FRAMEBUFFER, dst.frameBufferId);
 	}
 
 	/**
@@ -403,9 +403,8 @@ public class UIRenderHelper {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 
 			Minecraft minecraft = Minecraft.getInstance();
-			// MC 1.21.5: blitShader is no longer accessible, need to use appropriate shader
-			// TODO: Find replacement for blitShader in 1.21.5
-			var shaderinstance = minecraft.gameRenderer.getPositionTexColorShader();
+			// MC 1.21.5: Use ShaderProgram.getInstance() for shader access
+			var shaderinstance = net.minecraft.client.renderer.ShaderProgram.getInstance("position_tex_color");
 			// TODO: MC 1.21.5 - colorTextureId field is now private, need accessor
 			// shaderinstance.setSampler("DiffuseSampler", colorTextureId);
 			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);

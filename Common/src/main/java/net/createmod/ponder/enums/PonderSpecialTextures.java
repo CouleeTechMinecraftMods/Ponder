@@ -21,8 +21,8 @@ public enum PonderSpecialTextures implements BindableTexture {
 
 	@Override
 	public void bind() {
-		// MC 1.21.5: setShaderTexture now requires GpuTexture, use bindTexture instead
-		RenderSystem.setShaderTexture(0, RenderSystem.getTextureManager().getTexture(location));
+		// MC 1.21.5: setShaderTexture now requires GpuTexture, use Minecraft.getInstance()
+		RenderSystem.setShaderTexture(0, net.minecraft.client.Minecraft.getInstance().getTextureManager().getTexture(location).getId());
 	}
 
 	@Override

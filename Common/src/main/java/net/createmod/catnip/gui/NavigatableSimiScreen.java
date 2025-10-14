@@ -9,6 +9,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL30;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -173,14 +174,14 @@ public abstract class NavigatableSimiScreen extends AbstractSimiScreen {
 		if (lastScreen != null && lastScreen != this && !transition.settled()) {
 			currentlyRenderingPreviousScreen = true;
 			ms.pushPose();
-			// MC 1.21.5: bindAsDrawBuffer() replaces bindWrite()
-			UIRenderHelper.framebuffer.bindAsDrawBuffer();
+			// MC 1.21.5: Use GL30 for framebuffer binding
+			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, UIRenderHelper.framebuffer.frameBufferId);
 			lastScreen.render(graphics, 0, 0, partialTicks);
 
 			ms.popPose();
 
 			ms.pushPose();
-			minecraft.getMainRenderTarget().bindAsDrawBuffer();
+			GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, minecraft.getMainRenderTarget().frameBufferId);
 
 			int dpx = (int) (guiScaledWidth / 2);
 			int dpy = (int) (guiScaledHeight / 2);
