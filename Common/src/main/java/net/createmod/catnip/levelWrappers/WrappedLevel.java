@@ -114,7 +114,6 @@ public class WrappedLevel extends Level {
 		return chunkSource != null ? chunkSource : level.getChunkSource();
 	}
 
-	@Override
 	public void levelEvent(@Nullable Player player, int type, BlockPos pos, int data) {}
 
 	@Override
@@ -122,11 +121,9 @@ public class WrappedLevel extends Level {
 		return Collections.emptyList();
 	}
 
-	@Override
 	public void playSound(@Nullable Player player, double x, double y, double z, Holder<SoundEvent> soundIn,
 		SoundSource category, float volume, float pitch) {}
 
-	@Override
 	public void playSound(@Nullable Player p_217384_1_, Entity p_217384_2_, Holder<SoundEvent> p_217384_3_,
 		SoundSource p_217384_4_, float p_217384_5_, float p_217384_6_) {}
 
@@ -222,27 +219,22 @@ public class WrappedLevel extends Level {
 	// getHeight overrides where they deviate
 	// from the defaults for their dimension.
 
-	@Override
 	public int getMaxBuildHeight() {
 		return level.getMaxBuildHeight();
 	}
 
-	@Override
 	public int getMinBuildHeight() {
 		return level.getMinBuildHeight();
 	}
 
-	@Override
 	public int getSectionsCount() {
 		return this.getMaxSection() - this.getMinSection();
 	}
 
-	@Override
 	public int getMinSection() {
 		return SectionPos.blockToSectionCoord(this.getMinBuildHeight());
 	}
 
-	@Override
 	public int getMaxSection() {
 		return SectionPos.blockToSectionCoord(this.getMaxBuildHeight() - 1) + 1;
 	}
@@ -280,6 +272,11 @@ public class WrappedLevel extends Level {
 	@Override
 	public FuelValues fuelValues() {
 		return level.fuelValues();
+	}
+
+	@Override
+	public Iterable<Entity> dragonParts() {
+		return Collections.emptyList();
 	}
 
 	// Neo's patched methods
