@@ -81,7 +81,9 @@ public class NeoForgeClientHooksHelper implements ModClientHooksHelper {
 
 	@Override
 	public void enableStencilBuffer(RenderTarget renderTarget) {
-		renderTarget.enableStencil();
+		// MC 1.21.2: RenderTarget.enableStencil() was removed.
+		// Stencil buffers are now always available on RenderTargets.
+		// This method is now a no-op.
 	}
 
 	@Override
@@ -165,7 +167,8 @@ public class NeoForgeClientHooksHelper implements ModClientHooksHelper {
 
 			for (RenderType chunkType : blockModel.getRenderTypes(blockState, RandomSource.create(42L),
 				VirtualRenderHelper.VIRTUAL_DATA)) {
-				RenderType renderType = RenderTypeHelper.getEntityRenderType(chunkType, false);
+				// MC 1.21.2: RenderTypeHelper.getEntityRenderType() now takes only one parameter
+				RenderType renderType = RenderTypeHelper.getEntityRenderType(chunkType);
 				blockRenderer.getModelRenderer().renderModel(ms.last(), buffer.getBuffer(renderType), blockState,
 					blockModel, rgb.getRedAsFloat(), rgb.getGreenAsFloat(),
 					rgb.getBlueAsFloat(), LightTexture.FULL_BRIGHT,

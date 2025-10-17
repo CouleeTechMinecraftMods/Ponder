@@ -95,6 +95,10 @@ public class NeoForgePonderClient {
 			PlacementClient.onRenderCrosshairOverlay(event.getGuiGraphics(), AnimationTickHolder.getPartialTicksUI());
 		}
 
+		// MC 1.21.2: RenderTooltipEvent.Color was removed. Tooltip color customization
+		// needs to be reimplemented using the new tooltip rendering system.
+		// TODO: Reimplement custom tooltip colors using RenderTooltipEvent.Pre or GatherComponents
+		/*
 		@SubscribeEvent
 		public static void onRenderTooltipColor(RenderTooltipEvent.Color event) {
 			Optional<Couple<Color>> colors = PonderTooltipHandler.handleTooltipColor(event.getItemStack());
@@ -104,6 +108,7 @@ public class NeoForgePonderClient {
 			event.setBorderStart(colors.get().getFirst().getRGB());
 			event.setBorderEnd(colors.get().getSecond().getRGB());
 		}
+		*/
 
 		@SubscribeEvent
 		public static void onItemTooltip(ItemTooltipEvent event) {
