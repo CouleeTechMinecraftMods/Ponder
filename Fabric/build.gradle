@@ -21,8 +21,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
 
-    modApi("com.github.CouleeTechMinecraftMods.Flywheel:flywheel-fabric-api:${flywheel_version}")
-    modImplementation(include("com.github.CouleeTechMinecraftMods.Flywheel:flywheel-fabric:${flywheel_version}"))
+    modApi("dev.engine-room.flywheel:flywheel-fabric-api-${minecraft_version}:${flywheel_version}")
+    modImplementation(include("dev.engine-room.flywheel:flywheel-fabric-${minecraft_version}:${flywheel_version}"))
 
     modApi(include("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forgeconfigapiport_version}"))
     implementation(include("javax.annotation:javax.annotation-api:1.3.2"))
