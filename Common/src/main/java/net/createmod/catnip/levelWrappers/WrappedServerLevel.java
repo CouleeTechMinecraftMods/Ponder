@@ -123,11 +123,6 @@ public class WrappedServerLevel extends ServerLevel {
 	public void destroyBlockProgress(int breakerId, BlockPos pos, int progress) {}
 
 	@Override
-	public RecipeManager getRecipeManager() {
-		return level.getRecipeManager();
-	}
-
-	@Override
 	public Holder<Biome> getUncachedNoiseBiome(int p_225604_1_, int p_225604_2_, int p_225604_3_) {
 		return level.getUncachedNoiseBiome(p_225604_1_, p_225604_2_, p_225604_3_);
 	}

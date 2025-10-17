@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.FullChunkStatus;
@@ -17,11 +18,13 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.TickRateManager;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -210,7 +213,6 @@ public class SchematicChunkSource extends ChunkSource {
 				return null;
 			}
 
-			@Override
 			public RecipeManager getRecipeManager() {
 				return null;
 			}
@@ -243,6 +245,20 @@ public class SchematicChunkSource extends ChunkSource {
 			@Override
 			public TickRateManager tickRateManager() {
 				return null;
+			}
+
+			@Override
+			public void explode(Entity entity, DamageSource damageSource,
+					ExplosionDamageCalculator damageCalculator, double x, double y, double z,
+					float radius, boolean fire, Level.ExplosionInteraction explosionInteraction,
+					ParticleOptions smallExplosionParticles, ParticleOptions largeExplosionParticles,
+					Holder<SoundEvent> explosionSound) {
+				// Do nothing - dummy implementation
+			}
+
+			@Override
+			public int getSeaLevel() {
+				return 63;
 			}
 
 			// Neo's patched methods

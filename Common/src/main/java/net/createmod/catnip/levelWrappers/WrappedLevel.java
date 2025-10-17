@@ -293,6 +293,11 @@ public class WrappedLevel extends Level {
 		return level.enabledFeatures();
 	}
 
+	@Override
+	public int getSeaLevel() {
+		return level.getSeaLevel();
+	}
+
 	// Neo's patched methods
 	public void setDayTimeFraction(float var1) {}
 

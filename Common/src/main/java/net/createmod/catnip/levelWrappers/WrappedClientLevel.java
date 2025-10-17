@@ -8,7 +8,7 @@ import net.createmod.ponder.mixin.accessor.BiomeManagerAccessor;
 import net.createmod.ponder.mixin.client.accessor.ClientPacketListenerAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundEvent;
@@ -30,8 +30,8 @@ public class WrappedClientLevel extends ClientLevel {
 
 	private WrappedClientLevel(Level level) {
 		super(mc.getConnection(), mc.level.getLevelData(), level.dimension(), level.dimensionTypeRegistration(),
-			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(), Profiler::get,
-			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed());
+			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(),
+			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed(), level.getSeaLevel());
 		this.level = level;
 	}
 
@@ -75,13 +75,6 @@ public class WrappedClientLevel extends ClientLevel {
 	@Override
 	public FluidState getFluidState(BlockPos pos) {
 		return level.getFluidState(pos);
-	}
-
-	@Nullable
-	@Override
-	public <T extends LivingEntity> T getNearestEntity(List<? extends T> p_217361_1_, TargetingConditions p_217361_2_,
-		@Nullable LivingEntity p_217361_3_, double p_217361_4_, double p_217361_6_, double p_217361_8_) {
-		return level.getNearestEntity(p_217361_1_, p_217361_2_, p_217361_3_, p_217361_4_, p_217361_6_, p_217361_8_);
 	}
 
 	@Override
