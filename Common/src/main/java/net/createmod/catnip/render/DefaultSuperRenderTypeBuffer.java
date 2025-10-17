@@ -78,7 +78,6 @@ public class DefaultSuperRenderTypeBuffer implements SuperRenderTypeBuffer {
 			put(map, RenderType.glint());
 			put(map, RenderType.glintTranslucent());
 			put(map, RenderType.entityGlint());
-			put(map, RenderType.entityGlintDirect());
 			put(map, RenderType.waterMask());
 			ModelBakery.DESTROY_TYPES.forEach((renderType) -> {
 				put(map, renderType);

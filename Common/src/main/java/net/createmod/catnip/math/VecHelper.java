@@ -104,7 +104,7 @@ public class VecHelper {
 	}
 
 	public static boolean isVecPointingTowards(Vec3 vec, Direction direction) {
-		return Vec3.atLowerCornerOf(direction.getNormal())
+		return Vec3.atLowerCornerOf(direction.step())
 			.dot(vec.normalize()) > 0.125; // slight tolerance to activate perpendicular movement actors
 	}
 
@@ -126,7 +126,7 @@ public class VecHelper {
 	}
 
 	public static Vec3 axisAlingedPlaneOf(Direction face) {
-		return axisAlingedPlaneOf(Vec3.atLowerCornerOf(face.getNormal()));
+		return axisAlingedPlaneOf(Vec3.atLowerCornerOf(face.step()));
 	}
 
 	public static ListTag writeNBT(Vec3 vec) {

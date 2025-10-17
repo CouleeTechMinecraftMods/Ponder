@@ -62,7 +62,9 @@ public final class NBTProcessors {
 			CompoundTag itemComponents = compound.getCompound("components");
 			HashSet<String> keys = new HashSet<>(itemComponents.getAllKeys());
 			for (String key : keys) {
-				DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(key));
+				DataComponentType<?> type = BuiltInRegistries.DATA_COMPONENT_TYPE.get(ResourceLocation.parse(key))
+				.map(net.minecraft.core.Holder::value)
+				.orElse(null);
 				if (type != null && ComponentProcessors.isUnsafeItemComponent(type))
 					itemComponents.remove(key);
 			}

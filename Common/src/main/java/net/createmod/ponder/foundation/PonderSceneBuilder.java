@@ -318,7 +318,7 @@ public class PonderSceneBuilder implements SceneBuilder {
 
 		@Override
 		public void showFilterSlotInput(Vec3 location, Direction side, int duration) {
-			location = location.add(Vec3.atLowerCornerOf(side.getNormal()).scale(-3 / 128f));
+			location = location.add(Vec3.atLowerCornerOf(side.step()).scale(-3 / 128f));
 			Vec3 expands = VecHelper.axisAlingedPlaneOf(side).scale(11 / 128f);
 			addInstruction(new HighlightValueBoxInstruction(location, expands, duration));
 		}
