@@ -14,7 +14,6 @@
     "client.accessor.BufferBuilderAccessor",
     "client.accessor.ClientPacketListenerAccessor",
     "client.accessor.GameRendererAccessor",
-    "client.accessor.ItemRendererAccessor",
     "client.accessor.RenderSystemAccessor",
     "client.accessor.RenderTypeAccessor",
     "client.accessor.ScreenAccessor"

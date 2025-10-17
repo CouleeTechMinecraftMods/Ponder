@@ -18,7 +18,6 @@ import net.createmod.catnip.gui.UIRenderHelper;
 import net.createmod.catnip.impl.client.render.ColoringVertexConsumer;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.platform.CatnipClientServices;
-import net.createmod.ponder.mixin.client.accessor.ItemRendererAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
@@ -291,10 +290,12 @@ public class GuiGameElement {
 		}
 
 		public static void renderItemIntoGUI(PoseStack poseStack, ItemStack stack, boolean useDefaultLighting) {
-			ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
+			Minecraft mc = Minecraft.getInstance();
+			ItemRenderer renderer = mc.getItemRenderer();
 			BakedModel bakedModel = renderer.getModel(stack, null, null, 0);
 
-			((ItemRendererAccessor) renderer).catnip$getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
+			// MC 1.21.2: ItemRenderer no longer has textureManager field, get it from Minecraft instance
+			mc.getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
 			RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
 			RenderSystem.enableBlend();
 			RenderSystem.enableCull();

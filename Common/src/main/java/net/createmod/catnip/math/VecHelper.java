@@ -283,7 +283,8 @@ public class VecHelper {
 		}
 
 		// ----- adjust for fov -----
-		float fov = (float) ((GameRendererAccessor) mc.gameRenderer).catnip$callGetFov(ari, partialTicks, true);
+		// MC 1.21.2: getFov now returns float instead of double, no cast needed
+		float fov = ((GameRendererAccessor) mc.gameRenderer).catnip$callGetFov(ari, partialTicks, true);
 
 		float half_height = (float) mc.getWindow()
 			.getGuiScaledHeight() / 2;
