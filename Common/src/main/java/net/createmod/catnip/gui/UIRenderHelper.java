@@ -25,13 +25,12 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexSorting;
+import com.mojang.blaze3d.ProjectionType;
 import com.mojang.math.Axis;
 
 import net.createmod.catnip.platform.CatnipClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.CompiledShaderProgram;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 
@@ -400,25 +399,18 @@ public class UIRenderHelper {
 			float ty = (float) viewHeight / (float) height;
 
 			RenderSystem.disableDepthTest();
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
 
-			Minecraft minecraft = Minecraft.getInstance();
-			CompiledShaderProgram shaderinstance = minecraft.gameRenderer.blitShader;
-			shaderinstance.setSampler("DiffuseSampler", colorTextureId);
-			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);
+			// MC 1.21.2: Use standard texture shader instead of accessing blitShader directly
+			// The blitShader field was removed from GameRenderer in the rendering pipeline refactor
+			// Bind the framebuffer's color texture for rendering
+			this.bindRead();
+			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+
 			Matrix4f matrix4f = poseStack.last().pose();
 			Matrix4f projectionMatrix = RenderSystem.getProjectionMatrix();
-			RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.ORTHOGRAPHIC_Z);
-			if (shaderinstance.MODEL_VIEW_MATRIX != null) {
-				shaderinstance.MODEL_VIEW_MATRIX.set(new Matrix4f().translation(0.0F, 0.0F, -2000.0F));
-			}
-
-			if (shaderinstance.PROJECTION_MATRIX != null) {
-				shaderinstance.PROJECTION_MATRIX.set(matrix4f);
-			}
-
-			shaderinstance.apply();
-
-			//bindRead();
+			RenderSystem.setProjectionMatrix(matrix4f, ProjectionType.ORTHOGRAPHIC);
 
 			Tesselator tesselator = RenderSystem.renderThreadTesselator();
 			BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
@@ -428,11 +420,11 @@ public class UIRenderHelper {
 			bufferbuilder.addVertex(vx, 0 , 0).setUv(tx, ty).setColor(1, 1, 1, alpha);
 			bufferbuilder.addVertex(0 , 0 , 0).setUv(0 , ty).setColor(1, 1, 1, alpha);
 
-			BufferUploader.draw(bufferbuilder.buildOrThrow());
+			BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
 
-			shaderinstance.clear();
-			RenderSystem.setProjectionMatrix(projectionMatrix, VertexSorting.ORTHOGRAPHIC_Z);
-			//unbindRead();
+			this.unbindRead();
+			RenderSystem.setProjectionMatrix(projectionMatrix, ProjectionType.ORTHOGRAPHIC);
+			RenderSystem.disableBlend();
 		}
 
 	}

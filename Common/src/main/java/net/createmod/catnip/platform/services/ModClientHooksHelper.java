@@ -49,7 +49,7 @@ public interface ModClientHooksHelper {
 
 	void enableStencilBuffer(RenderTarget renderTarget);
 
-	void renderFullFluidState(PoseStack ms, MultiBufferSource.BufferSource buffer, FluidState fluid);
+	void renderFullFluidState(PoseStack ms, MultiBufferSource buffer, FluidState fluid);
 
 	@ApiStatus.Internal
 	void bufferModel(BakedModel model, BlockPos pos, BlockAndTintGetter level, BlockState state, @Nullable PoseStack poseStack, ShadeSeparatedBufferSource bufferSource);

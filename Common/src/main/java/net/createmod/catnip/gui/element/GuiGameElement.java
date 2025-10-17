@@ -195,7 +195,7 @@ public class GuiGameElement {
 			cleanUpMatrix(poseStack);
 		}
 
-		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer,
+		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource buffer,
 								   PoseStack ms) {
 			SinglePosVirtualBlockGetter level = SinglePosVirtualBlockGetter.createFullBright();
 			level.blockState(blockState);
@@ -221,13 +221,13 @@ public class GuiGameElement {
 		}
 
 		@Override
-		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer, PoseStack ms) {
+		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource buffer, PoseStack ms) {
 			renderBlockEntity(blockRenderer, buffer, ms);
 
 			super.renderModel(blockRenderer, buffer, ms);
 		}
 
-		private void renderBlockEntity(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer, PoseStack ms) {
+		private void renderBlockEntity(BlockRenderDispatcher blockRenderer, MultiBufferSource buffer, PoseStack ms) {
             if (blockEntity == null)
 				return;
 
@@ -251,7 +251,7 @@ public class GuiGameElement {
 		}
 
 		@Override
-		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource.BufferSource buffer, PoseStack poseStack) {
+		protected void renderModel(BlockRenderDispatcher blockRenderer, MultiBufferSource buffer, PoseStack poseStack) {
 			if (blockState.getBlock() instanceof BaseFireBlock) {
 				Lighting.setupForFlatItems();
 				super.renderModel(blockRenderer, buffer, poseStack);

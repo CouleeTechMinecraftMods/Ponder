@@ -216,6 +216,11 @@ public class SchematicChunkSource extends ChunkSource {
 			}
 
 			@Override
+			public net.minecraft.world.item.crafting.RecipeAccess recipeAccess() {
+				return getRecipeManager();
+			}
+
+			@Override
 			protected LevelEntityGetter<Entity> getEntities() {
 				return null;
 			}

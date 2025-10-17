@@ -257,4 +257,9 @@ public class SchematicLevel extends WrappedLevel implements ServerLevelAccessor,
 		}
 		throw new IllegalStateException("Cannot use IServerWorld#getWorld in a client environment");
 	}
+
+	@Override
+	public int getSeaLevel() {
+		return level.getSeaLevel();
+	}
 }

@@ -179,6 +179,11 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
+	public net.minecraft.world.item.crafting.RecipeAccess recipeAccess() {
+		return level.recipeAccess();
+	}
+
+	@Override
 	public Holder<Biome> getUncachedNoiseBiome(int p_225604_1_, int p_225604_2_, int p_225604_3_) {
 		return level.getUncachedNoiseBiome(p_225604_1_, p_225604_2_, p_225604_3_);
 	}
@@ -226,28 +231,28 @@ public class WrappedLevel extends Level {
 	// when other mods (such as Lithium)
 	// override the vanilla implementations in ways which cause WrappedWorlds to
 	// return incorrect, default height info.
-	// WrappedWorld subclasses should implement their own getMinBuildHeight and
+	// WrappedWorld subclasses should implement their own getMinY and
 	// getHeight overrides where they deviate
 	// from the defaults for their dimension.
 
 	@Override
-	public int getMaxBuildHeight() {
-		return this.getMinBuildHeight() + this.getHeight();
+	public int getMaxY() {
+		return this.getMinY() + this.getHeight();
 	}
 
 	@Override
 	public int getSectionsCount() {
-		return this.getMaxSection() - this.getMinSection();
+		return this.getMaxSectionY() - this.getMinSectionY();
 	}
 
 	@Override
-	public int getMinSection() {
-		return SectionPos.blockToSectionCoord(this.getMinBuildHeight());
+	public int getMinSectionY() {
+		return SectionPos.blockToSectionCoord(this.getMinY());
 	}
 
 	@Override
-	public int getMaxSection() {
-		return SectionPos.blockToSectionCoord(this.getMaxBuildHeight() - 1) + 1;
+	public int getMaxSectionY() {
+		return SectionPos.blockToSectionCoord(this.getMaxY() - 1) + 1;
 	}
 
 	@Override
@@ -257,7 +262,7 @@ public class WrappedLevel extends Level {
 
 	@Override
 	public boolean isOutsideBuildHeight(int y) {
-		return y < this.getMinBuildHeight() || y >= this.getMaxBuildHeight();
+		return y < this.getMinY() || y >= this.getMaxY();
 	}
 
 	@Override
@@ -267,12 +272,12 @@ public class WrappedLevel extends Level {
 
 	@Override
 	public int getSectionIndexFromSectionY(int sectionY) {
-		return sectionY - this.getMinSection();
+		return sectionY - this.getMinSectionY();
 	}
 
 	@Override
 	public int getSectionYFromSectionIndex(int sectionIndex) {
-		return sectionIndex + this.getMinSection();
+		return sectionIndex + this.getMinSectionY();
 	}
 
 	@Override

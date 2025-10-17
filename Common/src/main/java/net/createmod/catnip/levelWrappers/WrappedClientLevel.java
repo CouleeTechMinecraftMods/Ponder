@@ -8,6 +8,7 @@ import net.createmod.ponder.mixin.accessor.BiomeManagerAccessor;
 import net.createmod.ponder.mixin.client.accessor.ClientPacketListenerAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.util.profiling.Profiler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundEvent;
@@ -29,7 +30,7 @@ public class WrappedClientLevel extends ClientLevel {
 
 	private WrappedClientLevel(Level level) {
 		super(mc.getConnection(), mc.level.getLevelData(), level.dimension(), level.dimensionTypeRegistration(),
-			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(), level.getProfilerSupplier(),
+			((ClientPacketListenerAccessor) mc.getConnection()).catnip$getServerChunkRadius(), mc.level.getServerSimulationDistance(), Profiler::get,
 			mc.levelRenderer, level.isDebug(), ((BiomeManagerAccessor) level.getBiomeManager()).catnip$getBiomeZoomSeed());
 		this.level = level;
 	}

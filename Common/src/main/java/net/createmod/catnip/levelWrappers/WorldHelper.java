@@ -7,7 +7,7 @@ import net.minecraft.world.level.LevelAccessor;
 public class WorldHelper {
 	public static ResourceLocation getDimensionID(LevelAccessor world) {
 		return world.registryAccess()
-			.registryOrThrow(Registries.DIMENSION_TYPE)
+			.lookupOrThrow(Registries.DIMENSION_TYPE)
 			.getKey(world.dimensionType());
 	}
 }

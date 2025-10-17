@@ -1,5 +1,6 @@
 package net.createmod.catnip.registry;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -59,11 +60,11 @@ public class RegisteredObjectsHelper {
 	}
 
 	public static Item getItem(ResourceLocation location) {
-		return BuiltInRegistries.ITEM.get(location);
+		return BuiltInRegistries.ITEM.get(location).map(Holder::value).orElse(Items.AIR);
 	}
 
 	public static Block getBlock(ResourceLocation location) {
-		return BuiltInRegistries.BLOCK.get(location);
+		return BuiltInRegistries.BLOCK.get(location).map(Holder::value).orElse(Blocks.AIR);
 	}
 
 	@Nullable
