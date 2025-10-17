@@ -40,7 +40,8 @@ public class VertexUtils {
 	// Copy of putBulkData with alpha support
 	public static void putBulkData(VertexConsumer builder, PoseStack.Pose pose, BakedQuad bakedQuad, float[] baseBrightness, float red, float green, float blue, float alpha, int[] lightmap, int packedOverlay, boolean readExistingColor) {
 		int[] aint = bakedQuad.getVertices();
-		Vec3i faceNormal = bakedQuad.getDirection().step();
+		// MC 1.21.2: Direction.step() was renamed to getUnitVec3i()
+		Vec3i faceNormal = bakedQuad.getDirection().getUnitVec3i();
 		Vector3f normal = new Vector3f((float)faceNormal.getX(), (float)faceNormal.getY(), (float)faceNormal.getZ());
 		Matrix4f matrix4f = pose.pose();
 		normal.mul(pose.normal());
