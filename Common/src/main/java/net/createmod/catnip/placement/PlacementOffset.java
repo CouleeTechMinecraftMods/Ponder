@@ -13,7 +13,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -108,13 +107,13 @@ public class PlacementOffset {
 		return world.getBlockState(new BlockPos(pos)).canBeReplaced();
 	}
 
-	public ItemInteractionResult placeInWorld(Level world, BlockItem blockItem, Player player, InteractionHand hand, BlockHitResult ray) {
+	public InteractionResult placeInWorld(Level world, BlockItem blockItem, Player player, InteractionHand hand, BlockHitResult ray) {
 
 		if (!isReplaceable(world))
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 
 		if (world.isClientSide)
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 
 		UseOnContext context = new UseOnContext(player, hand, ray);
 		BlockPos newPos = new BlockPos(pos);
@@ -122,7 +121,7 @@ public class PlacementOffset {
 			.copy();
 
 		if (!world.mayInteract(player, newPos))
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 
 		BlockState state = stateTransform.apply(blockItem.getBlock().defaultBlockState());
 		if (state.hasProperty(BlockStateProperties.WATERLOGGED)) {
@@ -131,7 +130,7 @@ public class PlacementOffset {
 		}
 
 		if (CatnipServices.HOOKS.playerPlaceSingleBlock(player, world, newPos, state)) {
-			return ItemInteractionResult.FAIL;
+			return InteractionResult.FAIL;
 		}
 
 		BlockState newState = world.getBlockState(newPos);
@@ -149,6 +148,6 @@ public class PlacementOffset {
 		if (!player.isCreative())
 			context.getItemInHand().shrink(1);
 
-		return ItemInteractionResult.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

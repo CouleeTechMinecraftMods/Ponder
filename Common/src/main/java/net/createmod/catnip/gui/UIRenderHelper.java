@@ -31,8 +31,8 @@ import com.mojang.math.Axis;
 import net.createmod.catnip.platform.CatnipClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.CompiledShaderProgram;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.util.Mth;
 
 public class UIRenderHelper {
@@ -402,7 +402,7 @@ public class UIRenderHelper {
 			RenderSystem.disableDepthTest();
 
 			Minecraft minecraft = Minecraft.getInstance();
-			ShaderInstance shaderinstance = minecraft.gameRenderer.blitShader;
+			CompiledShaderProgram shaderinstance = minecraft.gameRenderer.blitShader;
 			shaderinstance.setSampler("DiffuseSampler", colorTextureId);
 			//Matrix4f matrix4f = Matrix4f.orthographic(guiScaledWidth, -guiScaledHeight, 1000.0F, 3000.0F);
 			Matrix4f matrix4f = poseStack.last().pose();
