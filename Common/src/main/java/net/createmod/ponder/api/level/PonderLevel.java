@@ -83,7 +83,7 @@ public class PonderLevel extends SchematicLevel {
 		entities.forEach(e -> {
 			CompoundTag tag = new CompoundTag();
 			e.save(tag);//TODO Used to use Forge's #serializeNBT, which includes Passengers
-			EntityType.create(tag, this).ifPresent(originalEntities::add);
+			EntityType.create(tag, this, net.minecraft.world.entity.EntitySpawnReason.LOAD).ifPresent(originalEntities::add);
 		});
 	}
 
@@ -103,7 +103,7 @@ public class PonderLevel extends SchematicLevel {
 		originalEntities.forEach(e -> {
 			CompoundTag tag = new CompoundTag();
 			e.save(tag);//TODO Used to use Forge's #serializeNBT, which includes Passengers
-			EntityType.create(tag, this).ifPresent(entities::add);
+			EntityType.create(tag, this, net.minecraft.world.entity.EntitySpawnReason.LOAD).ifPresent(entities::add);
 		});
 		particles.clearEffects();
 
@@ -191,12 +191,11 @@ public class PonderLevel extends SchematicLevel {
 		double d0 = Mth.lerp((double) pt, entity.xOld, entity.getX());
 		double d1 = Mth.lerp((double) pt, entity.yOld, entity.getY());
 		double d2 = Mth.lerp((double) pt, entity.zOld, entity.getZ());
-		float f = Mth.lerp(pt, entity.yRotO, entity.getYRot());
 		EntityRenderDispatcher renderManager = Minecraft.getInstance()
 			.getEntityRenderDispatcher();
 		int light = renderManager.getRenderer(entity)
 			.getPackedLightCoords(entity, pt);
-		renderManager.render(entity, d0 - x, d1 - y, d2 - z, f, pt, ms, buffer, light);
+		renderManager.render(entity, d0 - x, d1 - y, d2 - z, pt, ms, buffer, light);
 	}
 
 	public void renderParticles(PoseStack ms, MultiBufferSource buffer, Camera ari, float pt) {

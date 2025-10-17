@@ -250,9 +250,8 @@ public class PonderSceneBuilder implements SceneBuilder {
 
 		@Override
 		public void createRedstoneParticles(BlockPos pos, int color, int amount) {
-			Vector3f rgb = new Color(color).asVectorF();
 			addInstruction(new EmitParticlesInstruction(VecHelper.getCenterOf(pos),
-					effects().particleEmitterWithinBlockSpace(new DustParticleOptions(rgb, 1), Vec3.ZERO), amount, 2));
+					effects().particleEmitterWithinBlockSpace(new DustParticleOptions(color, 1.0f), Vec3.ZERO), amount, 2));
 		}
 
 	}
@@ -318,7 +317,7 @@ public class PonderSceneBuilder implements SceneBuilder {
 
 		@Override
 		public void showFilterSlotInput(Vec3 location, Direction side, int duration) {
-			location = location.add(Vec3.atLowerCornerOf(side.getNormal()).scale(-3 / 128f));
+			location = location.add(Vec3.atLowerCornerOf(side.getUnitVec3i()).scale(-3 / 128f));
 			Vec3 expands = VecHelper.axisAlingedPlaneOf(side).scale(11 / 128f);
 			addInstruction(new HighlightValueBoxInstruction(location, expands, duration));
 		}

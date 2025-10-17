@@ -31,7 +31,7 @@ import com.mojang.math.Axis;
 import net.createmod.catnip.platform.CatnipClientServices;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.util.Mth;
 
 public class UIRenderHelper {
@@ -71,7 +71,7 @@ public class UIRenderHelper {
 
 	public static void updateWindowSize(Window mainWindow) {
 		if (framebuffer != null)
-			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight());
 	}
 
 	public static void drawFramebuffer(PoseStack poseStack, float alpha) {
@@ -176,7 +176,7 @@ public class UIRenderHelper {
 		//RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_COLOR);
 
 		Tesselator tesselator = Tesselator.getInstance();
 		BufferBuilder buffer = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -236,7 +236,7 @@ public class UIRenderHelper {
 		RenderSystem.enableBlend();
 		RenderSystem.disableCull();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_COLOR);
 
 		Tesselator tessellator = Tesselator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.begin(VertexFormat.Mode.TRIANGLES, DefaultVertexFormat.POSITION_COLOR);
@@ -285,7 +285,7 @@ public class UIRenderHelper {
 
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_COLOR);
 
 		BufferBuilder builder = Tesselator.getInstance().begin(VertexFormat.Mode.TRIANGLE_STRIP, DefaultVertexFormat.POSITION_COLOR);
 
@@ -360,7 +360,7 @@ public class UIRenderHelper {
 		BufferBuilder bufferbuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
 		bufferbuilder.addVertex(m, (float) left , (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u1, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) bot, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v2);
 		bufferbuilder.addVertex(m, (float) right, (float) top, (float) z).setColor(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()).setUv(u2, v1);
@@ -381,7 +381,7 @@ public class UIRenderHelper {
 
 		public static CustomRenderTarget create(Window mainWindow) {
 			CustomRenderTarget framebuffer = new CustomRenderTarget(true);
-			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight(), Minecraft.ON_OSX);
+			framebuffer.resize(mainWindow.getWidth(), mainWindow.getHeight());
 			framebuffer.setClearColor(0, 0, 0, 0);
 			CatnipClientServices.CLIENT_HOOKS.enableStencilBuffer(framebuffer);
 			return framebuffer;
@@ -406,7 +406,7 @@ public class UIRenderHelper {
 			// The blitShader field was removed from GameRenderer in the rendering pipeline refactor
 			// Bind the framebuffer's color texture for rendering
 			this.bindRead();
-			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+			RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
 
 			Matrix4f matrix4f = poseStack.last().pose();
 			Matrix4f projectionMatrix = RenderSystem.getProjectionMatrix();

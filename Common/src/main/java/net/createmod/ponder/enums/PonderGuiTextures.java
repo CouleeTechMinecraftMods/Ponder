@@ -8,6 +8,7 @@ import net.createmod.catnip.render.ColoredRenderable;
 import net.createmod.catnip.theme.Color;
 import net.createmod.ponder.Ponder;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public enum PonderGuiTextures implements TextureSheetSegment, ScreenElement, ColoredRenderable {
@@ -81,7 +82,7 @@ public enum PonderGuiTextures implements TextureSheetSegment, ScreenElement, Col
 
 	@Override
 	public void render(GuiGraphics graphics, int x, int y) {
-		graphics.blit(getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
+		graphics.blit(RenderType::guiTextured, getLocation(), x, y, 0, startX, startY, width, height, sheetWidth, sheetHeight);
 	}
 
 	@Override

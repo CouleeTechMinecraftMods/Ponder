@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.TickRateManager;
@@ -20,7 +21,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.alchemy.PotionBrewing;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -174,8 +177,13 @@ public class WrappedLevel extends Level {
 	}
 
 	@Override
-	public RecipeManager getRecipeManager() {
-		return level.getRecipeManager();
+	public void explode(Entity entity, DamageSource damageSource,
+			ExplosionDamageCalculator damageCalculator, double x, double y, double z,
+			float radius, boolean fire, Level.ExplosionInteraction explosionInteraction,
+			ParticleOptions smallExplosionParticles, ParticleOptions largeExplosionParticles,
+			Holder<SoundEvent> explosionSound) {
+		level.explode(entity, damageSource, damageCalculator, x, y, z, radius, fire,
+				explosionInteraction, smallExplosionParticles, largeExplosionParticles, explosionSound);
 	}
 
 	@Override

@@ -23,9 +23,9 @@ import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
 import com.mojang.blaze3d.platform.ClipboardManager;
 import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexSorting;
 import com.mojang.math.Axis;
 
 import net.createmod.catnip.animation.LerpedFloat;
@@ -623,7 +623,7 @@ public class PonderUI extends AbstractPonderScreen {
 		// has to be outside of MS transforms, important for vertex sorting
 		Matrix4f matrix4f = new Matrix4f(RenderSystem.getProjectionMatrix());
 		matrix4f.translate(0, 0, 800);
-		RenderSystem.setProjectionMatrix(matrix4f, VertexSorting.DISTANCE_TO_ORIGIN);
+		RenderSystem.setProjectionMatrix(matrix4f, ProjectionType.PERSPECTIVE);
 
 		poseStack.pushPose();
 		poseStack.translate(0, 0, -800);
@@ -1070,8 +1070,7 @@ public class PonderUI extends AbstractPonderScreen {
 		if (chapter != null)
 			return chapter.getTitle();
 
-		return stack.getItem()
-				.getDescription()
+		return stack.getHoverName()
 				.getString();
 	}
 

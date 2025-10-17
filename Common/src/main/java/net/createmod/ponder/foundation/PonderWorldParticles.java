@@ -20,7 +20,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 
@@ -75,7 +75,6 @@ public class PonderWorldParticles {
 		Matrix4fStack stack = RenderSystem.getModelViewStack();
 		stack.pushMatrix();
 		stack.mul(ms.last().pose());
-		RenderSystem.applyModelViewMatrix();
 
 		for (ParticleRenderType iparticlerendertype : this.byType.keySet()) {
 			if (iparticlerendertype == ParticleRenderType.NO_RENDER)
@@ -83,7 +82,7 @@ public class PonderWorldParticles {
 			Iterable<Particle> iterable = this.byType.get(iparticlerendertype);
 			if (iterable != null) {
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-				RenderSystem.setShader(GameRenderer::getParticleShader);
+				RenderSystem.setShader(CoreShaders.PARTICLE);
 
 				Tesselator tesselator = Tesselator.getInstance();
 				BufferBuilder bufferBuilder = iparticlerendertype.begin(tesselator, mc.getTextureManager());
@@ -100,7 +99,6 @@ public class PonderWorldParticles {
 		}
 
 		stack.popMatrix();
-		RenderSystem.applyModelViewMatrix();
 		RenderSystem.depthMask(true);
 		RenderSystem.disableBlend();
 		lightTexture.turnOffLightLayer();

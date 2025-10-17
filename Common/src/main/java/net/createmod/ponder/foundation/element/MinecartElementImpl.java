@@ -109,7 +109,7 @@ public class MinecartElementImpl extends AnimatedSceneElementBase implements Min
 
 		poseStack.mulPose(Axis.YP.rotationDegrees(rotation.getValue(pt)));
 
-		entityrenderermanager.render(entity, 0, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
+		entityrenderermanager.render(entity, 0, 0, 0, pt, poseStack, buffer, lightCoordsFromFade(fade));
 		poseStack.popPose();
 	}
 
