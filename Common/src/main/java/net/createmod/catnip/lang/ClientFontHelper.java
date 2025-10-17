@@ -76,11 +76,13 @@ public class ClientFontHelper {
 		if (p_228078_1_ == null) {
 			return 0;
 		} else {
-			MultiBufferSource.BufferSource irendertypebuffer$impl = graphics.bufferSource();
-			int i = font.drawInBatch(p_228078_1_, p_228078_2_, p_228078_3_, p_228078_4_, p_228078_6_, p_228078_5_,
-				irendertypebuffer$impl, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
-			irendertypebuffer$impl.endBatch();
-			return i;
+			// MC 1.21.2: bufferSource() replaced with drawSpecial()
+			int[] result = new int[1];
+			graphics.drawSpecial(bufferSource -> {
+				result[0] = font.drawInBatch(p_228078_1_, p_228078_2_, p_228078_3_, p_228078_4_, p_228078_6_, p_228078_5_,
+					bufferSource, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
+			});
+			return result[0];
 		}
 	}
 }

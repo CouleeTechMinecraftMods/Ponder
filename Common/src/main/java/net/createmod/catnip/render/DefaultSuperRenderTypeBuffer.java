@@ -67,7 +67,8 @@ public class DefaultSuperRenderTypeBuffer implements SuperRenderTypeBuffer {
 			map.put(Sheets.solidBlockSheet(), fixedBufferPack.buffer(RenderType.solid()));
 			map.put(Sheets.cutoutBlockSheet(), fixedBufferPack.buffer(RenderType.cutout()));
 			map.put(Sheets.bannerSheet(), fixedBufferPack.buffer(RenderType.cutoutMipped()));
-			map.put(Sheets.translucentCullBlockSheet(), fixedBufferPack.buffer(RenderType.translucent()));
+			// MC 1.21.2: Sheets.translucentCullBlockSheet() removed, use RenderType.translucent() directly
+			map.put(RenderType.translucent(), fixedBufferPack.buffer(RenderType.translucent()));
 			put(map, Sheets.shieldSheet());
 			put(map, Sheets.bedSheet());
 			put(map, Sheets.shulkerBoxSheet());

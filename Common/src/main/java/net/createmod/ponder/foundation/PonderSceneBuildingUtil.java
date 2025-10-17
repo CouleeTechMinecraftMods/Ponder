@@ -88,7 +88,7 @@ public class PonderSceneBuildingUtil implements SceneBuildingUtil {
 
 		@Override
 		public Vec3 blockSurface(BlockPos pos, Direction face, float margin) {
-			return centerOf(pos).add(Vec3.atLowerCornerOf(face.step())
+			return centerOf(pos).add(Vec3.atLowerCornerOf(face.getNormal())
 				.scale(.5f + margin));
 		}
 

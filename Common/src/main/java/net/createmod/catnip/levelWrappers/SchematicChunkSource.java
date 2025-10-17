@@ -28,6 +28,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkSource;
@@ -101,9 +102,9 @@ public class SchematicChunkSource extends ChunkSource {
 		private static final class DummyLevel extends Level {
 			private DummyLevel(WritableLevelData pLevelData, ResourceKey<Level> pDimension,
 							   RegistryAccess pRegistryAccess, Holder<DimensionType> pDimensionTypeRegistration,
-							   Supplier<ProfilerFiller> pProfiler, boolean pIsClientSide, boolean pIsDebug, long pBiomeZoomSeed,
+							   boolean pIsClientSide, boolean pIsDebug, long pBiomeZoomSeed,
 							   int pMaxChainedNeighborUpdates) {
-				super(pLevelData, pDimension, pRegistryAccess, pDimensionTypeRegistration, pProfiler, pIsClientSide, pIsDebug,
+				super(pLevelData, pDimension, pRegistryAccess, pDimensionTypeRegistration, pIsClientSide, pIsDebug,
 					  pBiomeZoomSeed, pMaxChainedNeighborUpdates);
 				access = pRegistryAccess;
 			}
@@ -111,7 +112,7 @@ public class SchematicChunkSource extends ChunkSource {
 			private final RegistryAccess access;
 
 			private DummyLevel(Level level) {
-				this(null, null, level.registryAccess(), level.dimensionTypeRegistration(), null, false, false, 0, 0);
+				this(null, null, level.registryAccess(), level.dimensionTypeRegistration(), false, false, 0, 0);
 			}
 
 			@Override
@@ -135,6 +136,11 @@ public class SchematicChunkSource extends ChunkSource {
 
 			@Override
 			public PotionBrewing potionBrewing() {
+				return null;
+			}
+
+			@Override
+			public FuelValues fuelValues() {
 				return null;
 			}
 
@@ -167,10 +173,6 @@ public class SchematicChunkSource extends ChunkSource {
 			@Override
 			public void playSeededSound(Player pPlayer, double pX, double pY, double pZ, Holder<SoundEvent> pSound,
 										SoundSource pSource, float pVolume, float pPitch, long pSeed) {}
-
-			@Override
-			public void playSeededSound(Player p_220363_, double p_220364_, double p_220365_, double p_220366_,
-										SoundEvent p_220367_, SoundSource p_220368_, float p_220369_, float p_220370_, long p_220371_) {}
 
 			@Override
 			public void playSeededSound(Player p_220372_, Entity p_220373_, Holder<SoundEvent> p_220374_, SoundSource p_220375_,

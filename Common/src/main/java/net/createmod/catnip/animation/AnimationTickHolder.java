@@ -58,7 +58,7 @@ public class AnimationTickHolder {
 	 */
 	public static float getPartialTicks() {
 		Minecraft mc = Minecraft.getInstance();
-		return mc.getTimer().getGameTimeDeltaPartialTick(false);
+		return mc.getDeltaTracker().getGameTimeDeltaPartialTick(false);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class AnimationTickHolder {
 	// TODO - Check if one of the getGameTimeDeltaPartialTick methods can be used here instead
 	public static float getPartialTicksUI() {
 		Minecraft mc = Minecraft.getInstance();
-		DeltaTracker timer = mc.getTimer();
+		DeltaTracker timer = mc.getDeltaTracker();
 
 		if (timer instanceof TimerAccessor timerAccessor) {
 			return timerAccessor.catnip$getDeltaTickResidual();

@@ -154,7 +154,8 @@ public class NeoForgeClientHooksHelper implements ModClientHooksHelper {
 		ModelData modelData = beWithModelData != null ? beWithModelData.getModelData() : VirtualRenderHelper.VIRTUAL_DATA;
 
 		if (blockState.getBlock() == Blocks.AIR) {
-			RenderType renderType = Sheets.translucentCullBlockSheet();
+			// MC 1.21.2: Sheets.translucentCullBlockSheet() removed, use RenderType.translucent() directly
+			RenderType renderType = RenderType.translucent();
 			blockRenderer.getModelRenderer().renderModel(ms.last(), buffer.getBuffer(renderType), blockState,
 				blockModel, 1, 1, 1, LightTexture.FULL_BRIGHT,
 				OverlayTexture.NO_OVERLAY, modelData, null);

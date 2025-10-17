@@ -126,7 +126,7 @@ public abstract class ConfigScreen extends AbstractSimiScreen {
 	}
 
 	protected static void renderCog(GuiGraphics graphics) {
-		float partialTicks = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(false);
+		float partialTicks = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(false);
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();
 

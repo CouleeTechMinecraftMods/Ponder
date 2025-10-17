@@ -104,7 +104,7 @@ public class VecHelper {
 	}
 
 	public static boolean isVecPointingTowards(Vec3 vec, Direction direction) {
-		return Vec3.atLowerCornerOf(direction.step())
+		return Vec3.atLowerCornerOf(direction.getNormal())
 			.dot(vec.normalize()) > 0.125; // slight tolerance to activate perpendicular movement actors
 	}
 
@@ -126,7 +126,7 @@ public class VecHelper {
 	}
 
 	public static Vec3 axisAlingedPlaneOf(Direction face) {
-		return axisAlingedPlaneOf(Vec3.atLowerCornerOf(face.step()));
+		return axisAlingedPlaneOf(Vec3.atLowerCornerOf(face.getNormal()));
 	}
 
 	public static ListTag writeNBT(Vec3 vec) {
@@ -260,10 +260,10 @@ public class VecHelper {
 		if (mc.options.bobView().get()) {
 			Entity renderViewEntity = mc.getCameraEntity();
 			if (renderViewEntity instanceof Player playerEntity) {
-				float walkDist_modified = playerEntity.walkDist;
+				// MC 1.21.2: walkDist/walkDistO replaced with WalkAnimationState
+				float walkDist_modified = playerEntity.walkAnimation.position(partialTicks);
 
-				float f = walkDist_modified - playerEntity.walkDistO;
-				float f1 = -(walkDist_modified + f * partialTicks);
+				float f1 = -walkDist_modified;
 				float f2 = Mth.lerp(partialTicks, playerEntity.oBob, playerEntity.bob);
 				Quaternionf q2 =
 						com.mojang.math.Axis.XP.rotationDegrees(Math.abs(Mth.cos(f1 * (float) Math.PI - 0.2F) * f2) * 5.0F);

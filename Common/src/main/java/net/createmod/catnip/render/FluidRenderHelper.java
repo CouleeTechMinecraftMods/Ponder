@@ -152,7 +152,7 @@ public final class FluidRenderHelper<T> {
 	private static void putVertex(VertexConsumer builder, PoseStack ms, float x, float y, float z, int color, float u,
 									float v, Direction face, int light) {
 
-		Vec3i normal = face.step();
+		Vec3i normal = face.getNormal();
 		PoseStack.Pose peek = ms.last();
 		int a = color >> 24 & 0xff;
 		int r = color >> 16 & 0xff;

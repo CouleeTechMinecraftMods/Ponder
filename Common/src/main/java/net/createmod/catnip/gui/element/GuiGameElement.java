@@ -183,12 +183,14 @@ public class GuiGameElement {
 
 			Minecraft mc = Minecraft.getInstance();
 			BlockRenderDispatcher blockRenderer = mc.getBlockRenderer();
-			MultiBufferSource.BufferSource buffer = graphics.bufferSource();
 
 			transformMatrix(poseStack);
 
 			RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
-			renderModel(blockRenderer, buffer, poseStack);
+			// MC 1.21.2: bufferSource() replaced with drawSpecial()
+			graphics.drawSpecial(buffer -> {
+				renderModel(blockRenderer, buffer, poseStack);
+			});
 
 			cleanUpMatrix(poseStack);
 		}
@@ -199,11 +201,11 @@ public class GuiGameElement {
 			level.blockState(blockState);
 			level.blockEntity(blockEntity);
 			BakedModelBufferer.bufferModel(blockModel, BlockPos.ZERO, level, blockState, ms, (layer, shade) -> {
-				layer = layer == RenderType.translucent() ? Sheets.translucentCullBlockSheet() : Sheets.cutoutBlockSheet();
+				// MC 1.21.2: Sheets.translucentCullBlockSheet() removed, use RenderType.translucent() directly
+				layer = layer == RenderType.translucent() ? RenderType.translucent() : Sheets.cutoutBlockSheet();
 				return new ColoringVertexConsumer(buffer.getBuffer(layer), ARGB.red(color) / 255f, ARGB.green(color) / 255f, ARGB.blue(color) / 255f, 1);
 			});
-
-			buffer.endBatch();
+			// MC 1.21.2: endBatch() is now called automatically by drawSpecial()
 		}
 
 	}
@@ -263,8 +265,7 @@ public class GuiGameElement {
 				return;
 
 			CatnipClientServices.CLIENT_HOOKS.renderFullFluidState(poseStack, buffer, blockState.getFluidState());
-
-			buffer.endBatch();
+			// MC 1.21.2: endBatch() is now called automatically by drawSpecial()
 		}
 	}
 
